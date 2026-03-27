@@ -4,9 +4,10 @@
 *_files/
 _site/
 about.qmd
+.DS_Store
 
-day_1/practical_1/data/*/
-day_1/practical_1/data/*.zip
-day_2/practical_3/data/*/
-day_2/practical_3/data/*.zip
+practicals/practical_1/data/*/
+practicals/practical_1/data/*.zip
+practicals/practical_3/data/*/
+practicals/practical_3/data/*.zip
 .ipynb_checkpoints/

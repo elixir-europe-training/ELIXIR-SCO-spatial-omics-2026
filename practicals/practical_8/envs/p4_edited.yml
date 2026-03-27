@@ -1,0 +1,23 @@
+name: p4_edited
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11.6
+  - pip
+  - numpy=1.24.4
+  - pandas=2.1.1
+  - anndata=0.10.2
+  - scanpy=1.9.5
+  - scikit-learn=1.3.1
+  - scikit-image
+#  - pip:
+#      - squidpy==1.4.0
+#      - scvi-tools==1.1.6
+#      - cellcharter==0.3.2
+
+#conda create -n cellcharter-env -c conda-forge python=3.12
+#conda activate cellcharter-env
+#pip install scvi-tools
+#pip install cellcharter

@@ -1,0 +1,21 @@
+name: practical_2
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scipy
+  - statsmodels
+  - shapely
+  - scanpy
+  - squidpy
+  - igraph
+  - leidenalg
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+  - notebook

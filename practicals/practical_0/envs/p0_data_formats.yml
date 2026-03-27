@@ -1,0 +1,7 @@
+name: p0_data_formats
+dependencies:
+- python=3.9
+- squidpy 
+- ipykernel
+- pip:
+  - spatialdata[extra]

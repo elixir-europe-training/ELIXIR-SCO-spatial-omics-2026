@@ -1,0 +1,21 @@
+# Core Python scientific stack
+numpy
+pandas
+scipy
+matplotlib
+seaborn
+
+# Spatial transcriptomics + single-cell tools
+scanpy
+squidpy
+leidenalg
+scikit-misc
+statsmodels
+shapely
+igraph
+
+# Jupyter / notebook environment
+ipykernel
+
+# python -m pip install --no-user -r spatial-transcriptomics.txt
+# python -m ipykernel install --name "spatial-transcriptomics" --user

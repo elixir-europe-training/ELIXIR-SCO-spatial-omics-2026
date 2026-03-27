@@ -1,0 +1,13 @@
+name: p1_segmentation_sainsc
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python
+  - ipykernel
+  - sainsc
+  - scanpy
+  - polars
+  - pyarrow
+  - python-igraph
+  - ipywidgets

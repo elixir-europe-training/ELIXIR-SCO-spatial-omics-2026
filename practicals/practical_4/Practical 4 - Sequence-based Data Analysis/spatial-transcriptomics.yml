@@ -1,0 +1,51 @@
+name: spatial-transcriptomics
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  # Core Python
+  - python=3.10
+  - pip
+
+  # Core scientific stack
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - h5py
+  - pyarrow
+
+  # Spatial transcriptomics + single-cell tools
+  - scanpy>=1.9.8
+  - anndata
+  - squidpy>=1.3.1
+  - leidenalg
+  - harmonypy
+  - scikit-misc
+
+  # Image & visualization utilities
+  - scikit-image
+  - pillow
+  - tqdm
+
+  # Notebook environment
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+  - notebook
+
+  # Optional: interactive and plotting enhancements
+  - plotly
+  - louvain
+
+  # Optional: file and data access
+  - requests
+
+  # pip-only extras (for optional exploration)
+  - pip:
+      - spatialdata
+
+  # conda env create -f spatial-transcriptomics.yml
+  # python -m ipykernel install --user --name spatial-transcriptomics

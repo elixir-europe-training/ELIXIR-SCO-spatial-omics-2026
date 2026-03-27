@@ -1,0 +1,48 @@
+Collecting squidpy==1.4.0
+  Using cached squidpy-1.4.0-py3-none-any.whl.metadata (8.9 kB)
+Collecting aiohttp>=3.8.1 (from squidpy==1.4.0)
+  Using cached aiohttp-3.13.0-cp313-cp313-macosx_10_13_x86_64.whl.metadata (8.1 kB)
+Collecting anndata>=0.9 (from squidpy==1.4.0)
+  Using cached anndata-0.12.2-py3-none-any.whl.metadata (9.6 kB)
+Collecting cycler>=0.11.0 (from squidpy==1.4.0)
+  Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting dask-image>=0.5.0 (from squidpy==1.4.0)
+  Using cached dask_image-2024.5.3-py3-none-any.whl.metadata (2.8 kB)
+Collecting dask>=2021.02.0 (from dask[array]>=2021.02.0->squidpy==1.4.0)
+  Using cached dask-2025.10.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting docrep>=0.3.1 (from squidpy==1.4.0)
+  Using cached docrep-0.3.2.tar.gz (33 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting fsspec>=2021.11.0 (from squidpy==1.4.0)
+  Using cached fsspec-2025.9.0-py3-none-any.whl.metadata (10 kB)
+Collecting leidenalg>=0.8.2 (from squidpy==1.4.0)
+  Using cached leidenalg-0.10.2-cp38-abi3-macosx_10_9_x86_64.whl.metadata (10 kB)
+Collecting matplotlib-scalebar>=0.8.0 (from squidpy==1.4.0)
+  Using cached matplotlib_scalebar-0.9.0-py3-none-any.whl.metadata (18 kB)
+Collecting matplotlib>=3.3 (from squidpy==1.4.0)
+  Using cached matplotlib-3.10.7-cp313-cp313-macosx_10_13_x86_64.whl.metadata (11 kB)
+Collecting networkx>=2.6.0 (from squidpy==1.4.0)
+  Using cached networkx-3.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting numba>=0.56.4 (from squidpy==1.4.0)
+  Using cached numba-0.62.1-cp313-cp313-macosx_10_15_x86_64.whl.metadata (2.8 kB)
+Collecting numpy>=1.23.0 (from squidpy==1.4.0)
+  Using cached numpy-2.3.4-cp313-cp313-macosx_14_0_x86_64.whl.metadata (62 kB)
+Collecting omnipath>=1.0.7 (from squidpy==1.4.0)
+  Using cached omnipath-1.0.12-py3-none-any.whl.metadata (7.0 kB)
+Collecting pandas>=2.1.0 (from squidpy==1.4.0)
+  Using cached pandas-2.3.3-cp313-cp313-macosx_10_13_x86_64.whl.metadata (91 kB)
+Collecting pillow>=8.0.0 (from squidpy==1.4.0)
+  Using cached pillow-12.0.0-cp313-cp313-macosx_10_13_x86_64.whl.metadata (8.8 kB)
+Collecting scanpy>=1.9.3 (from squidpy==1.4.0)
+  Using cached scanpy-1.11.4-py3-none-any.whl.metadata (9.2 kB)
+Collecting scikit-image<=0.20,>=0.19 (from squidpy==1.4.0)
+  Using cached scikit_image-0.20.0.tar.gz (22.9 MB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'error'

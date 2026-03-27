@@ -1,0 +1,7 @@
+name: p2_sequence_based
+dependencies:
+- python=3.9
+- squidpy 
+- ipykernel
+- pip:
+  - spatialdata[extra]

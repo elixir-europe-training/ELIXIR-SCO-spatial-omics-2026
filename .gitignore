@@ -6,6 +6,8 @@ _site/
 about.qmd
 .DS_Store
 
+*.h5ad
+
 practicals/practical_1/data/*/
 practicals/practical_1/data/*.zip
 practicals/practical_3/data/*/

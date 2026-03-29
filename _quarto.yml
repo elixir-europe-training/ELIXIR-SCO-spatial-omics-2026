@@ -5,7 +5,7 @@ project:
     - "*.qmd"
     - "!CONTRIBUTIONG.md"
     - "!LICENSE.md"
-    - "!day_3/practical_5/**"
+    - "!practicals/**"
 
 website:
   title: "Spatial Omics Data Analysis"
@@ -31,7 +31,7 @@ website:
       #       text: "Practical 3: Integration with scRNA-seq"
     right:
       - icon: github
-        href: https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics/
+        href: https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics-2026/
         aria-label: GitHub
   sidebar:
     logo: assets/ELIXIR1.png

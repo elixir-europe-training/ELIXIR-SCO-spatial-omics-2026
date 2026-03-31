@@ -5,18 +5,20 @@ title: "Spatial Omics Data Analysis"
 <img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/SCObanner.png" alt="SCO banner" style="width:500px;"/>
 
 ## Overview
+
 This course delves into the cutting-edge field of Spatial Omics, focusing on Spatially-Resolved Transcriptomics (SRT) technology which provides unprecedented insights into the spatial organization of gene expression within tissues. The rapid and recent advances in SRT technology are transforming our understanding of biological systems, and this course is designed to equip researchers with the tools to harness the power of SRT, adding significant value to biological knowledge and opening new avenues for scientific discovery.
 
 Participants will explore both imaging-based and sequencing-based SRT technologies, learning to navigate the entire workflow of SRT data analysis. The course covers essential topics such as pre-processing techniques for data cleaning, normalization, and quality control, methods for identifying and characterizing spatial domains within tissues, strategies for integrating SRT data with single-cell RNA sequencing data, and statistical approaches to analyze spatial patterns and relationships. Additionally, participants will investigate interactions between cells within their spatial context. By the end of this course, participants will be equipped with the knowledge and skills to construct a complete workflow for SRT data analysis, from raw data to meaningful biological insights. The course combines lectures with practical sessions, ensuring a balanced approach to theory and hands-on experience. 
 
 ## Venue and time
 
-This course will take place in Lausanne. The course will start the first day at 13:00. Find a detailed schedule [here](schedule.qmd). 
+This course will take place in Uppsala, Sweden, 6-9 of October 2026. The course will be held 9-17 each day except Friday the 9th when we end at 13:00. Find a detailed schedule [here](schedule.qmd). 
 
-A lunch will be provided before the start of the course as well as at the end of the course on the last day. All participants are invited to the social dinner, organized on 21 January 2024. 
+Lunch and coffee-break snacks are provided each day. All participants are invited to the social dinner, organized on 6 October 2026. 
 
 ## Audience
-This 3-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis. 
+
+This 3.5-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis. 
 
 ## Learning outcomes 
 At the end of the course, the participants will be able to:
@@ -39,52 +41,62 @@ Participants should also have a basic understanding of working with command line
 
 
 ### Technical
+
 Participants are required to bring your own laptop. 
 
-We will be mainly working on an Amazon Web Services (AWS) Elastic Cloud (EC2) server. Our Ubuntu server behaves like a ‘normal’ remote server, and can be approached through a web browser (safari, firefox, chrome etc.). All participants will be granted access to a personal workspace to be used during the course. The web interface will be approached through http (not https!), so make sure you can access http sites. You can validate it [here](http://neverssl.com/).
-
-Please perform these installations PRIOR to the course and contact us if you have any trouble.
+We will be mainly working on an the [Scilifelab Serve](https://serve.scilifelab.se/) system. All participants will be granted access to a personal workspace to be used during the course. 
 
 ## The trainers
 
 The course will feature the following lecturers and trainers:
 
-* Lars Borm (Katholieke Universiteit (KU) Leuven & Vlaams Instituut voor Biotechnologie (VIB), BE)
-* Helena Crowell (Centro Nacional de Análisis Genómico (CNAG), ES)
 * Francesca Drummer (Helmholtz Zentrum München, DE)
-* George Gavrillidis (Centre for Research and Technology Hellas (CERTH), GR)
-* Geert van Geest (SIB Swiss Institute of Bioinformatics, CH)
+* Mark Robinson (University of Zurich (UZH) & SIB, CH)
 * Naveed Ishaque (Berlin Institute of Health (BIH), DE)
 * Ahmed Mahfouz (Leiden University Medical Center (LUMC), NL)
 * Benedetta Manzato (Leiden University Medical Center (LUMC), NL)
-* Niklas Müller-Bötticher (Berlin Institute of Health(BIH), DE)
-* Mark Robinson (University of Zurich (UZH) & SIB, CH)
-* Yvan Saeys (University of Ghent (UGent) & Vlaams Instituut voor Biotechnologie (VIB), BE)
-* Rasool Saghaleyni (NBIS / SciLifeLab, SE)
-* Anna Schaar (Helmholtz Zentrum München, DE)
-* Marco Varrone (University of Lausanne (UNIL) & SIB, CH)
+* Emma Vonk (Leiden University Medical Center (LUMC), NL)
+* Lucie Pfeiferova (Czech Academy of Sciences, CZ)
+* Christophe Avenel (Uppsala University, NBIS, Scilifelab, SE)
+* Jonas Windhager (Uppsala University, NBIS, Scilifelab, SE)
+* Suganya Sivagurunathan (Uppsala University, NBIS, Scilifelab, SE)
+* Stefan Ebmeyer (Chalmers University of Technology, NBIS, Scilifelab, SE)
+* Åsa Björklund (Chalmers University of Technology, NBIS, Scilifelab, SE)
+* Aditya Singh (Gothenburg University, NBIS, Scilifelab, SE)
+* Leslie Solorzano  (Uppsala University, NBIS, Scilifelab, SE)
+* Jennifer Fransson (Uppsala University, NBIS, Scilifelab, SE)
+* Susanne Reinsbach (Chalmers University of Technology, NBIS, Scilifelab, SE)
+* Sergiu Netotea (Chalmers University of Technology, NBIS, Scilifelab, SE)
 
-## Additional information
 
-This is an international course hosted by the SIB Swiss Institute of Bioinformatics (ELIXIR-CH) in collaboration with the [ELIXIR Single-Cell Omics community](https://elixir-europe.org/communities/single-cell-omics), and trainers’ own institutions and affiliations to ELIXIR nodes (KU Leuven, VIB, CNAG, Helmholtz Zentrum München, CERTH, SIB, BIH, LUMC, UZH, UGent, SciLifeLab, UNIL).
+## Course organizers
+
+This is an international course hosted by NBIS (National Bioinformatics Infrastructure Sweden, ELIXIR-SE) in collaboration with the [ELIXIR Single-Cell Omics community](https://elixir-europe.org/communities/single-cell-omics), and trainers’ own institutions and affiliations to ELIXIR nodes (KU Leuven, Helmholtz Zentrum München, SIB, BIH, LUMC, CAS).
 
 Course organizers:  
 
 * Ahmed Mahfouz, Leiden University Medical Center (LUMC), ELIXIR - Netherlands
-* Diana Marek, SIB Training group, ELIXIR - Switzerland 
-* Patricia Palagi, SIB Training group, ELIXIR - Switzerland
+* Åsa Björklund, Chalmers University of Technology, NBIS, Scilifelab, ELIXIR - Sweden
+* Christophe Avenel, Uppsala University, NBIS, Scilifelab, ELIXIR - Sweden
+* Jennifer Fransson, Uppsala University, NBIS, Scilifelab, ELIXIR - Sweden
+* Susanne Reinsbach, Chalmers University of Technology, NBIS, Scilifelab, ELIXIR - Sweden
 * Eija Korpelainen, CSC, ELIXIR - Finland
 
+Contact: edu.spatial [at] nbis.se
 
+## Application
+
+The [application form](Add link) will be open from 13 April to 22 May. 
+
+Once the application is closed we will not accept additional students. However we will make all material for the course freely available so that you can study the material on your owm if you missed the deadline. 
+
+## Additional information
+
+FIX: Put statement on travel grants here...
 This course is partially funded by an [ELIXIR Staff Exchange Programme](https://elixir-europe.org/internal-projects/staff-exchange-programme).
 
+We will recommend 0.75 ECTS credits for this course.
 
-We will recommend 0.75 ECTS credits for this course (given a passed assessment).
-
-You are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form [here](https://lists.sib.swiss/postorius/lists/courses.lists.sib.swiss/).
- 
-Please note that participation in SIB courses is subject to our [general conditions](https://www.sib.swiss/training/terms-and-conditions).
- 
 Course organizers and trainers abide by the [ELIXIR Code of Conduct](https://elixir-europe.org/events/code-of-conduct). Participants are also required to abide by the same code.
 
 <img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/ELIXIR1.png" alt="ElLIXIR logo" style="height: 210px; width:300px;"/>

@@ -74,14 +74,14 @@
     "href": "index.html#venue-and-time",
     "title": "Spatial Omics Data Analysis",
     "section": "Venue and time",
-    "text": "Venue and time\nThis course will take place in Lausanne. The course will start the first day at 13:00. Find a detailed schedule here.\nA lunch will be provided before the start of the course as well as at the end of the course on the last day. All participants are invited to the social dinner, organized on 21 January 2024."
+    "text": "Venue and time\nThis course will take place in Uppsala, Sweden, 6-9 of October 2026. The course will be held 9-17 each day except Friday the 9th when we end at 13:00. Find a detailed schedule here.\nLunch and coffee-break snacks are provided each day. All participants are invited to the social dinner, organized on 6 October 2026."
   },
   {
     "objectID": "index.html#audience",
     "href": "index.html#audience",
     "title": "Spatial Omics Data Analysis",
     "section": "Audience",
-    "text": "Audience\nThis 3-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis."
+    "text": "Audience\nThis 3.5-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis."
   },
   {
     "objectID": "index.html#learning-outcomes",
@@ -95,21 +95,35 @@
     "href": "index.html#prerequisites",
     "title": "Spatial Omics Data Analysis",
     "section": "Prerequisites",
-    "text": "Prerequisites\n\nKnowledge / competencies\nParticipants should be proficient in Python and R, for basic data analysis.\nParticipants should be familiar with NGS technologies, have experience with analyzing (spatial/single-cell) transcriptomics data as well as basic knowledge of machine learning.\nParticipants should also have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\nTechnical\nParticipants are required to bring your own laptop.\nWe will be mainly working on an Amazon Web Services (AWS) Elastic Cloud (EC2) server. Our Ubuntu server behaves like a ‘normal’ remote server, and can be approached through a web browser (safari, firefox, chrome etc.). All participants will be granted access to a personal workspace to be used during the course. The web interface will be approached through http (not https!), so make sure you can access http sites. You can validate it here.\nPlease perform these installations PRIOR to the course and contact us if you have any trouble."
+    "text": "Prerequisites\n\nKnowledge / competencies\nParticipants should be proficient in Python and R, for basic data analysis.\nParticipants should be familiar with NGS technologies, have experience with analyzing (spatial/single-cell) transcriptomics data as well as basic knowledge of machine learning.\nParticipants should also have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\nTechnical\nParticipants are required to bring your own laptop.\nWe will be mainly working on an the Scilifelab Serve system. All participants will be granted access to a personal workspace to be used during the course."
   },
   {
     "objectID": "index.html#the-trainers",
     "href": "index.html#the-trainers",
     "title": "Spatial Omics Data Analysis",
     "section": "The trainers",
-    "text": "The trainers\nThe course will feature the following lecturers and trainers:\n\nLars Borm (Katholieke Universiteit (KU) Leuven & Vlaams Instituut voor Biotechnologie (VIB), BE)\nHelena Crowell (Centro Nacional de Análisis Genómico (CNAG), ES)\nFrancesca Drummer (Helmholtz Zentrum München, DE)\nGeorge Gavrillidis (Centre for Research and Technology Hellas (CERTH), GR)\nGeert van Geest (SIB Swiss Institute of Bioinformatics, CH)\nNaveed Ishaque (Berlin Institute of Health (BIH), DE)\nAhmed Mahfouz (Leiden University Medical Center (LUMC), NL)\nBenedetta Manzato (Leiden University Medical Center (LUMC), NL)\nNiklas Müller-Bötticher (Berlin Institute of Health(BIH), DE)\nMark Robinson (University of Zurich (UZH) & SIB, CH)\nYvan Saeys (University of Ghent (UGent) & Vlaams Instituut voor Biotechnologie (VIB), BE)\nRasool Saghaleyni (NBIS / SciLifeLab, SE)\nAnna Schaar (Helmholtz Zentrum München, DE)\nMarco Varrone (University of Lausanne (UNIL) & SIB, CH)"
+    "text": "The trainers\nThe course will feature the following lecturers and trainers:\n\nFrancesca Drummer (Helmholtz Zentrum München, DE)\nMark Robinson (University of Zurich (UZH) & SIB, CH)\nNaveed Ishaque (Berlin Institute of Health (BIH), DE)\nAhmed Mahfouz (Leiden University Medical Center (LUMC), NL)\nBenedetta Manzato (Leiden University Medical Center (LUMC), NL)\nEmma Vonk (Leiden University Medical Center (LUMC), NL)\nLucie Pfeiferova (Czech Academy of Sciences, CZ)\nChristophe Avenel (Uppsala University, NBIS, Scilifelab, SE)\nJonas Windhager (Uppsala University, NBIS, Scilifelab, SE)\nSuganya Sivagurunathan (Uppsala University, NBIS, Scilifelab, SE)\nStefan Ebmeyer (Chalmers University of Technology, NBIS, Scilifelab, SE)\nÅsa Björklund (Chalmers University of Technology, NBIS, Scilifelab, SE)\nAditya Singh (Gothenburg University, NBIS, Scilifelab, SE)\nLeslie Solorzano (Uppsala University, NBIS, Scilifelab, SE)\nJennifer Fransson (Uppsala University, NBIS, Scilifelab, SE)\nSusanne Reinsbach (Chalmers University of Technology, NBIS, Scilifelab, SE)\nSergiu Netotea (Chalmers University of Technology, NBIS, Scilifelab, SE)"
+  },
+  {
+    "objectID": "index.html#course-organizers",
+    "href": "index.html#course-organizers",
+    "title": "Spatial Omics Data Analysis",
+    "section": "Course organizers",
+    "text": "Course organizers\nThis is an international course hosted by NBIS (National Bioinformatics Infrastructure Sweden, ELIXIR-SE) in collaboration with the ELIXIR Single-Cell Omics community, and trainers’ own institutions and affiliations to ELIXIR nodes (KU Leuven, Helmholtz Zentrum München, SIB, BIH, LUMC, CAS).\nCourse organizers:\n\nAhmed Mahfouz, Leiden University Medical Center (LUMC), ELIXIR - Netherlands\nÅsa Björklund, Chalmers University of Technology, NBIS, Scilifelab, ELIXIR - Sweden\nChristophe Avenel, Uppsala University, NBIS, Scilifelab, ELIXIR - Sweden\nJennifer Fransson, Uppsala University, NBIS, Scilifelab, ELIXIR - Sweden\nSusanne Reinsbach, Chalmers University of Technology, NBIS, Scilifelab, ELIXIR - Sweden\nEija Korpelainen, CSC, ELIXIR - Finland\n\nContact: edu.spatial [at] nbis.se"
+  },
+  {
+    "objectID": "index.html#application",
+    "href": "index.html#application",
+    "title": "Spatial Omics Data Analysis",
+    "section": "Application",
+    "text": "Application\nThe application form will be open from 13 April to 22 May.\nOnce the application is closed we will not accept additional students. However we will make all material for the course freely available so that you can study the material on your owm if you missed the deadline."
   },
   {
     "objectID": "index.html#additional-information",
     "href": "index.html#additional-information",
     "title": "Spatial Omics Data Analysis",
     "section": "Additional information",
-    "text": "Additional information\nThis is an international course hosted by the SIB Swiss Institute of Bioinformatics (ELIXIR-CH) in collaboration with the ELIXIR Single-Cell Omics community, and trainers’ own institutions and affiliations to ELIXIR nodes (KU Leuven, VIB, CNAG, Helmholtz Zentrum München, CERTH, SIB, BIH, LUMC, UZH, UGent, SciLifeLab, UNIL).\nCourse organizers:\n\nAhmed Mahfouz, Leiden University Medical Center (LUMC), ELIXIR - Netherlands\nDiana Marek, SIB Training group, ELIXIR - Switzerland\nPatricia Palagi, SIB Training group, ELIXIR - Switzerland\nEija Korpelainen, CSC, ELIXIR - Finland\n\nThis course is partially funded by an ELIXIR Staff Exchange Programme.\nWe will recommend 0.75 ECTS credits for this course (given a passed assessment).\nYou are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form here.\nPlease note that participation in SIB courses is subject to our general conditions.\nCourse organizers and trainers abide by the ELIXIR Code of Conduct. Participants are also required to abide by the same code."
+    "text": "Additional information\nFIX: Put statement on travel grants here… This course is partially funded by an ELIXIR Staff Exchange Programme.\nWe will recommend 0.75 ECTS credits for this course.\nCourse organizers and trainers abide by the ELIXIR Code of Conduct. Participants are also required to abide by the same code."
   },
   {
     "objectID": "presentations.html",

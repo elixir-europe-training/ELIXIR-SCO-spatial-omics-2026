@@ -2,4 +2,4 @@
 title: "Presentations"
 ---
 
-A YouTube playlist with all lectures can be found [here](https://www.youtube.com/playlist?list=PLxHnvy2HZSYlnFo0LhxO1irgDby6hV-On), and the corresponding slides can be found [here](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics/tree/main/presentations).
+The slides for each presentation will be made available [here](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics-2026/tree/main/presentations).

@@ -4,10 +4,10 @@ title: "Practicals"
 
 ## Introduction
 
-This course consists of multiple practicals. During the four days we will go through practical 0 till 6 (more info in the [schedule](schedule.qmd)). Each practical has a dedicated directory in the [repository](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics), and comes with:
+This course consists of multiple practicals. During the four days we will go through practical 0 till 9 (more info in the [schedule](schedule.qmd)). Each practical has a dedicated directory in the [repository](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics-2026), and comes with:
 
 - A container image: you will receive a link for each practical to your personal environment during the course.
-- One or more notebooks with the name `p[practical number]_topic.ipynb`. So for practical 1, we have a notebook called `p1_segmentation.ipynb`. 
+- One or more notebooks with the name `p[practical number]_topic.ipynb` or `Practical[practical number]_topic.ipynb. So for practical 1, we have a notebook called `Practical1_Segmentation_Cellpose.ipynb`. 
 - One or more conda environments in the image corresponding to each notebook, e.g. `p1_segmentation.ipynb`. 
 
 ## Working on the practicals

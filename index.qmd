@@ -12,7 +12,7 @@ Participants will explore both imaging-based and sequencing-based SRT technologi
 
 ## Venue and time
 
-This course will take place in Uppsala, Sweden, 6-9 of October 2026. The course will be held 9-17 each day except Friday the 9th when we end at 13:00. Find a detailed schedule [here](schedule.qmd). 
+This course will take place in Uppsala, Sweden, 6-9 of October 2026. The course will be held 9:00-17:00 each day except Friday the 9th when we end at 13:00. Find a detailed schedule [here](schedule.qmd). 
 
 Lunch and coffee-break snacks are provided each day. All participants are invited to the social dinner, organized on 6 October 2026. 
 
@@ -44,7 +44,7 @@ Participants should also have a basic understanding of working with command line
 
 Participants are required to bring your own laptop. 
 
-We will be mainly working on an the [Scilifelab Serve](https://serve.scilifelab.se/) system. All participants will be granted access to a personal workspace to be used during the course. 
+We will be mainly working on the [Scilifelab Serve](https://serve.scilifelab.se/) system. All participants will be granted access to a personal workspace to be used during the course. 
 
 ## The trainers
 
@@ -86,14 +86,13 @@ Contact: edu.spatial [at] nbis.se
 
 ## Application
 
-The [application form](Add link) will be open from 13 April to 22 May. 
+The [application form](Add link) will be open from 24 April to 22 May. 
 
 Once the application is closed we will not accept additional students. However we will make all material for the course freely available so that you can study the material on your owm if you missed the deadline. 
 
 ## Additional information
 
-FIX: Put statement on travel grants here...
-This course is partially funded by an [ELIXIR Staff Exchange Programme](https://elixir-europe.org/internal-projects/staff-exchange-programme).
+This course is partially funded by an [ELIXIR Staff Exchange Programme](https://elixir-europe.org/internal-projects/staff-exchange-programme). For more information, please contact your local ELIXIR node coordinator.
 
 We will recommend 0.75 ECTS credits for this course.
 

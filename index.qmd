@@ -90,7 +90,7 @@ Once the application is closed we will not accept additional students. However w
 
 ## Additional information
 
-This course is partially funded by an [ELIXIR Staff Exchange Programme](https://elixir-europe.org/internal-projects/staff-exchange-programme). For more information, please contact your local ELIXIR node coordinator.
+For information about ELIXIR-funded travel, please contact your local ELIXIR node coordinator.
 
 We will recommend 0.75 ECTS credits for this course.
 

@@ -42,8 +42,8 @@ title: "Schedule"
 | 09:00-09:45 	| [Multi-slice spatial data integration](presentations/multislice_integration.pdf)             	| Benedetta Manzato (LUMC, NL) |
 | 09:45-11:15 	| Practical 6: [Multi-slice spatial data integration](practicals/practical_6/practical.ipynb)   	| Benedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL) |
 | 11:15-12:00 	| [Spatial statistics](presentations/spatial_stats.pdf)                                          	| 	|
-| 12:00-13:00   | Lunch                                                                                           |   |
-| 13:00-14:30 	| Practical 7: Spatial statistics [Part A](practicals/practical_7/01-point-pattern-analysis-vignette.qmd) & [Part B](practicals/practical_7/02-lattice-data-analysis-vignette.qmd)             	| , Jennifer Fransson (NBIS, SE) 	|
+| 12:00-13:00   | Lunch                                                                                           | Mark Robinson (UZ, CH)  |
+| 13:00-14:30 	| Practical 7: Spatial statistics [Part A](practicals/practical_7/01-point-pattern-analysis-vignette.qmd) & [Part B](practicals/practical_7/02-lattice-data-analysis-vignette.qmd)             	| Mark Robinson (UZ, CH), Jennifer Fransson (NBIS, SE) |
 | 14:30-14:45 	| Break                                                       	|                                    	|
 | 14:45-15:30 	| [Domain identification and niche reconstruction](presentations/domains_niches.pdf)                  	|  	|
 | 15:30-17:00 	| Practical 8: [Domain identification and niche reconstruction](practicals/practical_8/Practical 6 - Niche reconstruction and SD Identification/adata_loading_and_annotation.ipynb) 	| Benedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL) |
@@ -54,7 +54,7 @@ title: "Schedule"
 | Time      	| Topic                                                 	| Teacher                      	|
 |-------------	|---------------------------------------------------------	|-------------------------------	|
 | 09:00-09:45 	| Guest lecture 	|         	|
-| 09:45-10:30 	| [Cell-cell communication](presentations/cc_communication.pdf)                               	| 	|
-| 10:30-12:00 	| Practical 9: Cell-cell communication [Part A](practicals/practical_9/Practical 7 - CCC/Practical_7_CCC_LIANA.ipynb) & [Part B](practicals/practical_9/Practical 7 - CCC/Practical_7_CCC_TensorCell2Cell.ipynb)	|  |
+| 09:45-10:30 	| [Cell-cell communication](presentations/cc_communication.pdf)                               	| Francesca Drummer (Helmholtz, DE) |
+| 10:30-12:00 	| Practical 9: Cell-cell communication [Part A](practicals/practical_9/Practical 7 - CCC/Practical_7_CCC_LIANA.ipynb) & [Part B](practicals/practical_9/Practical 7 - CCC/Practical_7_CCC_TensorCell2Cell.ipynb)	| Francesca Drummer (Helmholtz, DE), Leslie Solorzano (NBIS, SE) |
 | 12:00-13:00 	| Lunch and departure                                     	|                               	|
 : {tbl-colwidths="[25,50,25]"}

@@ -65,7 +65,6 @@ The course will feature the following lecturers and trainers:
 * Aditya Singh (Gothenburg University, NBIS, Scilifelab, SE)
 * Leslie Solorzano  (Uppsala University, NBIS, Scilifelab, SE)
 * Jennifer Fransson (Uppsala University, NBIS, Scilifelab, SE)
-* Susanne Reinsbach (Chalmers University of Technology, NBIS, Scilifelab, SE)
 * Sergiu Netotea (Chalmers University of Technology, NBIS, Scilifelab, SE)
 
 
@@ -79,7 +78,6 @@ Course organizers:
 * Åsa Björklund, Chalmers University of Technology, NBIS, Scilifelab, ELIXIR - Sweden
 * Christophe Avenel, Uppsala University, NBIS, Scilifelab, ELIXIR - Sweden
 * Jennifer Fransson, Uppsala University, NBIS, Scilifelab, ELIXIR - Sweden
-* Susanne Reinsbach, Chalmers University of Technology, NBIS, Scilifelab, ELIXIR - Sweden
 * Eija Korpelainen, CSC, ELIXIR - Finland
 
 Contact: edu.spatial [at] nbis.se

@@ -51,7 +51,6 @@ We will be mainly working on the [Scilifelab Serve](https://serve.scilifelab.se/
 The course will feature the following lecturers and trainers:
 
 * Francesca Drummer (Helmholtz Zentrum München, DE)
-* Mark Robinson (University of Zurich (UZH) & SIB, CH)
 * Naveed Ishaque (Berlin Institute of Health (BIH), DE)
 * Ahmed Mahfouz (Leiden University Medical Center (LUMC), NL)
 * Benedetta Manzato (Leiden University Medical Center (LUMC), NL)
@@ -89,8 +88,6 @@ The [application form](Add link) will be open from 24 April to 22 May.
 Once the application is closed we will not accept additional students. However we will make all material for the course freely available so that you can study the material on your owm if you missed the deadline. 
 
 ## Additional information
-
-For information about ELIXIR-funded travel, please contact your local ELIXIR node coordinator.
 
 We will recommend 0.75 ECTS credits for this course.
 

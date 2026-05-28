@@ -22,6 +22,10 @@ docker build --platform linux/amd64 --build-arg PRAC=X -t <YOUR-DOCKERHUB-ID>/el
 
 Replace `<YOUR-DOCKERHUB-ID>` with your actual Docker Hub username and `<version>` with the version tag you want to use (e.g., `v1.0`) and `X` with the practical number (e.g., `0` for Practical 0). This command will build the Docker image for the specified practical and tag it appropriately.
 
+# Practical Data
+
+If your practical requires large datasets to be downloaded, we recommend hosting them on `Zenodo` and letting us know the DOI and your practical number in the pull request description. We will consolidate all and add them to the download script. In case you need it beforehand, you can simply open an issue asking for this to be added and we will do it as soon as possible.
+
 # GitHub Actions
 
 **TO DO**: We will set up a GitHub Actions workflow in the `.github/workflows/` directory to automate the building and pushing of the Docker images to Docker Hub whenever changes are made to the `practicals/practical_X/env/` directories or the `docker/jupyter/Dockerfile`. The workflow will be triggered on push events to the main branch and will build the Docker images for all practicals, tagging them with the appropriate version and pushing them to Docker Hub under your account.

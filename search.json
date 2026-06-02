@@ -1,66 +1,24 @@
 [
   {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
+    "objectID": "travel.html",
+    "href": "travel.html",
+    "title": "Travel information",
     "section": "",
-    "text": "Please note: This is a preliminary schedule and will be updated prior to the course. Lecture slides will be made available before or during the course."
+    "text": "Uppsala Biomedical Centre (BMC), Uppsala University, Husargatan 3, Uppsala\nRoom: Trippelrummet (E10:1307-1309), BMC (enter via C11)\nTo find the room within BMC see [https://link.mazemap.com/DcIYaHIo]\n\n\n\n\n\nBMC is located approximately 2.5 km from Uppsala Central Station. A walk takes around 30 min.\n\n\n\nThe closest bus stop is “Uppsala Science Park”. To travel by bus in Uppsala see [https://www.ul.se/en] or the UL app. The bus lines 3, 4, 8 and 11 all stop at Uppsala Central Station and Uppsala Science Park."
   },
   {
-    "objectID": "schedule.html#day-1-october-6-2026",
-    "href": "schedule.html#day-1-october-6-2026",
-    "title": "Schedule",
-    "section": "Day 1 (October 6, 2026)",
-    "text": "Day 1 (October 6, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:15\nWelcome and course introduction\nAhmed Mahfouz (LUMC, NL)\n\n\n09:15-10:00\nOverview of SRT technologies\nÅsa Björklund (NBIS, SE)\n\n\n10:00-10:15\nBreak\n\n\n\n10:15-11:00\nCell segmentation\nChristophe Avenel (NBIS, SE)\n\n\n11:00-11:45\nPractical 0: SRT data formats\nJonas Windhager (NBIS, SE)\n\n\n11:45-12:45\nLunch\n\n\n\n12:45-14:15\nPractical 1: Cell segmentation\nChristophe Avenel (NBIS, SE)\n\n\n14:15-15:00\nLecture: Imaging-based spatial data analysis (preprocessing, QC and normalization)\nChristophe Avenel (NBIS, SE)\n\n\n15:00-15:15\nBreak\n\n\n\n15:15-16:45\nPractical 2: Imaging-based analysis and QC\nÅsa Björklund (NBIS, SE) & Stefan Ebmeyer (NBIS, SE)"
-  },
-  {
-    "objectID": "schedule.html#day-2-october-7-2026",
-    "href": "schedule.html#day-2-october-7-2026",
-    "title": "Schedule",
-    "section": "Day 2 (October 7, 2026)",
-    "text": "Day 2 (October 7, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:45\nCell segmentation free analysis of SRT data\nNaveed Ishaque (BIH, DE)\n\n\n09:45-11:15\nPractical 3: Cell segmentation free analysis of SRT data\nAditya Singh (NBIS, SE) & Lucie Pfeiferova (CAS, CZ)\n\n\n11:15-12:00\nSequence-based data analysis (preprocessing, data structures, QC and normalization)\nÅsa Björklund (NBIS, SE)\n\n\n12:00-13:00\nLunch\n\n\n\n13:00-14:30\nPractical 4: Sequence-based data analysis\nÅsa Björklund (NBIS, SE), Leslie Solorzano (NBIS, SE)\n\n\n14:30-14:45\nBreak\n\n\n\n14:45-15:30\nSpatial and single cell data integration\nAhmed Mahfouz (LUMC, NL)\n\n\n15:30-17:00\nPractical 5: Spatial and single cell data integration\nBenedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL)"
-  },
-  {
-    "objectID": "schedule.html#day-3-october-8-2026",
-    "href": "schedule.html#day-3-october-8-2026",
-    "title": "Schedule",
-    "section": "Day 3 (October 8, 2026)",
-    "text": "Day 3 (October 8, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:45\nMulti-slice spatial data integration\nBenedetta Manzato (LUMC, NL)\n\n\n09:45-11:15\nPractical 6: Multi-slice spatial data integration\nBenedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL)\n\n\n11:15-12:00\nSpatial statistics\n\n\n\n12:00-13:00\nLunch\n\n\n\n13:00-14:30\nPractical 7: Spatial statistics Part A & Part B\nJennifer Fransson (NBIS, SE)\n\n\n14:30-14:45\nBreak\n\n\n\n14:45-15:30\nDomain identification and niche reconstruction\n\n\n\n15:30-17:00\nPractical 8: Domain identification and niche reconstruction\nBenedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL)"
-  },
-  {
-    "objectID": "schedule.html#day-4-october-9-2026",
-    "href": "schedule.html#day-4-october-9-2026",
-    "title": "Schedule",
-    "section": "Day 4 (October 9, 2026)",
-    "text": "Day 4 (October 9, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:45\nGuest lecture\n\n\n\n09:45-10:30\nCell-cell communication\nFrancesca Drummer (Helmholtz, DE)\n\n\n10:30-12:00\nPractical 9: Cell-cell communication Part A & Part B\nFrancesca Drummer (Helmholtz, DE), Leslie Solorzano (NBIS, SE)\n\n\n12:00-13:00\nLunch and departure"
-  },
-  {
-    "objectID": "practicals.html",
-    "href": "practicals.html",
-    "title": "Practicals",
+    "objectID": "travel.html#transport-options-to-bmc-from-uppsala-central-station",
+    "href": "travel.html#transport-options-to-bmc-from-uppsala-central-station",
+    "title": "Travel information",
     "section": "",
-    "text": "This course consists of multiple practicals. During the four days we will go through practical 0 till 9 (more info in the schedule). Each practical has a dedicated directory in the repository, and comes with:\n\nA container image: you will receive a link for each practical to your personal environment during the course.\nOne or more notebooks with the name p[practical number]_topic.ipynb or Practical[practical number]_topic.ipynb. So for practical 1, we have a notebook called Practical1_Segmentation_Cellpose.ipynb.\nOne or more conda environments in the image corresponding to each notebook, e.g. p1_segmentation.ipynb."
+    "text": "BMC is located approximately 2.5 km from Uppsala Central Station. A walk takes around 30 min.\n\n\n\nThe closest bus stop is “Uppsala Science Park”. To travel by bus in Uppsala see [https://www.ul.se/en] or the UL app. The bus lines 3, 4, 8 and 11 all stop at Uppsala Central Station and Uppsala Science Park."
   },
   {
-    "objectID": "practicals.html#introduction",
-    "href": "practicals.html#introduction",
-    "title": "Practicals",
+    "objectID": "presentations.html",
+    "href": "presentations.html",
+    "title": "Presentations",
     "section": "",
-    "text": "This course consists of multiple practicals. During the four days we will go through practical 0 till 9 (more info in the schedule). Each practical has a dedicated directory in the repository, and comes with:\n\nA container image: you will receive a link for each practical to your personal environment during the course.\nOne or more notebooks with the name p[practical number]_topic.ipynb or Practical[practical number]_topic.ipynb. So for practical 1, we have a notebook called Practical1_Segmentation_Cellpose.ipynb.\nOne or more conda environments in the image corresponding to each notebook, e.g. p1_segmentation.ipynb."
-  },
-  {
-    "objectID": "practicals.html#working-on-the-practicals",
-    "href": "practicals.html#working-on-the-practicals",
-    "title": "Practicals",
-    "section": "Working on the practicals",
-    "text": "Working on the practicals\nTo start working on the practicals, navigate to the provided spreadsheet with server login information, click on the link next to your name that links to the corresponding practical. Then, use the password associated with your name to log in.\nNow you are in your personal container image. This image has two important directories that are mounted to all container images that are avaiable to you:\n\n(for jupyter-based practicals)/home/jovyan/workdir: a directory in home for which you have read and write access. This is where you will be mainly working in. For the rstudio-based practical this is /home/rstudio.\n/data: a directory where you only have read access. From here you can read the available input data.\n\nAt the first login, open a terminal, navigate to /home/jovyan/workdir and clone the repository:\ngit clone https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics.git\n\n\n\n\n\n\nWarning\n\n\n\nFor jupyter containers, only /home/jovyan/workdir is shared with other containers. This means that everything you write outside this directory will not be available for other practicals.\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you are comfortable with using git, you migh want to fork the repository first, and push your changes to your own namespace. In order to do so:\n\nFork the repository (Click ‘fork’ on the top right).\nSet your name and e-mail with:\n\ngit config --local user.email \"you@example.com\"\ngit config --local user.name \"Your Name\" \n\nClone the repository from your namespace to /home/jovyan/workdir\nMake changes and push them. You will be asked for your github username and password (use a token: https://github.com/settings/tokens/new). If you are using a token, store it somewhere, because you have to login again if you move to a container of another practical.\n\n\n\nAfter cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook). Do this by clicking the button ‘Python 3 (ipykernel)’ on the top right of your notebook:\n\nAnd select the environment with the corresponding name from the dropdown menu. This ensures that you are using the correct dependencies for each practical.\nIf you encounter any issues or have questions, please ask one of the instructors for assistance. Happy coding!"
-  },
-  {
-    "objectID": "practicals.html#working-locally",
-    "href": "practicals.html#working-locally",
-    "title": "Practicals",
-    "section": "Working locally",
-    "text": "Working locally\nIf you would like to work on the exercises after course, you can work locally with docker and download the files from amazon s3.\nOn s3, there is a bucket in which we mirrored the /data folder. To download data from /data, you can use e.g. wget:\nFILEPATH=/data/path/to/file.txt\nwget https://elixir-sco-spatial-omics.s3.eu-central-1.amazonaws.com\"$FILEPATH\"\nIf you are used to AWS CLI, you can also download the full directories from the bucket elixir-sco-spatial-omics in region eu-central-1.\nThe container images for each practical are in the sibswiss namespace on dockerhub, find them here. In order to use them locally for e.g. practical 6, you can use the following command:\ndocker run \\\n--rm \\\n-p 8888:8888 \\\n-v $PWD:/home/jovyan/workdir \\\n-e JUPYTER_ENABLE_LAB=yes \\\nsibswiss/elixir-sco-spatial-omics:practical_6\nNow, jupyter lab should be available from localhost:8888. Use the token that is provided in the terminal to login. Change the option -v to mount another local directory to the container, for example the directory in which you have stored the required input files.\nFor the rstudio image of practical 5, this would be:\ndocker run \\\n--rm \\\n-p 8787:8787 \\\n-v $PWD:/home/rstudio \\\nsibswiss/elixir-sco-spatial-omics:practical_5\nNow Rstudio is available from localhost:8787. Use the username rstudio and the password that is provided in the terminal to login."
+    "text": "The slides for each presentation will be made available here."
   },
   {
     "objectID": "index.html#overview",
@@ -133,10 +91,66 @@
     "text": "Additional information\nWe will recommend 0.75 ECTS credits for this course.\nCourse organizers and trainers abide by the ELIXIR Code of Conduct. Participants are also required to abide by the same code."
   },
   {
-    "objectID": "presentations.html",
-    "href": "presentations.html",
-    "title": "Presentations",
+    "objectID": "practicals.html",
+    "href": "practicals.html",
+    "title": "Practicals",
     "section": "",
-    "text": "The slides for each presentation will be made available here."
+    "text": "This course consists of multiple practicals. During the four days we will go through practical 0 till 9 (more info in the schedule). Each practical has a dedicated directory in the repository, and comes with:\n\nA container image: you will receive a link for each practical to your personal environment during the course.\nOne or more notebooks with the name p[practical number]_topic.ipynb or Practical[practical number]_topic.ipynb. So for practical 1, we have a notebook called Practical1_Segmentation_Cellpose.ipynb.\nOne or more conda environments in the image corresponding to each notebook, e.g. p1_segmentation.ipynb."
+  },
+  {
+    "objectID": "practicals.html#introduction",
+    "href": "practicals.html#introduction",
+    "title": "Practicals",
+    "section": "",
+    "text": "This course consists of multiple practicals. During the four days we will go through practical 0 till 9 (more info in the schedule). Each practical has a dedicated directory in the repository, and comes with:\n\nA container image: you will receive a link for each practical to your personal environment during the course.\nOne or more notebooks with the name p[practical number]_topic.ipynb or Practical[practical number]_topic.ipynb. So for practical 1, we have a notebook called Practical1_Segmentation_Cellpose.ipynb.\nOne or more conda environments in the image corresponding to each notebook, e.g. p1_segmentation.ipynb."
+  },
+  {
+    "objectID": "practicals.html#working-on-the-practicals",
+    "href": "practicals.html#working-on-the-practicals",
+    "title": "Practicals",
+    "section": "Working on the practicals",
+    "text": "Working on the practicals\nTo start working on the practicals, navigate to the provided spreadsheet with server login information, click on the link next to your name that links to the corresponding practical. Then, use the password associated with your name to log in.\nNow you are in your personal container image. This image has two important directories that are mounted to all container images that are avaiable to you:\n\n(for jupyter-based practicals)/home/jovyan/workdir: a directory in home for which you have read and write access. This is where you will be mainly working in. For the rstudio-based practical this is /home/rstudio.\n/data: a directory where you only have read access. From here you can read the available input data.\n\nAt the first login, open a terminal, navigate to /home/jovyan/workdir and clone the repository:\ngit clone https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics.git\n\n\n\n\n\n\nWarning\n\n\n\nFor jupyter containers, only /home/jovyan/workdir is shared with other containers. This means that everything you write outside this directory will not be available for other practicals.\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you are comfortable with using git, you migh want to fork the repository first, and push your changes to your own namespace. In order to do so:\n\nFork the repository (Click ‘fork’ on the top right).\nSet your name and e-mail with:\n\ngit config --local user.email \"you@example.com\"\ngit config --local user.name \"Your Name\" \n\nClone the repository from your namespace to /home/jovyan/workdir\nMake changes and push them. You will be asked for your github username and password (use a token: https://github.com/settings/tokens/new). If you are using a token, store it somewhere, because you have to login again if you move to a container of another practical.\n\n\n\nAfter cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook). Do this by clicking the button ‘Python 3 (ipykernel)’ on the top right of your notebook:\n\nAnd select the environment with the corresponding name from the dropdown menu. This ensures that you are using the correct dependencies for each practical.\nIf you encounter any issues or have questions, please ask one of the instructors for assistance. Happy coding!"
+  },
+  {
+    "objectID": "practicals.html#working-locally",
+    "href": "practicals.html#working-locally",
+    "title": "Practicals",
+    "section": "Working locally",
+    "text": "Working locally\nIf you would like to work on the exercises after course, you can work locally with docker and download the files from amazon s3.\nOn s3, there is a bucket in which we mirrored the /data folder. To download data from /data, you can use e.g. wget:\nFILEPATH=/data/path/to/file.txt\nwget https://elixir-sco-spatial-omics.s3.eu-central-1.amazonaws.com\"$FILEPATH\"\nIf you are used to AWS CLI, you can also download the full directories from the bucket elixir-sco-spatial-omics in region eu-central-1.\nThe container images for each practical are in the sibswiss namespace on dockerhub, find them here. In order to use them locally for e.g. practical 6, you can use the following command:\ndocker run \\\n--rm \\\n-p 8888:8888 \\\n-v $PWD:/home/jovyan/workdir \\\n-e JUPYTER_ENABLE_LAB=yes \\\nsibswiss/elixir-sco-spatial-omics:practical_6\nNow, jupyter lab should be available from localhost:8888. Use the token that is provided in the terminal to login. Change the option -v to mount another local directory to the container, for example the directory in which you have stored the required input files.\nFor the rstudio image of practical 5, this would be:\ndocker run \\\n--rm \\\n-p 8787:8787 \\\n-v $PWD:/home/rstudio \\\nsibswiss/elixir-sco-spatial-omics:practical_5\nNow Rstudio is available from localhost:8787. Use the username rstudio and the password that is provided in the terminal to login."
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Please note: This is a preliminary schedule and will be updated prior to the course. Lecture slides will be made available before or during the course."
+  },
+  {
+    "objectID": "schedule.html#day-1-october-6-2026",
+    "href": "schedule.html#day-1-october-6-2026",
+    "title": "Schedule",
+    "section": "Day 1 (October 6, 2026)",
+    "text": "Day 1 (October 6, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:15\nWelcome and course introduction\nAhmed Mahfouz (LUMC, NL)\n\n\n09:15-10:00\nOverview of SRT technologies\nÅsa Björklund (NBIS, SE)\n\n\n10:00-10:15\nBreak\n\n\n\n10:15-11:00\nCell segmentation\nChristophe Avenel (NBIS, SE)\n\n\n11:00-11:45\nPractical 0: SRT data formats\nJonas Windhager (NBIS, SE)\n\n\n11:45-12:45\nLunch\n\n\n\n12:45-14:15\nPractical 1: Cell segmentation\nChristophe Avenel (NBIS, SE)\n\n\n14:15-15:00\nLecture: Imaging-based spatial data analysis (preprocessing, QC and normalization)\nChristophe Avenel (NBIS, SE)\n\n\n15:00-15:15\nBreak\n\n\n\n15:15-16:45\nPractical 2: Imaging-based analysis and QC\nÅsa Björklund (NBIS, SE) & Stefan Ebmeyer (NBIS, SE)"
+  },
+  {
+    "objectID": "schedule.html#day-2-october-7-2026",
+    "href": "schedule.html#day-2-october-7-2026",
+    "title": "Schedule",
+    "section": "Day 2 (October 7, 2026)",
+    "text": "Day 2 (October 7, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:45\nCell segmentation free analysis of SRT data\nNaveed Ishaque (BIH, DE)\n\n\n09:45-11:15\nPractical 3: Cell segmentation free analysis of SRT data\nAditya Singh (NBIS, SE) & Lucie Pfeiferova (CAS, CZ)\n\n\n11:15-12:00\nSequence-based data analysis (preprocessing, data structures, QC and normalization)\nÅsa Björklund (NBIS, SE)\n\n\n12:00-13:00\nLunch\n\n\n\n13:00-14:30\nPractical 4: Sequence-based data analysis\nÅsa Björklund (NBIS, SE), Leslie Solorzano (NBIS, SE)\n\n\n14:30-14:45\nBreak\n\n\n\n14:45-15:30\nSpatial and single cell data integration\nAhmed Mahfouz (LUMC, NL)\n\n\n15:30-17:00\nPractical 5: Spatial and single cell data integration\nBenedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL)"
+  },
+  {
+    "objectID": "schedule.html#day-3-october-8-2026",
+    "href": "schedule.html#day-3-october-8-2026",
+    "title": "Schedule",
+    "section": "Day 3 (October 8, 2026)",
+    "text": "Day 3 (October 8, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:45\nMulti-slice spatial data integration\nBenedetta Manzato (LUMC, NL)\n\n\n09:45-11:15\nPractical 6: Multi-slice spatial data integration\nBenedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL)\n\n\n11:15-12:00\nSpatial statistics\n\n\n\n12:00-13:00\nLunch\n\n\n\n13:00-14:30\nPractical 7: Spatial statistics Part A & Part B\nJennifer Fransson (NBIS, SE)\n\n\n14:30-14:45\nBreak\n\n\n\n14:45-15:30\nDomain identification and niche reconstruction\n\n\n\n15:30-17:00\nPractical 8: Domain identification and niche reconstruction\nBenedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL)"
+  },
+  {
+    "objectID": "schedule.html#day-4-october-9-2026",
+    "href": "schedule.html#day-4-october-9-2026",
+    "title": "Schedule",
+    "section": "Day 4 (October 9, 2026)",
+    "text": "Day 4 (October 9, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:45\nGuest lecture\n\n\n\n09:45-10:30\nCell-cell communication\nFrancesca Drummer (Helmholtz, DE)\n\n\n10:30-12:00\nPractical 9: Cell-cell communication Part A & Part B\nFrancesca Drummer (Helmholtz, DE), Leslie Solorzano (NBIS, SE)\n\n\n12:00-13:00\nLunch and departure"
   }
 ]

@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/schedule.html</loc>
-    <lastmod>2026-05-21T09:25:02.715Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/practicals.html</loc>
-    <lastmod>2026-05-21T09:25:00.501Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/index.html</loc>
-    <lastmod>2026-05-21T09:25:00.501Z</lastmod>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/travel.html</loc>
+    <lastmod>2026-06-02T14:37:12.650Z</lastmod>
   </url>
   <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/presentations.html</loc>
-    <lastmod>2026-05-21T09:25:02.713Z</lastmod>
+    <lastmod>2026-06-02T14:37:12.648Z</lastmod>
+  </url>
+  <url>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/index.html</loc>
+    <lastmod>2026-06-02T14:37:10.218Z</lastmod>
+  </url>
+  <url>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/practicals.html</loc>
+    <lastmod>2026-06-02T14:37:10.218Z</lastmod>
+  </url>
+  <url>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/schedule.html</loc>
+    <lastmod>2026-06-02T14:37:12.650Z</lastmod>
   </url>
 </urlset>

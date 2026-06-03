@@ -17,7 +17,7 @@ RUN pixi install --locked
 RUN pixi shell-hook -s bash > /shell-hook.sh && \
     echo 'exec "$@"' >> /shell-hook.sh
 
-FROM ubuntu:22.04 AS production
+FROM ubuntu:latest AS production
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG NB_USER=nbis
 ARG NB_UID=1000

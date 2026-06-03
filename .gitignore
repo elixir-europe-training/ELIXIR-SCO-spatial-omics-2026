@@ -13,3 +13,7 @@ practicals/practical_1/data/*.zip
 practicals/practical_3/data/*/
 practicals/practical_3/data/*.zip
 .ipynb_checkpoints/
+
+# pixi environments
+.pixi/*
+!.pixi/config.toml

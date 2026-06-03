@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/gh-actions # To be removed after testing
     paths:
       - 'docker/**'
       - 'practicals/*/env/**'

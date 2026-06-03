@@ -8,7 +8,7 @@ on:
     paths:
       - 'docker/**'
       - 'practicals/*/env/**'
-      - '.github/workflows/build-docker-images.yml'
+      - '.github/workflows/build_push.yml'
 
 env:
   REGISTRY: ghcr.io

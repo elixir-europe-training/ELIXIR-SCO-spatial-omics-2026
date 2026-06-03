@@ -22,8 +22,6 @@ jobs:
           # Jupyter containers for practicals 0-5
           - practical: 0
             ide: jupyter
-          - practical: 1
-            ide: jupyter
           - practical: 2
             ide: jupyter
           - practical: 3

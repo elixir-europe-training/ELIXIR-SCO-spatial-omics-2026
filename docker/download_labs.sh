@@ -13,7 +13,7 @@
 set -euo pipefail
 
 # ---------- Config ----------
-REPO="addityea/ELIXIR-SCO-spatial-omics-2026"
+REPO="elixir-europe-training/ELIXIR-SCO-spatial-omics-2026"
 BRANCH="main"
 PARENT="practicals"
 N_PRACTICALS=10

@@ -28,4 +28,4 @@ If your practical requires large datasets to be downloaded, we recommend hosting
 
 # GitHub Actions
 
-**TO DO**: We will set up a GitHub Actions workflow in the `.github/workflows/` directory to automate the building and pushing of the Docker images to Docker Hub whenever changes are made to the `practicals/practical_X/env/` directories or the `docker/jupyter/Dockerfile`. The workflow will be triggered on push events to the main branch and will build the Docker images for all practicals, tagging them with the appropriate version and pushing them to Docker Hub under your account.
+GitHub Actions are set up to automatically build and push the Docker images to GitHub container registry (GHCR) whenever changes are made to the `docker/` directory or the `practicals/*/env/` directories. This ensures that the latest versions of the images are always available for use. The workflow is defined in the `.github/workflows/build_push.yml` file, which specifies the conditions under which the images should be built and pushed.

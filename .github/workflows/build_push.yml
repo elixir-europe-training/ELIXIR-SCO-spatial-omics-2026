@@ -5,7 +5,9 @@ on:
     branches:
       - main
     paths:
-      - 'docker/**'
+      - 'docker/jupyter/**'
+      - 'docker/rstudio/**'
+      - 'docker/download_labs.sh'
       - 'practicals/*/env/**'
       - '.github/workflows/build_push.yml'
 
@@ -18,7 +20,7 @@ jobs:
     strategy:
       matrix:
         include:
-          # Jupyter containers for practicals 0-5
+          # Jupyter containers for practicals 0-5, except practical 1 which doesn't exist
           - practical: 0
             ide: jupyter
           - practical: 2

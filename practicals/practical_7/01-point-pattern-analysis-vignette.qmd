@@ -8,7 +8,7 @@ format:
 editor: visual
 editor_options: 
   chunk_output_type: console
-bibliography: misc/PASTA.bib
+bibliography: resources/PASTA.bib
 ---
 
 ## Introduction
@@ -33,6 +33,11 @@ Often, the starting point in spatial omics data analysis in `R` is a `r BiocStyl
 
 ```{r warning=FALSE, message=FALSE}
 #| label: load packages
+
+if(!file.exists("/home/rstudio/.cache/R/ExperimentHub")){
+  dir.create("/home/rstudio/.cache/R/ExperimentHub", recursive = TRUE)
+}
+
 suppressPackageStartupMessages({
   library(SpatialExperiment)
   library(spatstat.geom)
@@ -53,12 +58,15 @@ suppressPackageStartupMessages({
 ```{r, message=FALSE, warning=FALSE}
 #| label: load-data
 # load the data from ExperimentHub
-basedir <- here::here("day_3/practical_5/")
-source(file.path(basedir, "code/load_data.R"))
+#basedir <- here::here("day_3/practical_5/")
+
+basedir <- "/home/rstudio/work/practicals/practical_7/"
+source(file.path(basedir, "resources", "load_data.R"))
 
 theme_set(theme_light())
 # load the SpatialExperiment object
-spe <- readRDS("data/spe.rds")
+#spe <- readRDS("data/spe.rds")
+spe <- readRDS(file.path(basedir, "data","spe.rds"))
 spe
 ```
 

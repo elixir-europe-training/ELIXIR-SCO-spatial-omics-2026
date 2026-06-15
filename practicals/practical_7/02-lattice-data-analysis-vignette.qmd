@@ -7,7 +7,7 @@ format:
       self-contained: true
 editor: visual
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 bibliography: misc/PASTA.bib
 ---
 
@@ -20,6 +20,11 @@ For this representation of the cells, we will rely on the `r BiocStyle::Biocpkg(
 ## Dependencies
 
 ```{r, warning=FALSE, message=FALSE}
+
+if(!file.exists("/home/rstudio/.cache/R/ExperimentHub")){
+  dir.create("/home/rstudio/.cache/R/ExperimentHub", recursive = TRUE)
+}
+
 suppressPackageStartupMessages({
   library(dplyr)
   library(ggplot2)

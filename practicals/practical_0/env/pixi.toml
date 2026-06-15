@@ -1,0 +1,26 @@
+[workspace]
+authors = ["Aditya Singh <dr.singhaditya@hotmail.com>"]
+channels = ["conda-forge", "bioconda"]
+name = "env"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+ipykernel = ">=7.2.0,<8"
+jupyter = ">=1.1.1,<2"
+curl = ">=8.20.0,<9"
+tar = ">=1.35,<2"
+gzip = ">=1.14,<2"
+seaborn = ">=0.13.2,<0.14"
+matplotlib = ">=3.10.9,<4"
+pandas = ">=2.3.3,<3"
+numpy = ">=2.4.6,<3"
+anndata = ">=0.12.16,<0.13"
+scipy = ">=1.17.1,<2"
+spatialdata = ">=0.7.3,<0.8"
+scanpy = ">=1.12.1,<2"
+spatialdata-io = ">=0.7.0,<0.8"
+spatialdata-plot = ">=0.3.4,<0.4"
+

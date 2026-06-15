@@ -25,6 +25,8 @@ if(!file.exists("/home/rstudio/.cache/R/ExperimentHub")){
   dir.create("/home/rstudio/.cache/R/ExperimentHub", recursive = TRUE)
 }
 
+Sys.setenv(PROJ_DATA = "/app/.pixi/envs/default/share/proj") # Required for Voyager to work in RStudio within container
+
 suppressPackageStartupMessages({
   library(dplyr)
   library(ggplot2)

@@ -371,10 +371,10 @@ plotLocalResult(...)
 
 # Summary and Considerations
 
--   Lattice data refers to spatial data collected at fixed locations arranged in regular or irregular grids, contrasting with stochastic point pattern analysis.
--   Regular lattices have uniform, evenly spaced spots, while irregular lattices have variable sizes and shapes with non-uniform spacing.
--   The spatial weight matrix models spatial relationships between lattice units. Different methods exist to define the spatial weight matrix.
--   Global spatial autocorrelation measures, like Moran's I, summarize spatial correlation over the entire field, while local measures identify local clusters of similarity or dissimilarity.
+- Lattice data refers to spatial data collected at fixed locations arranged in regular or irregular grids, contrasting with stochastic point pattern analysis.
+- Regular lattices have uniform, evenly spaced spots, while irregular lattices have variable sizes and shapes with non-uniform spacing.
+- The spatial weight matrix models spatial relationships between lattice units. Different methods exist to define the spatial weight matrix.
+- Global spatial autocorrelation measures, like Moran's I, summarize spatial correlation over the entire field, while local measures identify local clusters of similarity or dissimilarity.
 
 ```{r}
 sessionInfo()

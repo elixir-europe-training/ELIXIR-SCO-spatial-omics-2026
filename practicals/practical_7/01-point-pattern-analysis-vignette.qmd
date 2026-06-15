@@ -7,7 +7,7 @@ format:
       self-contained: true
 editor: visual
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 bibliography: resources/PASTA.bib
 ---
 
@@ -19,9 +19,9 @@ Here, we assume that cells (or transcripts) can be approximated as points given 
 
 The central package to analyse point patterns in `R` is called `r BiocStyle::CRANpkg('spatstat')` [@baddeleySpatstatPackageAnalyzing2005]. The main data object to compute on is called a `ppp` object. `ppp` objects describe point patterns in two dimensional space, `ppx` objects create multidimensional point patterns. A `ppp` object is made up of three specifications [@baddeleySpatstatPackageAnalyzing2005]:
 
--   The locations of the points in question ($x$,$y$ and, optionally, $z$ coordinates)
--   The observation window
--   "Marks" that are associated to each point in the pattern
+- The locations of the points in question ($x$,$y$ and, optionally, $z$ coordinates)
+- The observation window
+- "Marks" that are associated to each point in the pattern
 
 On this object, various `r BiocStyle::CRANpkg('spatstat')` metrics can be calculated.
 
@@ -253,21 +253,17 @@ Correlation is a second order quantity that measures the dependence between poin
 
 Global correlation measures quantify the correlation in the entire window. Global Ripley's $K$ is defined as:
 
-$$
-\hat{K}(r) = \frac{|W|}{n(n-1)}\sum_{i=1}^n\sum_{j=1 \\j \neq i}^n\{d_{ij}\leq r\} e_{ij}(r)
-$$
+$$\hat{K}(r) = \frac{|W|}{n(n-1)}\sum_{i=1}^n\sum_{j=1 \\j \neq i}^n\{d_{ij}\leq r\} e_{ij}(r)$$
 
 In the formula above we note a few things:
 
--   The function is normalised by the number of points $n$ and the window size $|W|$
+- The function is normalised by the number of points $n$ and the window size $|W|$
 
--   the term $e_{ij}(r)$ is an edge correction, which is covered briefly below.
+- the term $e_{ij}(r)$ is an edge correction, which is covered briefly below.
 
 Ripley's $K$ function can be variance-stabilized, which is referred to as Besag's $L$ [@caneteSpicyRSpatialAnalysis2022; @besag1977contribution]. The idea behind variance stabilisation is to "uncouple" the relationship between mean and variance. By taking the square root of the function in question, the variance is nearly constant across the function [@bartlettUseTransformations1947].
 
-$$
-L(r) = \sqrt{\frac{K(r)}{\pi}}
-$$
+$$L(r) = \sqrt{\frac{K(r)}{\pi}}$$
 
 ```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
 m <- calcMetricPerFov(spe, selection = 'OD Mature',
@@ -299,9 +295,7 @@ res <- calcMetricPerFov(...)
 
 A similar analysis can be performed for continuous marks. As an exercise, try to calculated a mark-weighted correlation function `markcorr`. You can get more information on this function by typing `?markcorr`. The mark weighted correlation function is defined as:
 
-$$
-k_f(r) =  \frac{\mathbb{E}[f(m(u),m(v))|u,v \in X]}{\mathbb{E}[f(M,M')]}
-$$
+$$k_f(r) =  \frac{\mathbb{E}[f(m(u),m(v))|u,v \in X]}{\mathbb{E}[f(M,M')]}$$
 
 where the numerator is the conditional expectation of the marks at location $u,v$ separated by a radius $r$ and $f$ can be any function linking the two marks. The denominator is the expectation of two random marks $M,M'$ [@baddeleySpatialPointPatterns2015, pp. 603].
 
@@ -448,27 +442,27 @@ There are many corrections for edge effects that are briefly listed here [@badde
 
 Border correction:
 
--   In border correction the summation of data points is restricted to $x_i$ for which $b(x_i,r)$ is completely in the window $W$.
+- In border correction the summation of data points is restricted to $x_i$ for which $b(x_i,r)$ is completely in the window $W$.
 
 Isotropic correction:
 
--   We can regard edge effect as a sampling bias. Larger distances (e.g. close to the edges) are less likely to be observed. This can be corrected for.
+- We can regard edge effect as a sampling bias. Larger distances (e.g. close to the edges) are less likely to be observed. This can be corrected for.
 
 Translation correction:
 
--   A stationary point process $X$ is invariant to translations. So the entire point process can be shifted by a vector $s$ to be at the position $X+s$.
+- A stationary point process $X$ is invariant to translations. So the entire point process can be shifted by a vector $s$ to be at the position $X+s$.
 
 ## Summary and Considerations
 
--   Point patterns are realisations of a point process. In the analysis, we make inferences about the point process.
+- Point patterns are realisations of a point process. In the analysis, we make inferences about the point process.
 
--   A point process assumes stochasticity. Therefore, low-resolution HTS-based approaches are not suitable for point pattern analysis.
+- A point process assumes stochasticity. Therefore, low-resolution HTS-based approaches are not suitable for point pattern analysis.
 
--   There are global metrics for the comparison within a celltype or between celltypes.
+- There are global metrics for the comparison within a celltype or between celltypes.
 
--   There are corresponding metrics for single cells and their interactions.
+- There are corresponding metrics for single cells and their interactions.
 
--   Point pattern analysis allows for the analysis of continuous gene expression marks as well.
+- Point pattern analysis allows for the analysis of continuous gene expression marks as well.
 
 ```{r}
 sessionInfo()

@@ -18,6 +18,9 @@ Go to the main repo directory (not this `docker` directory) and run the followin
 
 ```bash
 docker build --platform linux/amd64 --build-arg PRAC=X -t <YOUR-DOCKERHUB-ID>/elixir-prac-0:<version> -f docker/jupyter/Dockerfile .
+
+# For practical 7 : 
+# docker build --platform linux/amd64 --build-arg PRAC=7 -t <YOUR-DOCKERHUB-ID>/elixir-prac-7:<version> -f docker/rstudio/Dockerfile .
 ```
 
 Replace `<YOUR-DOCKERHUB-ID>` with your actual Docker Hub username and `<version>` with the version tag you want to use (e.g., `v1.0`) and `X` with the practical number (e.g., `0` for Practical 0). This command will build the Docker image for the specified practical and tag it appropriately.

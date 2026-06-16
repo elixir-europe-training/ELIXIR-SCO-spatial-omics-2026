@@ -7,7 +7,7 @@ format:
       self-contained: true
 editor: visual
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 bibliography: misc/PASTA.bib
 ---
 
@@ -20,6 +20,13 @@ For this representation of the cells, we will rely on the `r BiocStyle::Biocpkg(
 ## Dependencies
 
 ```{r, warning=FALSE, message=FALSE}
+
+if(!file.exists("/home/rstudio/.cache/R/ExperimentHub")){
+  dir.create("/home/rstudio/.cache/R/ExperimentHub", recursive = TRUE)
+}
+
+Sys.setenv(PROJ_DATA = "/app/.pixi/envs/default/share/proj") # Required for Voyager to work in RStudio within container
+
 suppressPackageStartupMessages({
   library(dplyr)
   library(ggplot2)
@@ -366,10 +373,10 @@ plotLocalResult(...)
 
 # Summary and Considerations
 
--   Lattice data refers to spatial data collected at fixed locations arranged in regular or irregular grids, contrasting with stochastic point pattern analysis.
--   Regular lattices have uniform, evenly spaced spots, while irregular lattices have variable sizes and shapes with non-uniform spacing.
--   The spatial weight matrix models spatial relationships between lattice units. Different methods exist to define the spatial weight matrix.
--   Global spatial autocorrelation measures, like Moran's I, summarize spatial correlation over the entire field, while local measures identify local clusters of similarity or dissimilarity.
+- Lattice data refers to spatial data collected at fixed locations arranged in regular or irregular grids, contrasting with stochastic point pattern analysis.
+- Regular lattices have uniform, evenly spaced spots, while irregular lattices have variable sizes and shapes with non-uniform spacing.
+- The spatial weight matrix models spatial relationships between lattice units. Different methods exist to define the spatial weight matrix.
+- Global spatial autocorrelation measures, like Moran's I, summarize spatial correlation over the entire field, while local measures identify local clusters of similarity or dissimilarity.
 
 ```{r}
 sessionInfo()

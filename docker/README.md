@@ -25,6 +25,12 @@ docker build --platform linux/amd64 --build-arg PRAC=X -t <YOUR-DOCKERHUB-ID>/el
 
 Replace `<YOUR-DOCKERHUB-ID>` with your actual Docker Hub username and `<version>` with the version tag you want to use (e.g., `v1.0`) and `X` with the practical number (e.g., `0` for Practical 0). This command will build the Docker image for the specified practical and tag it appropriately.
 
+# Running containers
+
+The final containers will be run on SciLifeLab Serve. To test on Serve, create a Custom App linking to your image.
+
+The password for the jupyter labs is `spatial`.
+
 # Practical Data
 
 If your practical requires large datasets to be downloaded, we recommend hosting them on `Zenodo` and letting us know the DOI and your practical number in the pull request description. We will consolidate all and add them to the download script. In case you need it beforehand, you can simply open an issue asking for this to be added and we will do it as soon as possible.

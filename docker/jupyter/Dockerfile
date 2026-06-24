@@ -13,6 +13,12 @@ COPY ${PIXI_ENV_PATH}/pixi.lock /app/
 # Install the selected environment (locked for reproducibility)
 RUN pixi install --locked
 
+ARG NB_UID=1000
+ARG NB_GID=1000
+
+# Make sure user owns its home and app dirs
+RUN chown -R ${NB_UID}:${NB_GID} /app
+
 # Create an activation script that sets up the env vars
 RUN pixi shell-hook -s bash > /shell-hook.sh && \
     echo 'exec "$@"' >> /shell-hook.sh
@@ -73,7 +79,7 @@ RUN mkdir -p ${HOME}/.local/share/jupyter \
              ${HOME}/work
 # Make sure user owns its home and app dirs
 RUN chmod +x /app/start-script.sh /shell-hook.sh && \
-    chown -R ${NB_UID}:${NB_GID} ${HOME} /app
+    chown -R ${NB_UID}:${NB_GID} ${HOME}
 
 # Copy helper script to download labs
 COPY docker/download_labs.sh /home/${NB_USER}/download-labs.sh

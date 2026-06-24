@@ -3,11 +3,21 @@
 # Download practicals from the ELIXIR Spatial Omics 2026 course
 #
 # Usage:
-#   bash download_labs.sh.sh              # interactive menu
-#   bash download_labs.sh.sh all          # download all practicals
-#   bash download_labs.sh.sh 0 3 7        # download practical_0, _3, _7
-#   bash download_labs.sh.sh reset 2      # remove practical_2
-#   bash download_labs.sh.sh reset all    # remove all practicals
+#   bash download_labs.sh [OPTIONS] [COMMAND]
+#
+# Options (all optional, shown with defaults):
+#   -r, --repo          OWNER/NAME  GitHub repository  (elixir-europe-training/ELIXIR-SCO-spatial-omics-2026)
+#   -b, --branch        BRANCH      Git branch          (main)
+#   -p, --parent        DIR         Folder in repo      (practicals)
+#   -n, --n-practicals  N           Number of practicals (10)
+#   -d, --dest          PATH        Local destination   (work/)
+#
+# Commands:
+#   (none)              Interactive menu
+#   all                 Download all practicals
+#   0 3 7               Download practical_0, _3, _7
+#   reset 2             Remove practical_2
+#   reset all           Remove all practicals
 ###############################################################################
 
 set -euo pipefail
@@ -22,9 +32,6 @@ DEST="work/"
 declare -A practical_dois=(
     [practical_0]="https://zenodo.org/records/17641420/files/Practical0.zip?download=1"
 )
-
-REPO_NAME="${REPO##*/}"
-TARBALL_URL="https://github.com/${REPO}/archive/refs/heads/${BRANCH}.tar.gz"
 
 # ---------- Colors ----------
 if [ -t 1 ]; then
@@ -148,6 +155,23 @@ interactive_menu() {
         esac
     done
 }
+
+# ---------- Parse options ----------
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -r|--repo)           REPO="$2";          shift 2 ;;
+        -b|--branch)         BRANCH="$2";        shift 2 ;;
+        -p|--parent)         PARENT="$2";        shift 2 ;;
+        -n|--n-practicals)   N_PRACTICALS="$2";  shift 2 ;;
+        -d|--dest)           DEST="$2";          shift 2 ;;
+        --) shift; break ;;
+        -*) err "Unknown option: $1"; exit 1 ;;
+        *) break ;;
+    esac
+done
+
+REPO_NAME="${REPO##*/}"
+TARBALL_URL="https://github.com/${REPO}/archive/refs/heads/${BRANCH}.tar.gz"
 
 # ---------- Main ----------
 echo -e "${BOLD}🧬 ELIXIR Spatial Omics 2026 — Practicals downloader${RESET}"

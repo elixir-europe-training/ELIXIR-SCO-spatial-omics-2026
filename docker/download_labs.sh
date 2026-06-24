@@ -3,11 +3,11 @@
 # Download practicals from the ELIXIR Spatial Omics 2026 course
 #
 # Usage:
-#   bash download_practicals.sh              # interactive menu
-#   bash download_practicals.sh all          # download all practicals
-#   bash download_practicals.sh 0 3 7        # download practical_0, _3, _7
-#   bash download_practicals.sh reset 2      # remove practical_2
-#   bash download_practicals.sh reset all    # remove all practicals
+#   bash download_labs.sh.sh              # interactive menu
+#   bash download_labs.sh.sh all          # download all practicals
+#   bash download_labs.sh.sh 0 3 7        # download practical_0, _3, _7
+#   bash download_labs.sh.sh reset 2      # remove practical_2
+#   bash download_labs.sh.sh reset all    # remove all practicals
 ###############################################################################
 
 set -euo pipefail

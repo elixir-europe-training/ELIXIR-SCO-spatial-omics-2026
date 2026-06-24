@@ -1,5 +1,5 @@
 ---
-title: "SIB Spatial Omics Data Analysis Course 2025 (Part 2): Lattice Data Analysis Vignette"
+title: "SIB Spatial Omics Data Analysis Course 2026 (Part 2): Lattice Data Analysis Vignette"
 author: "Samuel Gunz, Martin Emons, Mark D. Robinson"
 format:
     html:
@@ -28,17 +28,10 @@ if(!file.exists("/home/rstudio/.cache/R/ExperimentHub")){
 Sys.setenv(PROJ_DATA = "/app/.pixi/envs/default/share/proj") # Required for Voyager to work in RStudio within container
 
 suppressPackageStartupMessages({
-  library(dplyr)
-  library(ggplot2)
-  library(patchwork)
   library(Voyager)
   library(SpatialFeatureExperiment)
   library(SFEData)
-  library(spdep)
   library(sf)
-  library(stringr)
-  library(tidyr)
-  library(magrittr)
   library(scater)
 })
 
@@ -51,9 +44,29 @@ We will load a dataset gereated by [@mckellarLargescaleIntegrationSinglecell2021
 
 ```{r}
 # Load the dataset
-sfe <- SFEData::McKellarMuscleData(dataset = "full")
+
+basedir <- "/home/rstudio/work/practical_7/"
+
+if(!file.exists(file.path(basedir, "data","muscle.rds"))){
+  
+  sfe <- SFEData::McKellarMuscleData(dataset = "full")
+  
+  dir_path <- paste0(basedir, "/data")
+  file_path <- file.path(dir_path, "muscle.rds")
+  
+  # Check if the directory exists, and create it if it doesn't
+  if (!dir.exists(dir_path)) {
+    dir.create(dir_path)
+  }
+  
+  saveRDS(sfe, file.path(basedir, "data","muscle.rds"))
+}
+
+sfe = readRDS(file.path(basedir, "data","muscle.rds"))
 # Take spots that are covered with tissue
 sfe_tissue <- sfe[, colData(sfe)$in_tissue]
+rm(sfe)
+invisible(gc())
 # Filter out genes with no counts
 sfe_tissue <- sfe_tissue[rowSums(counts(sfe_tissue)) > 0, ]
 # Convert counts log-transformed normalized expression values

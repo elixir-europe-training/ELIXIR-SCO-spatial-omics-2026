@@ -1,0 +1,61 @@
+name: Question
+description: Ask for clarification or help with course material
+title: "[Question]: "
+body:
+  - type: checkboxes
+    id: location
+    attributes:
+      label: Which practical?
+      options:
+        - label: Practical 1
+        - label: Practical 2
+        - label: Practical 3
+        - label: Practical 4
+        - label: Practical 5
+        - label: Practical 6
+        - label: Practical 7
+        - label: Practical 8
+        - label: Practical 9
+        - label: Practical 10
+        - label: General / not specific to a practical
+
+  - type: checkboxes
+    id: topic
+    attributes:
+      label: What's your question about?
+      options:
+        - label: Code explanation
+        - label: Dataset / file usage
+        - label: Installation/setup
+        - label: Output interpretation
+        - label: Concept/theory
+        - label: Other
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What would you like to understand better?
+      placeholder: |
+        Example: What does the n_threads=8 parameter do in read_Xenium()?
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Relevant code (if applicable)
+      render: code
+
+  - type: textarea
+    id: what_you_tried
+    attributes:
+      label: What have you tried so far?
+      description: This helps us give better guidance
+
+  - type: checkboxes
+    id: urgency
+    attributes:
+      label: Urgency
+      options:
+        - label: Blocking my progress
+        - label: Just curious
+        - label: Would help understanding

@@ -1,0 +1,70 @@
+name: Bug Report
+description: Report something broken, missing, or not working
+title: "[Bug]: "
+body:
+  - type: checkboxes
+    id: issue_type
+    attributes:
+      label: What type of bug?
+      options:
+        - label: Code does not run
+        - label: File or folder not found
+        - label: Error when executing
+        - label: Output not as expected
+        - label: Other
+
+  - type: checkboxes
+    id: location
+    attributes:
+      label: Where did this occur?
+      options:
+        - label: Practical 1
+        - label: Practical 2
+        - label: Practical 3
+        - label: Practical 4
+        - label: Practical 5
+        - label: Practical 6
+        - label: Practical 7
+        - label: Practical 8
+        - label: Practical 9
+        - label: Practical 10
+        - label: Other
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the issue
+      description: What went wrong?
+      placeholder: |
+        Example: In Practical 3, the code references files that don't exist.
+
+  - type: textarea
+    id: error_message
+    attributes:
+      label: Error message (if any)
+      render: text
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Relevant code snippet
+      render: code
+
+  - type: checkboxes
+    id: reproduce
+    attributes:
+      label: Can you reproduce it?
+      options:
+        - label: Yes, consistently
+        - label: Sometimes
+        - label: No, it worked once then failed
+
+  - type: checkboxes
+    id: environment
+    attributes:
+      label: Your environment
+      options:
+        - label: Running locally (own computer)
+        - label: Using cloud / notebook environment
+        - label: Using Docker
+        - label: Other

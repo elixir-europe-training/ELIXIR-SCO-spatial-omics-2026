@@ -1,5 +1,5 @@
 ---
-title: "SIB Spatial Omics Data Analysis Course 2025: Point Pattern Analysis Vignette (Part 1)"
+title: "SIB Spatial Omics Data Analysis Course 2026: Point Pattern Analysis Vignette (Part 1)"
 author: "Martin Emons, Samuel Gunz, Mark D. Robinson"
 format:
     html:
@@ -39,18 +39,17 @@ if(!file.exists("/home/rstudio/.cache/R/ExperimentHub")){
 }
 
 suppressPackageStartupMessages({
+  
   library(SpatialExperiment)
-  library(spatstat.geom)
   library(spatstat.explore)
-  library(ExperimentHub)
-  library(dplyr)
+  library(spatialFDA)
+
   library(ggplot2)
-  library(patchwork)
-  library(reshape2)
-  library(stringr)
+  library(dplyr)
   library(tidyr)
   library(magrittr)
-  library(spatialFDA)
+  library(purrr)
+  
 })
 
 ```
@@ -60,14 +59,70 @@ suppressPackageStartupMessages({
 # load the data from ExperimentHub
 #basedir <- here::here("day_3/practical_5/")
 
-basedir <- "/home/rstudio/work/practicals/practical_7/"
-source(file.path(basedir, "resources", "load_data.R"))
+basedir <- "/home/rstudio/work/practical_7/"
+
+if(!file.exists(file.path(basedir, "data","brain.rds"))){
+  
+  load_and_save = function(basedir){
+    
+    library(ExperimentHub)
+    
+    #### Code from Helena Crowell ####
+    eh <- ExperimentHub()
+    # query(eh, "MERFISH")
+    df <- eh[["EH7546"]]
+    
+    # extract cell metadata
+    i <- seq_len(9)
+    cd <- data.frame(df[, i], row.names = 1)
+    
+    # set sample identifiers
+    names(cd)[grep("Bregma", names(cd))] <- "sample_id"
+    
+    # rename spatial coordinates
+    names(cd)[grep("Centroid", names(cd))] <- c("x", "y")
+    
+    # simplify annotations
+    cd$cluster_id <- cd$Cell_class
+    for (. in c("Endothelial", "OD Mature", "OD Immature"))
+      cd$cluster_id[grep(., cd$cluster_id)] <- .
+    
+    # extract & sparsify assay data
+    y <- data.frame(df[, -i], row.names = df[, 1])
+    y <- as(t(as.matrix(y)), "dgCMatrix")
+    
+    # construct SPE
+    (spe <- SpatialExperiment(
+      assays = list(exprs  = y),
+      spatialCoordsNames = c("x","y"),
+      colData = cd))
+    
+    # Define the directory and file paths
+    dir_path <- paste0(basedir, "/data")
+    file_path <- file.path(dir_path, "brain.rds")
+    
+    # Check if the directory exists, and create it if it doesn't
+    if (!dir.exists(dir_path)) {
+      dir.create(dir_path)
+    }
+    
+    #save data as rds file
+    saveRDS(spe,  file_path)
+    
+  }
+  
+  load_and_save(basedir)
+  
+}
 
 theme_set(theme_light())
-# load the SpatialExperiment object
-#spe <- readRDS("data/spe.rds")
-spe <- readRDS(file.path(basedir, "data","spe.rds"))
+#spe <- readRDS("data/brain.rds")
+spe <- readRDS(file.path(basedir, "data","brain.rds"))
 spe
+```
+
+```{r}
+invisible(gc())
 ```
 
 We see that we have an object of class `r BiocStyle::Biocpkg('SpatialExperiment')` with $161$ genes (rows) and $73655$ cells. This object is very similar to a `r BiocStyle::Biocpkg('SingleCellExperiment')` object except it has the added `spatialCoords` slot. One slot in the `colData` is called `sample_id` which defines the so called z-slices. The three dimensional tissue is cut in the z-axis into consecutive two dimensional slices [@righelliSpatialExperimentInfrastructureSpatiallyresolved2022].
@@ -302,7 +357,7 @@ where the numerator is the conditional expectation of the marks at location $u,v
 ```{r}
 genes <- c('Slc18a2', 'Esr1', 'Pgr')
 
-res <- calcMetricPerFov(
+calcMetricPerFov(
   spe[,spe$sample_id == "-0.09"],
   'OD Mature',
   subsetby = genes,
@@ -311,17 +366,19 @@ res <- calcMetricPerFov(
   rSeq = NULL,
   by = 'sample_id',
   continuous = TRUE
-)
+) |> 
+  plotMetricPerFov(
+    correction = "iso",
+    theo = TRUE,
+    x = "r",
+    imageId = 'gene', linewidth = 3
+    ) + 
+  theme(legend.position = "bottom")
 
-p <- plotMetricPerFov(
-  res,
-  correction = "iso",
-  theo = TRUE,
-  x = "r",
-  imageId = 'gene', linewidth = 3
-)
-p + theme(legend.position = "bottom")
+```
 
+```{r}
+invisible(gc())
 ```
 
 We note that at very small radii the expression of the gene `Esr1` shows a high association with itself. Later on, the association is less pronounced than in the slices $-0.09$ and $0.01$.
@@ -332,28 +389,23 @@ Next to observation window metrics, we can calculate point level statistics as w
 
 ```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
 pp <- subset(pp_ls[["0.01"]], marks %in% "OD Mature")
-L_odmature_lisa <- localL(pp)
+df <- localL(pp) %>% as.data.frame
 
 # data.frame manipulation for plotting
-df <- as.data.frame(L_odmature_lisa)
-dfm <- reshape2::melt(df, "r")
+dfm <- pivot_longer(df,  cols = colnames(df)[colnames(df) != "r"], names_to = "variable")
 get_sel <- dfm %>%
   filter(r > 200.5630 & r < 201.4388, variable != "theo") %>%
   mutate(sel = value) %>%
   select(variable, sel)
 dfm <- dfm %>% left_join(get_sel)
 
-p <- ggplot(dfm, aes(x = r, y = value, 
+ggplot(dfm, aes(x = r, y = value, 
                      group = variable, colour = sel)) +
   geom_line(linewidth = 1) +
   scale_color_continuous(type = "viridis") +
   geom_vline(xintercept = 200) +
   theme(legend.position = "none") +
   ggtitle("LISA curves of slice 0.01")
-```
-
-```{r, fig.height=5, fig.width=10}
-p
 ```
 
 It may be useful to compress these curves into something easier to interpret, such as plotting the first **functional** principal components from a functional PCA [@baddeleySpatialPointPatterns2015 pp. 247-248; @ramsayPrincipalComponentsAnalysis2005].
@@ -370,17 +422,14 @@ dat$sel <- get_sel$sel
 # perform functional PCA
 res <- functionalPCA(dat, unique(df$r))
 
-scores_df <- res$scores %>% as.data.frame()
-
-p <- ggplot(scores_df, aes(scores_df[, 1], scores_df[, 2], 
-                       colour = (dat[['sel']]))) +
+ggplot(res$scores %>% as.data.frame(),
+       aes(V1, V2, colour = (dat[['sel']]))) +
   geom_point() +
   coord_equal() +
   theme_light() +
   scale_color_continuous(type = "viridis") +
   xlab('PC1') +
   ylab('PC2')
-p
 
 ```
 
@@ -389,12 +438,17 @@ p
 2.  Do the exploratory analysis the other way around; for each point, plot the value of the functional PC1 in the spatial context (above, we coloured by the value of the K curve at r=\~200).
 :::
 
+```{r}
+invisible(gc())
+```
+
 ### Cross Mark Comparison
 
 Similar to above, analyses can be performed *between* two celltypes. The corresponding functions are called cross functions [@baddeleySpatialPointPatterns2015 pp. 594 ff.]. As an exercise, try to implement (similar to the analyses above) a cross comparison between two cell types of interest. With the provided functions this is possible, just give a function you like as input and a vector with two cell types you wish to compare. You can look at functions in the documentation of `r BiocStyle::CRANpkg('spatstat.explore')`. We provide an example below:
 
 ```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
-resCross <- calcCrossMetricPerFov(
+
+calcCrossMetricPerFov(
   spe,
   selection = c("OD Mature", "Microglia"),
   subsetby = 'sample_id',
@@ -402,16 +456,14 @@ resCross <- calcCrossMetricPerFov(
   marks = 'cluster_id',
   rSeq = seq(0, 500, length.out = 100),
   by = c('sample_id')
-)
-
-ps <- plotCrossMetricPerFov(
-  resCross,
+) |>
+plotCrossMetricPerFov(
   theo = TRUE,
   correction = "iso",
   x = "r",
   imageId = 'sample_id', linewidth = 3
-)
-ps[[2]]
+) |>
+  pluck(2)
 
 ```
 

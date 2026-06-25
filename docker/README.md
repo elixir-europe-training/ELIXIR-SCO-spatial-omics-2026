@@ -4,7 +4,7 @@
 
 Each practical has its own Pixi environment defined in the `practicals/practical_X/env/` directory (replace `X` with the practical number). This right now contains a basic environment that enables `Jupyterlab` or `Rstudio` to run, but you can customize it by adding any additional packages you need for the practical. Feel free to modify the `pixi.toml` file to remove conflicting packages but highlight them during the pull request review so we can discuss them.
 
-To create the environment for a specific practical, navigate to that directory and run:
+To create the environment for a specific practical, navigate to the `env` directory and run:
 
 ```bash
 cd practicals/practical_X/env/
@@ -19,21 +19,34 @@ Go to the main repo directory (not this `docker` directory) and run the followin
 ```bash
 docker build --platform linux/amd64 --build-arg PRAC=X -t <YOUR-DOCKERHUB-ID>/elixir-prac-0:<version> -f docker/jupyter/Dockerfile .
 
-# For practical 7 : 
+# For practical 7 (OBS! Using the Restudio container.): 
 # docker build --platform linux/amd64 --build-arg PRAC=7 -t <YOUR-DOCKERHUB-ID>/elixir-prac-7:<version> -f docker/rstudio/Dockerfile .
 ```
 
-Replace `<YOUR-DOCKERHUB-ID>` with your actual Docker Hub username and `<version>` with the version tag you want to use (e.g., `v1.0`) and `X` with the practical number (e.g., `0` for Practical 0). This command will build the Docker image for the specified practical and tag it appropriately.
+Replace `<YOUR-DOCKERHUB-ID>` with your actual Docker Hub username and `<version>` with the version tag you want to use (e.g., `v1.0`) and `X` with the practical number (e.g., `0` for Practical 0). This command will build the Docker image for the specified practical and tag it appropriately. Then make sure to push the container to dockerhub with e.g. `docker push <YOUR-DOCKERHUB-ID>/elixir-prac-7:<version>` so that it is available to pull on serve. 
 
-# Running containers
+# Running containers on Serve
 
-The final containers will be run on SciLifeLab Serve. To test on Serve, create a Custom App linking to your image.
+The final containers will be run on SciLifeLab [Serve](https://serve.scilifelab.se/). The default accounts you get on Serve only provides maximum 5 Gb Memory and 2 CPU. But we have a test project `test_elixir_spatial` with more resources that Aditya is admin of, so please contact him for access to the project once you have a Serve account. To test run them on Serve, first go to "My Projects", then open "test_elixir_spatial". There find the "Custom App" section and press the button "Create". There you have to fill in some options:
 
-The password for the jupyter labs is `spatial`.
+* Mount path: `/home/nbis/work`
+* Hardware: Make sure to have a large enough allocation.
+* Port: `8888`
+* Image: `docker.io/<YOUR-DOCKERHUB-ID>/elixir-prac-7:<version>`
+* Title: any suitable title.
+
+The rest of the fields can be left blank.
+Click "Submit" and wait for the container to be synced, then you should be able to click "Open App"
+
+Some notes about running on Serve:
+
+* The password for the jupyter lab is `spatial`.
+* There is a download script in the root folder (see below) that you can use to fetch the scripts and the data for the tutorials. OBS! It fetches the version found in the main branch of the repo.
+* You can move files to/from serve in the GUI, but we have noticed that files are not getting deleted properly. So if you run into problems with disk quota, please check the folder `/home/nbis/work/.Trash-1000/` and empty it if it contains large files.
 
 # Practical Data
 
-If your practical requires large datasets to be downloaded, we recommend hosting them on `Zenodo` and letting us know the DOI and your practical number in the pull request description. We will consolidate all and add them to the download script. In case you need it beforehand, you can simply open an issue asking for this to be added and we will do it as soon as possible.
+If your practical requires large datasets to be downloaded, we will be hosting them on `Zenodo` so please let us know which files we need to upload to Zenodo. We will consolidate all and add them to the download script. In case you need it beforehand, you can simply open an issue asking for this to be added and we will do it as soon as possible. Once we have an overview of all the datasets needed for all the tutorials we will create a central Zenodo page with all the files. 
 
 # Download Script
 

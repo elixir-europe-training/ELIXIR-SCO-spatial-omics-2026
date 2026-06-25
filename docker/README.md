@@ -41,6 +41,7 @@ Click "Submit" and wait for the container to be synced, then you should be able 
 Some notes about running on Serve:
 
 * The password for the jupyter lab is `spatial`.
+* If you add additional packages to the environment and update the Docker image, you need to create a new version. If the version remains the same, Serve will not update to the latest container version. 
 * There is a download script in the root folder (see below) that you can use to fetch the scripts and the data for the tutorials. OBS! It fetches the version found in the main branch of the repo.
 * You can move files to/from serve in the GUI, but we have noticed that files are not getting deleted properly. So if you run into problems with disk quota, please check the folder `/home/nbis/work/.Trash-1000/` and empty it if it contains large files.
 

@@ -1,0 +1,73 @@
+name: Code linting
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+       - 'practicals/**/*.py'
+       - 'practicals/**/*.ipynb'
+       - 'practicals/**/*.R'
+       - 'practicals/**/*.Rmd'
+       - 'practicals/**/*.qmd'
+
+permissions:
+  contents: read
+
+jobs:
+  lint-python:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get changed Python and notebook files
+        id: changed-py
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            practicals/**/*.py
+            practicals/**/*.ipynb
+
+      - name: Set up Python
+        if: steps.changed-py.outputs.any_changed == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Ruff
+        if: steps.changed-py.outputs.any_changed == 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+
+      - name: Run Ruff on changed files
+        if: steps.changed-py.outputs.any_changed == 'true'
+        run: |
+          ruff check ${{ steps.changed-py.outputs.all_changed_files }}
+
+  lint-r:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get changed R/Rmd/Quarto files
+        id: changed-r
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            practicals/**/*.R
+            practicals/**/*.Rmd
+            practicals/**/*.qmd
+
+      - name: Download Jarl binary
+        if: steps.changed-r.outputs.any_changed == 'true'
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://github.com/etiennebacher/jarl/releases/download/v0.5.0/jarl-installer.sh | sh
+
+      - name: Run Jarl on changed R/Rmd/Quarto files
+        if: steps.changed-r.outputs.any_changed == 'true'
+        run: |
+          jarl check ${{ steps.changed-r.outputs.all_changed_files }}

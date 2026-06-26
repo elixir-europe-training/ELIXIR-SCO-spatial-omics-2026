@@ -21,4 +21,7 @@ pandas = ">=2.3.3,<3"
 pyarrow = ">=24.0.0,<25"
 igraph = ">=1.0.1,<2"
 leidenalg = ">=0.12.0,<0.13"
+spatialdata-plot = ">=0.4.0,<0.5"
+spatialdata-io = ">=0.7.0,<0.8"
+spatialdata = ">=0.7.3,<0.8"
 

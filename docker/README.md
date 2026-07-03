@@ -1,5 +1,7 @@
 # Instructions
 
+A more comprehensive `Wiki` page is now available [here](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics-2026/wiki/Contributor-Wiki).
+
 ## How to create Pixi environments
 
 Each practical has its own Pixi environment defined in the `practicals/practical_X/env/` directory (replace `X` with the practical number). This right now contains a basic environment that enables `Jupyterlab` or `Rstudio` to run, but you can customize it by adding any additional packages you need for the practical. Feel free to modify the `pixi.toml` file to remove conflicting packages but highlight them during the pull request review so we can discuss them.

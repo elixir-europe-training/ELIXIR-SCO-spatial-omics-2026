@@ -11,6 +11,7 @@
 #   -p, --parent        DIR         Folder in repo      (practicals)
 #   -n, --n-practicals  N           Number of practicals (10)
 #   -d, --dest          PATH        Local destination   (work/)
+#   -f, --data-file     PATH        Dataset TSV         (practical_data.tsv next to script)
 #
 # Commands:
 #   (none)              Interactive menu
@@ -18,6 +19,13 @@
 #   0 3 7               Download practical_0, _3, _7
 #   reset 2             Remove practical_2
 #   reset all           Remove all practicals
+#
+# Dataset TSV format (tab-separated, one row per practical):
+#   Practical<TAB>URL
+#   practical_0<TAB>https://zenodo.org/.../Practical0.zip?download=1
+#   practical_1<TAB>https://.../A.zip?download=1,https://.../B.zip?download=1
+# Multiple URLs are comma-separated. Point several practicals at the same URL to
+# download that (multi-GB) dataset only once and share it.
 ###############################################################################
 
 set -euo pipefail
@@ -29,12 +37,15 @@ PARENT="practicals"
 N_PRACTICALS=10
 DEST="work/"
 # Zenodo archives to download and unzip into the central <DEST>/data/ directory.
-# Each dataset is stored under its ORIGINAL archive name (e.g. data/Practical0),
-# and reuse is keyed on that name: point several practicals at the SAME URL and
-# the (multi-GB) archive is downloaded/extracted only once and shared.
-declare -A practical_dois=(
-    [practical_0]="https://zenodo.org/records/17641420/files/Practical0.zip?download=1"
-)
+# This map is populated from a TSV file (see DATA_FILE below) so contributors can
+# add data without editing the script. Each dataset is stored under its ORIGINAL
+# archive name (e.g. data/Practical0), and reuse is keyed on that name: point
+# several practicals at the SAME URL and the (multi-GB) archive is downloaded and
+# extracted only once, then shared.
+declare -A practical_dois=()
+# TSV of "practical<TAB>url[,url2,...]" rows (default: next to this script).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DATA_FILE="${SCRIPT_DIR}/practical_data.tsv"
 
 # ---------- Colors ----------
 if [ -t 1 ]; then
@@ -54,7 +65,7 @@ err()  { echo -e "${RED}❌ $*${RESET}"; }
 # Download it ONCE per run and extract every requested practical from the cached
 # copy, instead of re-streaming the whole tarball for each practical.
 TARBALL_FILE=""
-cleanup() { [ -n "$TARBALL_FILE" ] && rm -f "$TARBALL_FILE"; }
+cleanup() { [ -n "$TARBALL_FILE" ] && rm -f "$TARBALL_FILE"; return 0; }
 trap cleanup EXIT
 
 fetch_tarball() {
@@ -68,17 +79,41 @@ fetch_tarball() {
     fi
 }
 
-download_data() {
-    # Download + extract Zenodo data for a practical, if one is registered.
-    #
-    # Datasets live in a single central ${DEST}/data dir and keep their ORIGINAL
-    # archive name (e.g. work/data/Practical0), not a per-practical name. The
-    # existence check is keyed on that dataset name, so if several practicals
-    # point at the same Zenodo archive the (multi-GB) download happens only once
-    # and the rest reuse the already-extracted folder.
-    local name="$1"
-    [[ -n "${practical_dois[$name]:-}" ]] || return 0
-    local url="${practical_dois[$name]}"
+# Strip surrounding whitespace and one layer of surrounding quotes.
+trim() {
+    local s="$1"
+    s="${s#"${s%%[![:space:]]*}"}"   # leading whitespace
+    s="${s%"${s##*[![:space:]]}"}"   # trailing whitespace
+    s="${s%\"}"; s="${s#\"}"          # surrounding double quotes
+    s="${s%\'}"; s="${s#\'}"          # surrounding single quotes
+    printf '%s' "$s"
+}
+
+# Populate practical_dois from a TSV: "practical<TAB>url[,url2,...]".
+# Header row, blank lines, and lines starting with '#' are ignored.
+load_dois() {
+    local file="$1"
+    if [ ! -f "$file" ]; then
+        warn "Data file not found: ${file} — no Zenodo datasets will be downloaded."
+        return 0
+    fi
+    local practical urls
+    while IFS=$'\t' read -r practical urls || [ -n "$practical" ]; do
+        practical="${practical%$'\r'}"; urls="${urls%$'\r'}"   # tolerate CRLF
+        practical="$(trim "$practical")"; urls="$(trim "$urls")"
+        [ -n "$practical" ] || continue                        # blank line
+        [ "${practical:0:1}" = "#" ] && continue               # comment
+        [ "$practical" = "Practical" ] && continue             # header row
+        [ -n "$urls" ] || { warn "No URL for ${practical} in ${file} — skipping."; continue; }
+        practical_dois["$practical"]="$urls"
+    done < "$file"
+}
+
+# Download + extract ONE archive into the central <DEST>/data dir, keeping its
+# ORIGINAL archive name (e.g. data/Practical0). Reuse is keyed on that name, so a
+# dataset shared by several practicals is fetched only once.
+fetch_dataset() {
+    local for_name="$1" url="$2"
 
     # Dataset name = the archive's own filename stem (Practical0.zip -> Practical0).
     local base="${url##*/}"; base="${base%%\?*}"   # strip path + query string
@@ -87,7 +122,7 @@ download_data() {
     local dest="${data_dir}/${data_name}"
 
     if [ -d "$dest" ]; then
-        ok "Dataset '${data_name}' already present in ${data_dir}/ — reusing it (no download for ${name})."
+        ok "Dataset '${data_name}' already present in ${data_dir}/ — reusing it (no download for ${for_name})."
         return 0
     fi
 
@@ -95,7 +130,7 @@ download_data() {
     local zip stage
     zip="$(mktemp "${TMPDIR:-/tmp}/${data_name}.XXXXXX")"
     stage="$(mktemp -d "${data_dir}/.stage.XXXXXX")"   # same FS as dest -> atomic move
-    log "Downloading dataset ${BOLD}${data_name}${RESET} for ${name} from Zenodo: ${url}"
+    log "Downloading dataset ${BOLD}${data_name}${RESET} for ${for_name} from Zenodo: ${url}"
     if ! curl -fL --progress-bar "$url" -o "$zip"; then
         err "Failed to download dataset '${data_name}'."
         rm -f "$zip"; rm -rf "$stage"; return 1
@@ -120,6 +155,22 @@ download_data() {
         mv "$stage" "$dest"         # loose files: keep them under data_name/
     fi
     ok "Dataset '${data_name}' extracted to ${dest}/"
+}
+
+download_data() {
+    # Fetch every dataset registered for a practical. The registry value may hold
+    # several comma-separated URLs; each is downloaded/deduped independently.
+    local name="$1"
+    [[ -n "${practical_dois[$name]:-}" ]] || return 0
+
+    local urls url rc=0
+    IFS=',' read -ra urls <<< "${practical_dois[$name]}"
+    for url in "${urls[@]}"; do
+        url="$(trim "$url")"
+        [ -n "$url" ] || continue
+        fetch_dataset "$name" "$url" || rc=1
+    done
+    return "$rc"
 }
 
 download_one() {
@@ -237,6 +288,7 @@ while [[ $# -gt 0 ]]; do
         -p|--parent)         PARENT="$2";        shift 2 ;;
         -n|--n-practicals)   N_PRACTICALS="$2";  shift 2 ;;
         -d|--dest)           DEST="$2";          shift 2 ;;
+        -f|--data-file)      DATA_FILE="$2";     shift 2 ;;
         --) shift; break ;;
         -*) err "Unknown option: $1"; exit 1 ;;
         *) break ;;
@@ -246,6 +298,9 @@ done
 DEST="${DEST%/}"   # strip trailing slash to avoid work//practical_0
 REPO_NAME="${REPO##*/}"
 TARBALL_URL="https://github.com/${REPO}/archive/refs/heads/${BRANCH}.tar.gz"
+
+# Populate the dataset registry from the TSV file.
+load_dois "$DATA_FILE"
 
 # ---------- Main ----------
 echo -e "${BOLD}🧬 ELIXIR Spatial Omics 2026 — Practicals downloader${RESET}"

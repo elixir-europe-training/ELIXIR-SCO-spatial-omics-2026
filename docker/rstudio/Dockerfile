@@ -138,8 +138,9 @@ RUN chmod +x /app/start-script.sh /shell-hook.sh && \
 
 # Copy helper script to download labs
 COPY docker/download_labs.sh /home/${NB_USER}/download-labs.sh
+COPY docker/practical_data.tsv /home/${NB_USER}/practical_data.tsv
 RUN chmod +x /home/${NB_USER}/download-labs.sh && \
-    chown ${NB_UID}:${NB_GID} /home/${NB_USER}/download-labs.sh
+    chown ${NB_UID}:${NB_GID} /home/${NB_USER}/download-labs.sh /home/${NB_USER}/practical_data.tsv
 
 # Switch to non-root user
 USER ${NB_UID}:${NB_GID}

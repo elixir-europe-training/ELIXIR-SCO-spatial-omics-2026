@@ -28,7 +28,10 @@ BRANCH="main"
 PARENT="practicals"
 N_PRACTICALS=10
 DEST="work/"
-# Define Zenodo DOI links to download and unzip in data/ directory for certain practicals
+# Zenodo archives to download and unzip into the central <DEST>/data/ directory.
+# Each dataset is stored under its ORIGINAL archive name (e.g. data/Practical0),
+# and reuse is keyed on that name: point several practicals at the SAME URL and
+# the (multi-GB) archive is downloaded/extracted only once and shared.
 declare -A practical_dois=(
     [practical_0]="https://zenodo.org/records/17641420/files/Practical0.zip?download=1"
 )
@@ -47,10 +50,84 @@ warn() { echo -e "${YELLOW}⚠️  $*${RESET}"; }
 err()  { echo -e "${RED}❌ $*${RESET}"; }
 
 # ---------- Functions ----------
+# The repo archive is large (~230 MB) because data/images are committed in git.
+# Download it ONCE per run and extract every requested practical from the cached
+# copy, instead of re-streaming the whole tarball for each practical.
+TARBALL_FILE=""
+cleanup() { [ -n "$TARBALL_FILE" ] && rm -f "$TARBALL_FILE"; }
+trap cleanup EXIT
+
+fetch_tarball() {
+    [ -n "$TARBALL_FILE" ] && [ -f "$TARBALL_FILE" ] && return 0
+    TARBALL_FILE="$(mktemp "${TMPDIR:-/tmp}/elixir-sco.XXXXXX")"
+    log "Fetching repository archive..."
+    if ! curl -fL --progress-bar "$TARBALL_URL" -o "$TARBALL_FILE"; then
+        err "Failed to download archive from ${TARBALL_URL}"
+        rm -f "$TARBALL_FILE"; TARBALL_FILE=""
+        return 1
+    fi
+}
+
+download_data() {
+    # Download + extract Zenodo data for a practical, if one is registered.
+    #
+    # Datasets live in a single central ${DEST}/data dir and keep their ORIGINAL
+    # archive name (e.g. work/data/Practical0), not a per-practical name. The
+    # existence check is keyed on that dataset name, so if several practicals
+    # point at the same Zenodo archive the (multi-GB) download happens only once
+    # and the rest reuse the already-extracted folder.
+    local name="$1"
+    [[ -n "${practical_dois[$name]:-}" ]] || return 0
+    local url="${practical_dois[$name]}"
+
+    # Dataset name = the archive's own filename stem (Practical0.zip -> Practical0).
+    local base="${url##*/}"; base="${base%%\?*}"   # strip path + query string
+    local data_name="${base%.*}"                    # strip .zip
+    local data_dir="${DEST}/data"
+    local dest="${data_dir}/${data_name}"
+
+    if [ -d "$dest" ]; then
+        ok "Dataset '${data_name}' already present in ${data_dir}/ — reusing it (no download for ${name})."
+        return 0
+    fi
+
+    mkdir -p "$data_dir"
+    local zip stage
+    zip="$(mktemp "${TMPDIR:-/tmp}/${data_name}.XXXXXX")"
+    stage="$(mktemp -d "${data_dir}/.stage.XXXXXX")"   # same FS as dest -> atomic move
+    log "Downloading dataset ${BOLD}${data_name}${RESET} for ${name} from Zenodo: ${url}"
+    if ! curl -fL --progress-bar "$url" -o "$zip"; then
+        err "Failed to download dataset '${data_name}'."
+        rm -f "$zip"; rm -rf "$stage"; return 1
+    fi
+    if ! unzip -oq "$zip" -d "$stage"; then
+        err "Failed to unzip dataset '${data_name}'."
+        rm -f "$zip"; rm -rf "$stage"; return 1
+    fi
+    rm -f "$zip"
+    # Clean up any __MACOSX folders that may be included in the zip
+    find "$stage" -name "__MACOSX" -type d -exec rm -rf {} + 2>/dev/null || true
+
+    # Publish under the original name. Only stage -> dest at the end, so an
+    # interrupted download never leaves a half-populated dataset folder behind.
+    local tops only
+    tops=$(find "$stage" -mindepth 1 -maxdepth 1 | wc -l | tr -d ' ')
+    only=$(find "$stage" -mindepth 1 -maxdepth 1)
+    if [ "$tops" -eq 1 ] && [ -d "$only" ]; then
+        mv "$only" "$dest"          # zip already had a single top-level folder
+        rm -rf "$stage"
+    else
+        mv "$stage" "$dest"         # loose files: keep them under data_name/
+    fi
+    ok "Dataset '${data_name}' extracted to ${dest}/"
+}
+
 download_one() {
     local n="$1"
     local name="practical_${n}"
     local target="${DEST}/${name}"
+
+    fetch_tarball || return 1
 
     if [ -d "$target" ]; then
         warn "${name} already exists — removing old copy first..."
@@ -58,40 +135,30 @@ download_one() {
     fi
 
     mkdir -p "$DEST"
-    log "Downloading ${BOLD}${name}${RESET}..."
+    log "Extracting ${BOLD}${name}${RESET}..."
 
-    if curl -sL "$TARBALL_URL" \
-        | tar -xz -C "$DEST" --strip-components=2 \
-            "${REPO_NAME}-${BRANCH}/${PARENT}/${name}" 2>/dev/null; then
+    if tar -xz -f "$TARBALL_FILE" -C "$DEST" --strip-components=2 \
+            "${REPO_NAME}-${BRANCH}/${PARENT}/${name}"; then
         local n_files n_nb
         n_files=$(find "$target" -type f | wc -l | tr -d ' ')
         n_nb=$(find "$target" -name "*.ipynb" | wc -l | tr -d ' ')
         ok "${name} → ${target} (${n_files} files, ${n_nb} notebooks)"
-        if [[ -n "${practical_dois[$name]:-}" ]]; then
-            log "Downloading data for ${name} from Zenodo DOI: ${practical_dois[$name]}"
-            curl --cookie zenodo-cookies.txt -L "${practical_dois[$name]}" -o "work/${name}.zip"
-            unzip -o "work/${name}.zip" -d "$target/data/"
-            rm "work/${name}.zip"
-            # Clean up any __MACOSX folders that may be included in the zip
-            find "$target/data/" -name "__MACOSX" -type d -exec rm -rf {} + >/dev/null 2>&1 || true
-            ok "Data for ${name} downloaded and extracted to ${target}/data/"
-        fi
+        download_data "$name"
     else
-        err "Failed to download ${name}. Does it exist in the repo?"
+        err "Failed to extract ${name}. Does it exist in the repo?"
         return 1
     fi
 }
 
 download_all() {
+    fetch_tarball || return 1
     mkdir -p "$DEST"
-    log "Downloading ${BOLD}ALL${RESET} practicals..."
-    if curl -sL "$TARBALL_URL" \
-        | tar -xz -C "$DEST" --strip-components=2 \
+    log "Extracting ${BOLD}ALL${RESET} practicals..."
+    if tar -xz -f "$TARBALL_FILE" -C "$DEST" --strip-components=2 \
             "${REPO_NAME}-${BRANCH}/${PARENT}"; then
         ok "All practicals downloaded → ${DEST}"
-
     else
-        err "Download failed."
+        err "Extraction failed."
         return 1
     fi
 }
@@ -146,12 +213,18 @@ interactive_menu() {
         read -rp "Choice: " choice
 
         case "$choice" in
-            [0-9])         download_one "$choice" ;;
             a|A)           download_all ;;
-            r\ [0-9])      reset_one "${choice#r }" ;;
+            r\ *)          reset_one "${choice#r }" ;;
             R)             reset_all ;;
             q|Q|exit|quit) ok "Bye!"; exit 0 ;;
-            *)             warn "Unknown choice: $choice" ;;
+            '')            : ;;
+            *)
+                if [[ "$choice" =~ ^[0-9]+$ ]]; then
+                    download_one "$choice"
+                else
+                    warn "Unknown choice: $choice"
+                fi
+                ;;
         esac
     done
 }
@@ -170,6 +243,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+DEST="${DEST%/}"   # strip trailing slash to avoid work//practical_0
 REPO_NAME="${REPO##*/}"
 TARBALL_URL="https://github.com/${REPO}/archive/refs/heads/${BRANCH}.tar.gz"
 

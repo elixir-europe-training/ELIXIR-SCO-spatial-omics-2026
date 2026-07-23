@@ -13,4 +13,19 @@ jupyter = ">=1.1.1,<2"
 curl = ">=8.20.0,<9"
 tar = ">=1.35,<2"
 gzip = ">=1.14,<2"
+scanpy = ">=1.12.2,<2"
+seaborn = ">=0.13.2,<0.14"
+matplotlib = ">=3.11.1,<4"
+pandas = ">=3.0.3,<4"
+numpy = ">=2.4.6,<3"
+anndata = ">=0.13.2,<0.14"
+scipy = ">=1.18.0,<2"
+scikit-learn = ">=1.9.0,<2"
+pip = ">=26.1.2,<27"
+scikit-misc = ">=0.5.2,<0.6"
+
+[pypi-dependencies]
+tangram-sc = ">=1.0.4, <2"
+cell2location = ">=0.1.5, <0.2"
+abc-atlas-access = { git = "https://github.com/alleninstitute/abc_atlas_access.git", extras = ["notebooks"] }
 

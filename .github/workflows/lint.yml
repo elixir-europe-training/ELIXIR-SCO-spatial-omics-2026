@@ -65,7 +65,7 @@ jobs:
       - name: Download Jarl binary
         if: steps.changed-r.outputs.any_changed == 'true'
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://github.com/etiennebacher/jarl/releases/download/v0.5.0/jarl-installer.sh | sh
+          curl --proto '=https' --tlsv1.2 -sSf https://github.com/etiennebacher/jarl/releases/download/0.6.0/jarl-installer.sh | sh
 
       - name: Run Jarl on changed R/Rmd/Quarto files
         if: steps.changed-r.outputs.any_changed == 'true'

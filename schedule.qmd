@@ -18,8 +18,8 @@ title: "Schedule"
 | 14:15-15:00 	| [Lecture: Imaging-based spatial data analysis (preprocessing, QC and normalization)](presentations/imaging_based_analysis.pdf)   | Christophe Avenel (NBIS, SE) |
 | 15:00-15:15 	| Break                                                                                                         	|                                	|
 | 15:15-16:45 	| Practical 2: [Imaging-based analysis and QC](practicals/practical_2/Practical 2 - Imaging Based Data Analysis/p2_imaging_based_data_analysis.ipynb)  | Åsa Björklund (NBIS, SE) & Stefan Ebmeyer (NBIS, SE) |
+| Evening (time TBA) | Course Dinner  |  |
 : {tbl-colwidths="[25,50,25]"}
-
 
 ## Day 2 (October 7, 2026)
 

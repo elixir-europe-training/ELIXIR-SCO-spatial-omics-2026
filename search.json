@@ -4,7 +4,7 @@
     "href": "travel.html",
     "title": "Travel information",
     "section": "",
-    "text": "Uppsala Biomedical Centre (BMC), Uppsala University, Husargatan 3, Uppsala\nRoom: Trippelrummet (E10:1307-1309), BMC (enter via C11)\nTo find the room within BMC see [https://link.mazemap.com/DcIYaHIo]\n\n\n\n\n\nBMC is located approximately 2.5 km from Uppsala Central Station. A walk takes around 30 min.\n\n\n\nThe closest bus stop is “Uppsala Science Park”. To travel by bus in Uppsala see the UL website or the UL app. The bus lines 3, 4, 8 and 11 all stop at Uppsala Central Station and Uppsala Science Park."
+    "text": "Uppsala Biomedical Centre (BMC), Uppsala University, Husargatan 3, Uppsala\nRoom: Trippelrummet (E10:1307-1309), BMC (enter via C11)\nTo find the room within BMC see https://link.mazemap.com/DcIYaHIo\n\n\n\n\n\nBMC is located approximately 2.5 km from Uppsala Central Station. A walk takes around 30 min.\n\n\n\nThe closest bus stop is “Uppsala Science Park”. To travel by bus in Uppsala see the UL website or the UL app. The bus lines 3, 4, 8 and 11 all stop at Uppsala Central Station and Uppsala Science Park."
   },
   {
     "objectID": "travel.html#transport-options-to-bmc-from-uppsala-central-station",
@@ -12,6 +12,13 @@
     "title": "Travel information",
     "section": "",
     "text": "BMC is located approximately 2.5 km from Uppsala Central Station. A walk takes around 30 min.\n\n\n\nThe closest bus stop is “Uppsala Science Park”. To travel by bus in Uppsala see the UL website or the UL app. The bus lines 3, 4, 8 and 11 all stop at Uppsala Central Station and Uppsala Science Park."
+  },
+  {
+    "objectID": "travel.html#transport-to-uppsala",
+    "href": "travel.html#transport-to-uppsala",
+    "title": "Travel information",
+    "section": "Transport to Uppsala",
+    "text": "Transport to Uppsala\n\nFrom Arlanda Airport\nTravel between Arlanda Airport and Uppsala Central station can be done by train, bus or taxi. For more information, see https://www.swedavia.com/arlanda/transport/.\n\n\nFrom Stockholm Central Station\nFor train travel between Stockholm and Uppsala, see https://www.sj.se/."
   },
   {
     "objectID": "presentations.html",
@@ -32,7 +39,7 @@
     "href": "index.html#venue-and-time",
     "title": "Spatial Omics Data Analysis",
     "section": "Venue and time",
-    "text": "Venue and time\nThis course will take place in Uppsala, Sweden, 6-9 of October 2026. The course will be held 9:00-17:00 each day except Friday the 9th when we end at 13:00. Find a detailed schedule here.\nLunch and coffee-break snacks are provided each day. All participants are invited to the social dinner, organized on 6 October 2026."
+    "text": "Venue and time\nThis course will take place at Biomedicinskt Centrum in Uppsala, Sweden, 6-9 of October 2026. The course will be held 9:00-17:00 each day except Friday the 9th when we end at 13:00. Find a detailed schedule here. For more information about the venue and travel, please see Travel Info.\nLunch and coffee-break snacks are provided each day. All participants are invited to the social dinner, organized on 6 October 2026."
   },
   {
     "objectID": "index.html#audience",
@@ -130,7 +137,7 @@
     "href": "schedule.html#day-1-october-6-2026",
     "title": "Schedule",
     "section": "Day 1 (October 6, 2026)",
-    "text": "Day 1 (October 6, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:15\nWelcome and course introduction\nAhmed Mahfouz (LUMC, NL)\n\n\n09:15-10:00\nOverview of SRT technologies\nÅsa Björklund (NBIS, SE)\n\n\n10:00-10:15\nBreak\n\n\n\n10:15-11:00\nCell segmentation\nChristophe Avenel (NBIS, SE)\n\n\n11:00-11:45\nPractical 0: SRT data formats\nJonas Windhager (NBIS, SE)\n\n\n11:45-12:45\nLunch\n\n\n\n12:45-14:15\nPractical 1: Cell segmentation\nChristophe Avenel (NBIS, SE)\n\n\n14:15-15:00\nLecture: Imaging-based spatial data analysis (preprocessing, QC and normalization)\nChristophe Avenel (NBIS, SE)\n\n\n15:00-15:15\nBreak\n\n\n\n15:15-16:45\nPractical 2: Imaging-based analysis and QC\nÅsa Björklund (NBIS, SE) & Stefan Ebmeyer (NBIS, SE)"
+    "text": "Day 1 (October 6, 2026)\n\n\n\n\n\n\n\n\nTime\nTopic\nTeacher\n\n\n\n\n09:00-09:15\nWelcome and course introduction\nAhmed Mahfouz (LUMC, NL)\n\n\n09:15-10:00\nOverview of SRT technologies\nÅsa Björklund (NBIS, SE)\n\n\n10:00-10:15\nBreak\n\n\n\n10:15-11:00\nCell segmentation\nChristophe Avenel (NBIS, SE)\n\n\n11:00-11:45\nPractical 0: SRT data formats\nJonas Windhager (NBIS, SE)\n\n\n11:45-12:45\nLunch\n\n\n\n12:45-14:15\nPractical 1: Cell segmentation\nChristophe Avenel (NBIS, SE)\n\n\n14:15-15:00\nLecture: Imaging-based spatial data analysis (preprocessing, QC and normalization)\nChristophe Avenel (NBIS, SE)\n\n\n15:00-15:15\nBreak\n\n\n\n15:15-16:45\nPractical 2: Imaging-based analysis and QC\nÅsa Björklund (NBIS, SE) & Stefan Ebmeyer (NBIS, SE)\n\n\nEvening (time TBA)\nCourse Dinner"
   },
   {
     "objectID": "schedule.html#day-2-october-7-2026",

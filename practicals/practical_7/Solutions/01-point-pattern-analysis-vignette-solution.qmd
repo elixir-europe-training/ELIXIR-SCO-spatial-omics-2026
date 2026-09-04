@@ -8,7 +8,7 @@ format:
 editor: visual
 editor_options: 
   chunk_output_type: inline
-bibliography: resources/PASTA.bib
+bibliography: ../resources/PASTA.bib
 ---
 
 ## Introduction
@@ -149,6 +149,18 @@ table(spe$sample_id)
 2.  How many cells are annotated as 'OD Mature' in each of the 3 slices used below (-0.09, 0.01, 0.21)?
 :::
 
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+# Number of z-slices 
+length(unique(spe$sample_id))
+
+# Number of OD Mature cells in each selected slice
+selected_slices <- c("-0.09", "0.01", "0.21")
+cell_counts <- table(spe$sample_id, spe$cluster_id)
+cell_counts[selected_slices, "OD Mature"]
+```
+:::
+
 Next, we want to extract three 2D slices of this `r BiocStyle::Biocpkg('SpatialExperiment')` object and convert them into `ppp` objects. The `r BiocStyle::Biocpkg('spatialFDA')` package contains a function for this conversion: `spatialFDA::.dfToppp`.
 
 ```{r}
@@ -179,6 +191,20 @@ ggplot(slice_df, aes(x, y, colour = marks)) +
 
 ::: {.callout-tip title="EXERCISE"}
 Modify the ggplot to highlight `OD Mature` cells
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+ggplot(slice_df, aes(x, y, colour = marks)) +
+  geom_point(size = .5) +
+  geom_point(
+    data = subset(slice_df, marks == "OD Mature"),
+    aes(x, y),
+    shape = 1,
+    colour = "black"
+  ) +
+  coord_equal()
+```
 :::
 
 ### Windows
@@ -275,6 +301,18 @@ ggplot(pp_df, aes(x, y, colour = log(value + 1))) +
 Adjust the code blocks above to also visualize the expression of 'Prlr'
 :::
 
+::: {.callout-tip collapse="true" title="Solution"}
+Make the following two changes:
+
+``` r
+genes <- c("Slc18a2", "Esr1", "Pgr", "Prlr")
+
+pivot_longer(cols = all_of(genes))
+```
+
+Then re-run the modified code blocks.
+:::
+
 #### Within Mark Comparison
 
 We can compare patterns between marks of the same type, which is referred to as a *within-mark* comparison in our vignette. We can compare discrete marks, i.e., the distribution of one single mark (e.g., a cell type).
@@ -348,6 +386,25 @@ Choose another summary function from `r BiocStyle::CRANpkg('spatstat.explore')` 
 For example, use Besag's $L$ (`Lest`) to compare the spatial arrangement of `OD Mature` cells across the same three sections. How do the resulting curves compare with the Ripley's $K$ curves above?
 :::
 
+::: {.callout-tip collapse="true" title="Solution"}
+```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
+calcMetricPerFov(
+  spe, selection = "OD Mature",
+  subsetby = "sample_id",
+  fun = "Lest",
+  marks = "cluster_id",
+  by = "sample_id"
+) |>
+  dplyr::filter(sample_id %in% c("-0.09", "0.01", "0.21")) |>
+  plotMetricPerFov(
+    correction = "border",
+    theo = TRUE, x = "r",
+    imageId = "sample_id",
+    linewidth = 3
+  ) 
+```
+:::
+
 A similar analysis can be performed for continuous marks using a mark-weighted correlation function (`markcorr`). For a continuous mark such as gene expression, it evaluates whether pairs of cells separated by distance (r) tend to have jointly high or low mark values. The mark weighted correlation function is defined as:
 
 $$k_f(r) =  \frac{\mathbb{E}[f(m(u),m(v))|u,v \in X]}{\mathbb{E}[f(M,M')]}$$
@@ -358,6 +415,29 @@ where the numerator is the conditional expectation of the marks at location $u,v
 Calculate the mark correlation function for the expression of `Slc18a2`, `Esr1`, and `Pgr` in section `-0.09`
 
 Hint: modify `subsetby`, `fun`, and `marks`, and set `continuous = TRUE`. Use `?markcorr` for more information.
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
+genes <- c('Slc18a2', 'Esr1', 'Pgr')
+
+calcMetricPerFov(
+  spe[,spe$sample_id == "-0.09"],
+  selection = "all",
+  subsetby = genes,
+  fun = 'markcorr',
+  marks = genes,
+  by = 'sample_id',
+  continuous = TRUE
+) |> 
+  plotMetricPerFov(
+    correction = "iso",
+    theo = TRUE,
+    x = "r",
+    imageId = 'gene', linewidth = 3
+    ) + 
+  theme(legend.position = "bottom")
+```
 :::
 
 ```{r}
@@ -420,6 +500,29 @@ ggplot(res$scores %>% as.data.frame(),
 2.  Do the exploratory analysis the other way around; for each point, plot the value of the functional PC1 in the spatial context (above, we coloured by the value of the local L-curve at r=\~200).
 :::
 
+::: {.callout-tip collapse="true" title="Solution"}
+``` r
+# Exercise 1
+# transform the local L curves
+df_trans <- df %>%
+  mutate(across(!c(r, theo), ~ asinh(.x / 50)))
+```
+
+```{r, message=FALSE, warning=FALSE, fig.height=5, fig.width=7}
+# Exercise 2
+pp_df <- as.data.frame(pp)
+pp_df$fPC1 <- res$scores[, 1]
+
+ggplot(pp_df, aes(x, y, colour = fPC1)) +
+  geom_point(size = 2) +
+  coord_equal() +
+  scale_color_continuous(type = "viridis") +
+  theme_bw() +
+  labs(title = "Functional PC1 in spatial context",
+       colour = "fPC1")
+```
+:::
+
 ```{r}
 invisible(gc())
 ```
@@ -456,6 +559,30 @@ We note that there is not a very strong co-localisation indicated by the $L$ cur
 Compare the colocalisation of `OD Mature` and `Ependymal` cells in section `0.01`.
 
 Choose an appropriate cross-type summary function from `r BiocStyle::CRANpkg('spatstat.explore')`. See the **Summary statistics for a multitype point pattern** section in `?spatstat.explore` for available functions. `calcMetricPerFov` is a helper (wrapper) function that is useful to operate on `r BiocStyle::Biocpkg('SpatialExperiment')` objects.
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+Here, we use the inhomogeneous cross-type (L)-function:
+
+```{r, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
+calcMetricPerFov(
+  spe[, spe$sample_id == "0.01"],
+  selection = c("OD Mature", "Ependymal"),
+  subsetby = "sample_id",
+  fun = "Lcross.inhom",
+  marks = "cluster_id",
+  rSeq = seq(0, 500, length.out = 100),
+  by = "sample_id",
+  correction = "isotropic"
+) |>
+  plotMetricPerFov(
+    theo = TRUE,
+    correction = "iso",
+    x = "r",
+    imageId = "sample_id",
+    linewidth = 3
+  )
+```
 :::
 
 ::: {.callout-tip title="EXERCISE (advanced!)"}

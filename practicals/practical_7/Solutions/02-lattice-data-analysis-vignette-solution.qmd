@@ -8,7 +8,7 @@ format:
 editor: visual
 editor_options: 
   chunk_output_type: inline
-bibliography: resources/PASTA.bib
+bibliography: ../resources/PASTA.bib
 ---
 
 # Introduction
@@ -278,16 +278,47 @@ In the local version of Moran's I, the interpretation is the same as the global 
 Try to recalculate the local Moran's I with gene *Myh1*. What do you notice?
 :::
 
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+sfe_tissue <- runUnivariate(sfe_tissue,
+  type = "localmoran",
+  features = "Myh1",
+  colGraphName = "visium",
+  swap_rownames = "symbol"
+)
+
+# plot the expression values
+pExp <- plotSpatialFeature(sfe_tissue,
+  features = c("Myh1"), colGeometryName = "spotPoly",
+  swap_rownames = "symbol"
+)
+
+# plot the local Moran's I values
+pLi <- plotLocalResult(sfe_tissue, "localmoran",
+  features = c("Myh1"),
+  colGeometryName = "spotPoly", swap_rownames = "symbol",
+  divergent = TRUE, diverge_center = 0
+) + labs(fill = "li(Myh1)") # specify legend
+
+
+# plot the local Moran's I p-values
+pPval <- plotLocalResult(sfe_tissue, "localmoran",
+  features = c("Myh1"), "-log10p_adj",
+  colGeometryName = "spotPoly", swap_rownames = "symbol",
+  divergent = TRUE, diverge_center = -log10(0.05)
+) + labs(fill = "-log10(p.adj)") # specify legend
+
+pExp + pLi + pPval
+```
+:::
+
 ### Advanced -- Bivariate Moran's I
 
 There exists a bivariate version of Moran's I as well. The package `spatialDM` [@liSpatialDMRapidIdentification2023] uses an adapted version of bivariate Moran's I to identify ligand-receptor pairs.
 
-For two continuous observations, the global bivariate Moran's I is defined as [@wartenbergMultivariateSpatialCorrelation1985; @bivandPackagesAnalyzingSpatial2022]
-$$I_B =\frac{\sum_i x_i \sum_j w_{ij} y_j}{\sum_i x_i^2}.$$
+For two continuous observations, the global bivariate Moran's I is defined as [@wartenbergMultivariateSpatialCorrelation1985; @bivandPackagesAnalyzingSpatial2022] $$I_B =\frac{\sum_i x_i \sum_j w_{ij} y_j}{\sum_i x_i^2}.$$
 
-Here, $x_i$ is the value of variable $x$ at location $i$, while
-$\sum_j w_{ij}y_j$ is the spatial lag of variable $y$, i.e. a weighted
-summary of $y$ in the neighbours of location $i$ (also called the spatial lag of $y$).
+Here, $x_i$ is the value of variable $x$ at location $i$, while $\sum_j w_{ij}y_j$ is the spatial lag of variable $y$, i.e. a weighted summary of $y$ in the neighbours of location $i$ (also called the spatial lag of $y$).
 
 There exists a local version that we will explore here. The local version follows that same idea; it compares $x_i$ with the spatial lag of a second variable $y$. Note that bivariate Moran's I is not symmetric.
 
@@ -308,6 +339,12 @@ plotLocalResult(sfe_tissue, "localmoran_bv",
 
 ::: {.callout-tip title="EXERCISE"}
 Compare the results with the univariate local Moran's I plots for genes *Myh1* and *Myh2*. Also compare *Myh1*–*Myh2* with *Myh2*–*Myh1*. What do you notice?
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+The univariate statistic compares each gene with neighbouring values of itself, whereas the bivariate statistic compares one gene with neighbouring values of the other gene.
+
+The *Myh1*–*Myh2* and *Myh2*–*Myh1* maps are similar, but not identical. This is expected because bivariate Moran's I is asymmetric.
 :::
 
 Please note that the result might overestimate the spatial autocorrelation of the variables due to the inherent (non-spatial) correlation of $x$ and $y$ [@bivandPackagesAnalyzingSpatial2022].
@@ -359,6 +396,49 @@ pPoly + pKnn5
 
 ::: {.callout-tip title="EXERCISE"}
 What happens if we set the nearest neighbourhood graph to 10 nearest neighbours? What do you notice?
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+annotGraph(sfe_tissue, "knn10") <-
+  findSpatialNeighbors(
+    sfe_tissue,
+    type = "myofiber_simplified",
+    MARGIN = 3,
+    method = "knearneigh",
+    k = 10,
+    zero.policy = TRUE
+  )
+
+sfe_tissue <- annotGeometryUnivariate(
+  sfe_tissue,
+  "localmoran",
+  "area",
+  annotGeometryName = "myofiber_simplified",
+  annotGraphName = "knn10",
+  include_self = FALSE,
+  zero.policy = TRUE,
+  name = "knn10"
+)
+
+pKnn10 <- plotLocalResult(
+  sfe_tissue,
+  "knn10",
+  "area",
+  annotGeometryName = "myofiber_simplified",
+  annotGraphName = "knn10",
+  divergent = TRUE,
+  diverge_center = 0
+) +
+  labs(
+    title = "Local Moran's I (li)\n10 Nearest Neighbours",
+    fill = "li(area)"
+  )
+
+pKnn5 + pKnn10
+```
+
+The overall spatial pattern remains similar, but there are local differences. With 10 nearest neighbours, each myofiber is compared to a broader neighbourhood, resulting in a slightly smoother local Moran's I pattern. Note that the same color in the different plots does not correspond to the same value between the plots.
 :::
 
 # Summary and Considerations

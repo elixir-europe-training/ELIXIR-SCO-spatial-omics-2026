@@ -11,7 +11,7 @@ COPY ${PIXI_ENV_PATH}/pixi.toml /app/
 COPY ${PIXI_ENV_PATH}/pixi.lock /app/
 
 # Install the selected environment (locked for reproducibility)
-RUN pixi install --locked
+RUN pixi install --locked --run-post-link-scripts
 
 ARG NB_UID=1000
 ARG NB_GID=1000

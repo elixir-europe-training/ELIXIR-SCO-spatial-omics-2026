@@ -378,6 +378,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/mapclassify-2.11.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/markdown-it-py-4.2.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/matplotlib-inline-0.2.2-pyhd8ed1ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/matplotlib-scalebar-0.9.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mdurl-0.1.2-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mistune-3.3.4-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/more-itertools-11.1.0-pyhcf101f3_0.conda
@@ -454,6 +455,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/soupsieve-2.9.2-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/spatial-image-1.2.3-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/spatialdata-0.8.0-pyhd8ed1ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/spatialdata-plot-0.4.2-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stack_data-0.6.3-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/sympy-1.14.0-pyh2585a3b_106.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tblib-3.2.2-pyhcf101f3_0.conda
@@ -4075,7 +4077,7 @@ packages:
   license: MIT
   license_family: MIT
   purls:
-  - pkg:pypi/pyproj?source=compressed-mapping
+  - pkg:pypi/pyproj?source=hash-mapping
   run_exports: {}
   size: 573847
   timestamp: 1786351881422
@@ -6667,6 +6669,19 @@ packages:
   run_exports: {}
   size: 15725
   timestamp: 1778264403247
+- conda: https://conda.anaconda.org/conda-forge/noarch/matplotlib-scalebar-0.9.0-pyhd8ed1ab_0.conda
+  sha256: 20085f78b3fca5e8696264bd47fdd4c76bf2085ebf819bddda27cd6cf2c31117
+  md5: 05cf7fe9bbd45b12eb6c0ea8fd747307
+  depends:
+  - matplotlib-base
+  - python >=3.9
+  license: MIT
+  license_family: MIT
+  purls:
+  - pkg:pypi/matplotlib-scalebar?source=hash-mapping
+  run_exports: {}
+  size: 21170
+  timestamp: 1737197680653
 - conda: https://conda.anaconda.org/conda-forge/noarch/mdurl-0.1.2-pyhd8ed1ab_1.conda
   sha256: 78c1bbe1723449c52b7a9df1af2ee5f005209f67e40b6e1d3c7619127c43b1c7
   md5: 592132998493b3ff25fd7479396e8351
@@ -7790,6 +7805,23 @@ packages:
   run_exports: {}
   size: 153755
   timestamp: 1783420938275
+- conda: https://conda.anaconda.org/conda-forge/noarch/spatialdata-plot-0.4.2-pyhd8ed1ab_0.conda
+  sha256: b3ed91636716202640bc4c5209d8de3cf74667f59dfd902a542c6404ab5c86c8
+  md5: c06deb7b620ab6b574a68650ffa74292
+  depends:
+  - matplotlib-base
+  - matplotlib-scalebar
+  - python >=3.12
+  - scanpy
+  - scikit-learn
+  - spatialdata >=0.3.0
+  license: BSD-3-Clause
+  license_family: BSD
+  purls:
+  - pkg:pypi/spatialdata-plot?source=hash-mapping
+  run_exports: {}
+  size: 128296
+  timestamp: 1787858192400
 - conda: https://conda.anaconda.org/conda-forge/noarch/stack_data-0.6.3-pyhd8ed1ab_1.conda
   sha256: 570da295d421661af487f1595045760526964f41471021056e993e73089e9c41
   md5: b1b505328da7a6b246787df4b5a49fbc

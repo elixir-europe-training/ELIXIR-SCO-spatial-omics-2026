@@ -36,7 +36,7 @@ BRANCH="main"
 PARENT="practicals"
 N_PRACTICALS=10
 DEST="work/"
-# Zenodo archives to download and unzip into the central <DEST>/data/ directory.
+# Zenodo archives to download and extract into the central <DEST>/data/ directory.
 # This map is populated from a TSV file (see DATA_FILE below) so contributors can
 # add data without editing the script. Each dataset is stored under its ORIGINAL
 # archive name (e.g. data/Practical0), and reuse is keyed on that name: point
@@ -109,38 +109,129 @@ load_dois() {
     done < "$file"
 }
 
-# Download + extract ONE archive into the central <DEST>/data dir, keeping its
-# ORIGINAL archive name (e.g. data/Practical0). Reuse is keyed on that name, so a
-# dataset shared by several practicals is fetched only once.
+# Pick the directory a URL's dataset should live in under <data_dir>, starting
+# from its filename stem (e.g. data.zip -> data). Two practicals pointing at the
+# SAME url reuse that folder. Two DIFFERENT urls that happen to share a filename
+# (e.g. two Zenodo records both called "data.zip") must NOT collide, so each
+# candidate folder's provenance is checked via a ".source_url" marker written
+# inside it; on a mismatch we fall back to "<name>-2", "<name>-3", etc. A folder
+# with no marker predates this check and is assumed to match (and gets stamped),
+# so pre-existing downloads aren't invalidated.
+resolve_dataset_dir() {
+    local url="$1" data_name="$2" data_dir="$3"
+    local candidate="${data_dir}/${data_name}" i=1
+    while [ -d "$candidate" ]; do
+        if [ ! -f "$candidate/.source_url" ] || [ "$(cat "$candidate/.source_url" 2>/dev/null)" = "$url" ]; then
+            break
+        fi
+        i=$((i + 1))
+        candidate="${data_dir}/${data_name}-${i}"
+    done
+    printf '%s' "$candidate"
+}
+
+# Classify a filename by its archive type so fetch_dataset can pick the right
+# extraction tool (or none, if it isn't an archive at all).
+# Prints one of: tar, zip, gz, bz2, xz, "" (not a recognized archive).
+archive_kind() {
+    local lower
+    lower="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
+    case "$lower" in
+        *.tar.gz|*.tar.bz2|*.tar.xz|*.tgz|*.tbz2|*.txz|*.tar) printf 'tar' ;;
+        *.zip)  printf 'zip' ;;
+        *.gz)   printf 'gz' ;;
+        *.bz2)  printf 'bz2' ;;
+        *.xz)   printf 'xz' ;;
+        *)      printf '' ;;
+    esac
+}
+
+# Dataset name = the archive's own filename stem, with compound extensions like
+# .tar.gz stripped fully (Practical0.zip -> Practical0, data.tar.gz -> data).
+compute_data_name() {
+    local base="$1" lower name
+    lower="$(printf '%s' "$base" | tr '[:upper:]' '[:lower:]')"
+    case "$lower" in
+        *.tar.gz|*.tar.bz2|*.tar.xz)
+            name="${base%.*}"; name="${name%.*}" ;;
+        *)
+            name="${base%.*}" ;;
+    esac
+    printf '%s' "$name"
+}
+
+# Download + extract ONE archive into the central <DEST>/data dir, keyed on the
+# archive's own filename stem (e.g. data/Practical0) unless that collides with a
+# different URL (see resolve_dataset_dir). A dataset shared by several practicals
+# (same URL) is fetched only once. If the URL doesn't point at a recognized
+# archive, the downloaded file is kept as-is (no extraction attempted).
 fetch_dataset() {
     local for_name="$1" url="$2"
 
-    # Dataset name = the archive's own filename stem (Practical0.zip -> Practical0).
     local base="${url##*/}"; base="${base%%\?*}"   # strip path + query string
-    local data_name="${base%.*}"                    # strip .zip
+    local data_name; data_name="$(compute_data_name "$base")"
+    local kind; kind="$(archive_kind "$base")"
     local data_dir="${DEST}/data"
-    local dest="${data_dir}/${data_name}"
+    mkdir -p "$data_dir"
+    local dest
+    dest="$(resolve_dataset_dir "$url" "$data_name" "$data_dir")"
 
     if [ -d "$dest" ]; then
-        ok "Dataset '${data_name}' already present in ${data_dir}/ — reusing it (no download for ${for_name})."
+        [ -f "$dest/.source_url" ] || printf '%s' "$url" > "$dest/.source_url"
+        ok "Dataset '$(basename "$dest")' already present in ${data_dir}/ — reusing it (no download for ${for_name})."
         return 0
     fi
 
-    mkdir -p "$data_dir"
-    local zip stage
-    zip="$(mktemp "${TMPDIR:-/tmp}/${data_name}.XXXXXX")"
+    local archive_file stage
+    archive_file="$(mktemp "${TMPDIR:-/tmp}/${data_name}.XXXXXX")"
     stage="$(mktemp -d "${data_dir}/.stage.XXXXXX")"   # same FS as dest -> atomic move
     log "Downloading dataset ${BOLD}${data_name}${RESET} for ${for_name} from Zenodo: ${url}"
-    if ! curl -fL --progress-bar "$url" -o "$zip"; then
+    if ! curl -fL --progress-bar "$url" -o "$archive_file"; then
         err "Failed to download dataset '${data_name}'."
-        rm -f "$zip"; rm -rf "$stage"; return 1
+        rm -f "$archive_file"; rm -rf "$stage"; return 1
     fi
-    if ! unzip -oq "$zip" -d "$stage"; then
-        err "Failed to unzip dataset '${data_name}'."
-        rm -f "$zip"; rm -rf "$stage"; return 1
-    fi
-    rm -f "$zip"
-    # Clean up any __MACOSX folders that may be included in the zip
+
+    case "$kind" in
+        zip)
+            if ! unzip -oq "$archive_file" -d "$stage"; then
+                err "Failed to unzip dataset '${data_name}'."
+                rm -f "$archive_file"; rm -rf "$stage"; return 1
+            fi
+            ;;
+        tar)
+            # tar auto-detects gzip/bzip2/xz compression, so this covers
+            # .tar, .tar.gz/.tgz, .tar.bz2/.tbz2 and .tar.xz/.txz alike.
+            if ! tar -xf "$archive_file" -C "$stage"; then
+                err "Failed to extract tar archive '${data_name}'."
+                rm -f "$archive_file"; rm -rf "$stage"; return 1
+            fi
+            ;;
+        gz)
+            if ! gzip -dc "$archive_file" > "${stage}/${data_name}"; then
+                err "Failed to decompress dataset '${data_name}'."
+                rm -f "$archive_file"; rm -rf "$stage"; return 1
+            fi
+            ;;
+        bz2)
+            if ! bzip2 -dc "$archive_file" > "${stage}/${data_name}"; then
+                err "Failed to decompress dataset '${data_name}'."
+                rm -f "$archive_file"; rm -rf "$stage"; return 1
+            fi
+            ;;
+        xz)
+            if ! xz -dc "$archive_file" > "${stage}/${data_name}"; then
+                err "Failed to decompress dataset '${data_name}'."
+                rm -f "$archive_file"; rm -rf "$stage"; return 1
+            fi
+            ;;
+        '')
+            # Not a recognized archive — keep the downloaded file as-is.
+            mv "$archive_file" "${stage}/${base}"
+            archive_file=""
+            ;;
+    esac
+    [ -n "$archive_file" ] && rm -f "$archive_file"
+    # Clean up any __MACOSX folders that may be included in a zip
     find "$stage" -name "__MACOSX" -type d -exec rm -rf {} + 2>/dev/null || true
 
     # Publish under the original name. Only stage -> dest at the end, so an
@@ -154,7 +245,8 @@ fetch_dataset() {
     else
         mv "$stage" "$dest"         # loose files: keep them under data_name/
     fi
-    ok "Dataset '${data_name}' extracted to ${dest}/"
+    printf '%s' "$url" > "$dest/.source_url"
+    ok "Dataset '$(basename "$dest")' extracted to ${dest}/"
 }
 
 download_data() {

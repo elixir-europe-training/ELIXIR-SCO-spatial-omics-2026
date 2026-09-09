@@ -26,6 +26,7 @@ pip = ">=26.2.1,<27"
 curl = ">=8.22.0,<9"
 tar = ">=1.35,<2"
 gzip = ">=1.14,<2"
+spatialdata-plot = ">=0.4.2,<0.5"
 
 [pypi-dependencies]
 celltypist = "*"

@@ -1,16 +1,29 @@
 [workspace]
-authors = ["Aditya Singh <dr.singhaditya@hotmail.com>"]
-channels = ["conda-forge", "bioconda"]
 name = "env"
-platforms = ["linux-64"]
 version = "0.1.0"
-
-[tasks]
+authors = ["Leslie Solorzano <leslie.solorzano@icm.uu.se>"]
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64"]
 
 [dependencies]
-ipykernel = ">=7.2.0,<8"
-jupyter = ">=1.1.1,<2"
-curl = ">=8.20.0,<9"
-tar = ">=1.35,<2"
-gzip = ">=1.14,<2"
+# Core Data & Spatial Ecosystem
+zarr = ">=3.0.0"
+spatialdata = ">=0.8.0,<0.9"
+leidenalg = ">=0.12.0,<0.13"
 
+# Standard Scientific Stack
+scanpy = "*"
+numpy = "*"
+pandas = "*"
+seaborn = "*"
+matplotlib = "*"
+# Jupyter Ecosystem
+jupyterlab = "*"
+pixi-kernel = "*"
+
+# Required base tooling for PyPI resolution
+pip = ">=26.2.1,<27"
+
+[pypi-dependencies]
+celltypist = "*"
+spatialdata-io = ">=0.7.1,<0.8"

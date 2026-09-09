@@ -20,8 +20,10 @@ jobs:
     strategy:
       matrix:
         include:
-          # Jupyter containers for practicals 0-5, except practical 1 which doesn't exist
+          # Jupyter containers for practicals 0-5
           - practical: 0
+            ide: jupyter
+          - practical: 1
             ide: jupyter
           - practical: 2
             ide: jupyter
@@ -30,6 +32,10 @@ jobs:
           - practical: 4
             ide: jupyter
           - practical: 5
+            ide: jupyter
+          - practical: 6_part1
+            ide: jupyter
+          - practical: 6_part2
             ide: jupyter
           # RStudio container for practical 7
           - practical: 7

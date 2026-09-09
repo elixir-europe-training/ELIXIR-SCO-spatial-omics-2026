@@ -1,7 +1,7 @@
 [workspace]
 name = "env"
 version = "0.1.0"
-authors = ["Leslie Solorzano <leslie.solorzano@icm.uu.se>"]
+authors = ["Leslie Solorzano <leslie.solorzano@icm.uu.se>", "Aditya Singh <aditya.singh@gu.se>"]
 channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64"]
 
@@ -23,6 +23,9 @@ pixi-kernel = "*"
 
 # Required base tooling for PyPI resolution
 pip = ">=26.2.1,<27"
+curl = ">=8.22.0,<9"
+tar = ">=1.35,<2"
+gzip = ">=1.14,<2"
 
 [pypi-dependencies]
 celltypist = "*"

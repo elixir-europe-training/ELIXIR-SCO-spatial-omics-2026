@@ -35,12 +35,9 @@ jobs:
             ide: jupyter
           - practical: 6_part1
             ide: jupyter
-          - practical: 6_part2
-            ide: jupyter
           # RStudio container for practical 7
           - practical: 7
             ide: rstudio
-          # Jupyter containers for practicals 8-9
           - practical: 8
             ide: jupyter
           - practical: 9

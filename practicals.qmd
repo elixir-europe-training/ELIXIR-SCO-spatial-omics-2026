@@ -88,7 +88,7 @@ docker run \
 ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026:practical-0-jupyter-latest
 ```
 
-Now, jupyter lab should be available from `localhost:8888`. Use the token that is provided in the terminal to login. 
+Now, jupyter lab should be available from `localhost:8888`, use password `spatial` when prompted. 
 
 For the rstudio image of practical 7, the equivalent would be:
 
@@ -97,14 +97,11 @@ docker run \
 --rm \
 --platform=linux/amd64 \
 -p 8787:8787 \
--v $PWD:/home/rstudio \
+-v $PWD:/home/rstudio/work/ \
 ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026:practical-7-rstudio-latest
 ```
 
-Now Rstudio is available from `localhost:8787`. Use the username `rstudio` and the password that is provided in the terminal to login. 
-
-
-Change the option `-v` to mount another local directory to the container, for example the directory in which you have stored the required input files. 
+Now Rstudio is available from `localhost:8787`.
 
 
 Once the you have accessed the app, see steps 6 and 7 above.

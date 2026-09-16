@@ -4,88 +4,108 @@ title: "Practicals"
 
 ## Introduction
 
-This course consists of multiple practicals. During the four days we will go through practical 0 till 9 (more info in the [schedule](schedule.qmd)). Each practical has a dedicated directory in the [repository](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics-2026), and comes with:
+This course includes multiple practical exercises. During the four days we will go through practical 0 to 9 (more info in the [schedule](schedule.qmd)). Each practical has a dedicated directory in the [repository](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics-2026) under the practicals/ directory. Each practical directory includes:
 
-- A container image: you will receive a link for each practical to your personal environment during the course.
-- One or more notebooks with the name `p[practical number]_topic.ipynb` or `Practical[practical number]_topic.ipynb`. So for practical 1, we have a notebook called `Practical1_Segmentation_Cellpose.ipynb`. 
-- One or more conda environments in the image corresponding to each notebook, e.g. `p1_segmentation.ipynb`. 
+- One or more notebooks with names starting with Practical[number] or p[number]. For example, for practical 1, we have a notebook called `Practical1_Segmentation_Cellpose.ipynb` 
+- A directory (`env`) with environment files
+- Any other files necessary for running the labs
 
 ## Working on the practicals
 
-To start working on the practicals, navigate to the provided spreadsheet with server login information, click on the link next to your name that links to the corresponding practical. Then, use the password associated with your name to log in. 
+Participants of the course are recommended to use SciLifeLab Serve to run the practical exercises. If you are not a participant in the course but want to run the practicals, please see "Working locally" below.
 
-Now you are in your personal container image. This image has two important directories that are mounted to all container images that are avaiable to you:
+### On SciLifeLab Serve (recommended)
 
-- (for jupyter-based practicals)`/home/jovyan/workdir`: a directory in home for which you have read and write access. This is where you will be mainly working in. For the rstudio-based practical this is `/home/rstudio`. 
-- `/data`: a directory where you only have read access. From here you can read the available input data. 
-
-At the first login, open a terminal, navigate to `/home/jovyan/workdir` and clone the repository:
-
-```sh
-git clone https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics.git
-```
-
-::: {.callout-warning}
-For jupyter containers, only `/home/jovyan/workdir` is shared with other containers. This means that everything you write outside this directory will **not** be available for other practicals. 
+:::{.callout-note}
+SciLifeLab Serve is an app-hosting platform provided by SciLifeLab Sweden. All participants registered to the course will gain access to a project that has been designed for the course. In order to gain access to this project, a SciLifeLab Serve account is needed. If you do not already have an account, please follow [these instructions](serve_instructions.qmd).
 :::
 
-::: {.callout-note}
-If you are comfortable with using git, you migh want to fork the repository first, and push your changes to your own namespace. In order to do so:
+1. Log onto <https://serve.scilifelab.se>
 
-- Fork the [repository](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics) (Click 'fork' on the top right).
-- Set your name and e-mail with:
+2. When your course project has been created, you can find it under _My projects_ in the main menu. Click _Open_.
 
-```sh
-git config --local user.email "you@example.com"
-git config --local user.name "Your Name" 
-```
+![](./assets/serve_lab_project.png)
 
-- Clone the repository from your namespace to `/home/jovyan/workdir`
-- Make changes and push them. You will be asked for your github username and password (use a token: https://github.com/settings/tokens/new). If you are using a token, store it somewhere, because you have to login again if you move to a container of another practical.
+3. In the project, you can create Jupyter Lab apps and RStudio apps. Each practical requires its own app with its own environment. Jupyter Lab is used for all practicals except practical 7, which uses RStudio. To reduce memory usage, create the app only when you will start the practical, and delete the app after you have finished it. Choose the appropriate app and click _Create_.
+
+![](./assets/serve_lab_app_types.png)
+
+4. You will now see a form to configure a notebook server. Under _Name_ put the name of your choice, _e.g._ the practical name. Select the Docker image for the practical you want to run. Leave the rest of the fields unchanged. Now click _Submit_.
+  * Example for practical 1:
+![](./assets/serve_lab_form.png)
+
+5. The notebook server will now be created for you. Wait a few minutes to see the status _Running_ in green. You can now click on its name to open it in a new tab.
+
+:::{.callout-note}
+If a password is required in Jupyter Lab or RStudio, use `spatial`.
 :::
 
-After cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook). Do this by clicking the button 'Python 3 (ipykernel)' on the top right of your notebook:
+![](./assets/serve_lab_running.png)
 
-![](assets/select_kernel.png)
 
-And select the environment with the corresponding name from the dropdown menu. This ensures that you are using the correct dependencies for each practical.
+:::{.callout-note}
+If the status does not turn to _Running_ within 5 minutes, click on the three dots under _Actions_ and then _Delete_. Wait a few minutes until you see the status _Deleted_. Now you can refresh the page and create a new instance starting from step 3.
 
-If you encounter any issues or have questions, please ask one of the instructors for assistance. Happy coding!
+:::
+
+6. Once your app is open, download the files required for the practicals. You can download one practical at a time or all practicals at once. In a terminal window in the app, run 
+
+```
+
+bash download_labs.sh [practical number]
+## or 
+bash download_labs.sh all
+
+```
+
+7. Your practical should now be available under `work/practical_[number]`. Open the notebook.
+
+:::{.callout-note}
+In rare cases it may happen that your notebook server suddenly restarts. This could be due to an error that affected the notebook globally (for example, it ran out of temporary memory). You will see this on the page where you are working. A new notebook will start for you at the same URL within a few minutes.
+:::
+
+
+#### Storage
+
+In the case of both JupyterLab and RStudio you have access to persistent storage. This is mounted to the folder `/home/nbis/work` (Jupyter) or `/home/rstudio/work` (RStudio). Files stored in this folder (_NB: only in this folder_) will be available even if a notebook suddenly restarts. You can also view, download these files or upload other files that will become visible in your instance through a _File Manager_ that can be launched from the bottom of the _Project_ overview page.
+
+
+
 
 ## Working locally
 
-If you would like to work on the exercises after course, you can work locally with docker and download the files from amazon s3.
+If you do not have access to  would like to work on the exercises after course, you can work locally with Docker.
 
-On s3, there is a bucket in which we mirrored the `/data` folder. To download data from `/data`, you can use e.g. `wget`: 
-
-```sh
-FILEPATH=/data/path/to/file.txt
-wget https://elixir-sco-spatial-omics.s3.eu-central-1.amazonaws.com"$FILEPATH"
-```
-
-If you are used to AWS CLI, you can also download the full directories from the bucket `elixir-sco-spatial-omics` in region `eu-central-1`. 
-
-The container images for each practical are in the `sibswiss` namespace on dockerhub, find them [here](https://hub.docker.com/r/sibswiss/elixir-sco-spatial-omics/tags). In order to use them locally for e.g. practical 6, you can use the following command:
+The container images for each practical are in the `elixir-europe-training` namespace on dockerhub, find them [here](https://ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026). The naming convention is `practical-[number]-[IDE]-latest`. In order to use them locally, you can use the following command (example given for practical 0):
 
 ```sh
 docker run \
 --rm \
+--platform=linux/amd64 \
 -p 8888:8888 \
--v $PWD:/home/jovyan/workdir \
+-v $PWD:/home/nbis/work/ \
 -e JUPYTER_ENABLE_LAB=yes \
-sibswiss/elixir-sco-spatial-omics:practical_6
+ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026:practical-0-jupyter-latest
 ```
 
-Now, jupyter lab should be available from `localhost:8888`. Use the token that is provided in the terminal to login. Change the option `-v` to mount another local directory to the container, for example the directory in which you have stored the required input files. 
+Now, jupyter lab should be available from `localhost:8888`. Use the token that is provided in the terminal to login. 
 
-For the rstudio image of practical 5, this would be:
+For the rstudio image of practical 7, the equivalent would be:
 
 ```sh 
 docker run \
 --rm \
+--platform=linux/amd64 \
 -p 8787:8787 \
 -v $PWD:/home/rstudio \
-sibswiss/elixir-sco-spatial-omics:practical_5
+ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026:practical-7-rstudio-latest
 ```
 
 Now Rstudio is available from `localhost:8787`. Use the username `rstudio` and the password that is provided in the terminal to login. 
+
+
+Change the option `-v` to mount another local directory to the container, for example the directory in which you have stored the required input files. 
+
+
+Once the you have accessed the app, see steps 6 and 7 above.
+

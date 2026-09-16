@@ -17,22 +17,23 @@ Participants of the course are recommended to use SciLifeLab Serve to run the pr
 ### On SciLifeLab Serve (recommended)
 
 :::{.callout-note}
-SciLifeLab Serve is an app-hosting platform provided by SciLifeLab Sweden. All participants registered to the course will gain access to a project that has been designed for the course. In order to gain access to this project, a SciLifeLab Serve account is needed. If you do not already have an account, please follow [these instructions](serve_instructions.qmd).
+SciLifeLab Serve is an app-hosting platform provided by SciLifeLab Sweden. All participants registered to the course will gain access to a project that has been designed for the course. In order to gain access to this project, a SciLifeLab Serve account is needed. If you do not already have an account, please follow [these instructions](https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/serve_instructions.html).
 :::
 
 1. Log onto <https://serve.scilifelab.se>
 
 2. When your course project has been created, you can find it under _My projects_ in the main menu. Click _Open_.
 
-![](./assets/serve_lab_project.png)
+![](./assets/serve/serve_lab_project.png)
 
 3. In the project, you can create Jupyter Lab apps and RStudio apps. Each practical requires its own app with its own environment. Jupyter Lab is used for all practicals except practical 7, which uses RStudio. To reduce memory usage, create the app only when you will start the practical, and delete the app after you have finished it. Choose the appropriate app and click _Create_.
 
-![](./assets/serve_lab_app_types.png)
+![](./assets/serve/serve_lab_app_types.png)
 
 4. You will now see a form to configure a notebook server. Under _Name_ put the name of your choice, _e.g._ the practical name. Select the Docker image for the practical you want to run. Leave the rest of the fields unchanged. Now click _Submit_.
   * Example for practical 1:
-![](./assets/serve_lab_form.png)
+
+![](./assets/serve/serve_lab_form.png)
 
 5. The notebook server will now be created for you. Wait a few minutes to see the status _Running_ in green. You can now click on its name to open it in a new tab.
 
@@ -40,7 +41,7 @@ SciLifeLab Serve is an app-hosting platform provided by SciLifeLab Sweden. All p
 If a password is required in Jupyter Lab or RStudio, use `spatial`.
 :::
 
-![](./assets/serve_lab_running.png)
+![](./assets/serve/serve_lab_running.png)
 
 
 :::{.callout-note}

@@ -1,0 +1,12 @@
+---
+title: "Registering for SciLifeLab Serve"
+---
+
+
+To run the practical exercises during the course, all participants will need an account on <https://serve.scilifelab.se>. To register for an account, go to <https://serve.scilifelab.se/signup/>.
+
+- If you do not have a Swedish university email address, specify in the "How do you plan on using Serve?" section that you will participate in the NBIS course in Spatial Omics Data Analysis.
+- If you have a Swedish university email address, you can specify in the "Do you require support?" section that you will participate in the NBIS course in Spatial Omics Data Analysis. This makes it a bit easier for us to find everyone, but it is not a problem if you register without specifying this.
+
+Do not forget to also confirm your e-mail address by clicking on a link in the activation email.
+

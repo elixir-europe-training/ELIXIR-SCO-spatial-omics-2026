@@ -3,7 +3,7 @@ project:
   execute-dir: project
   render:
     - "*.qmd"
-    - "!CONTRIBUTIONG.md"
+    - "!CONTRIBUTING.md"
     - "!LICENSE.md"
     - "!practicals/**"
 

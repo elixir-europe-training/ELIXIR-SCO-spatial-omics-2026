@@ -271,4 +271,3 @@ def build_multimodal_anndata(outdir, mol_dir, coord_dir, metadata=None, max_dist
     print(f"Saved multimodal AnnData to {out_h5ad}, shape={adata.shape}")
 
     return adata
-

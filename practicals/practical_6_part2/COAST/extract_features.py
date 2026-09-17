@@ -146,4 +146,3 @@ def extract_features(coord_path, img_path, output_name, outdir,
     print(f"[INFO] Saved patch coordinates to {VIT_DIR}/{output_name}_vit_coord.csv")
 
     return features_array, coords_array
-

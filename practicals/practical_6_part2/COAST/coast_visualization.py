@@ -9,129 +9,110 @@ from sklearn.cluster import KMeans
 import umap
 
 def run_umap_clustering(outdir, n_clusters=9, spot_size=20, background=True):
-    """
-    Compute UMAP embedding and KMeans clustering on concatenated _vit_mf CSVs
-    and plot spatial clusters using _vit_coord CSVs, side by side.
-    
-    Args:
-        outdir (str): Base output directory containing ViT_features/
-        n_clusters (int): Number of clusters for KMeans
-        spot_size (int): Dot size for scatterplots
-        background (bool): If True, include all patches (intissue + grid).
-                           If False, exclude patches ending in '_grid'.
-    """
     vit_feature_dir = os.path.join(outdir, "ViT_features")
-    vis_outdir = os.path.join(outdir, "visualization")
+    vis_outdir      = os.path.join(outdir, "visualization")
     os.makedirs(vis_outdir, exist_ok=True)
 
-    # --- Load all feature and coordinate files ---
-    vit_mf_files = sorted(glob.glob(os.path.join(vit_feature_dir, "*_vit_mf.csv")))
+    # --- Load files ---
+    vit_mf_files    = sorted(glob.glob(os.path.join(vit_feature_dir, "*_vit_mf.csv")))
     vit_coord_files = sorted(glob.glob(os.path.join(vit_feature_dir, "*_vit_coord.csv")))
     if not vit_mf_files or not vit_coord_files:
         raise FileNotFoundError("No _vit_mf.csv or _vit_coord.csv files found")
 
-    # --- Concatenate features ---
-    feature_dfs = []
-    coord_dfs = []
-    tissue_labels = []
-
+    feature_dfs, coord_dfs, tissue_labels = [], [], []
     for mf_file, coord_file in zip(vit_mf_files, vit_coord_files):
-        df_feat = pd.read_csv(mf_file, index_col=0)
+        df_feat  = pd.read_csv(mf_file,    index_col=0)
         df_coord = pd.read_csv(coord_file, index_col=0)
-
-        if not background:  # remove grid patches
-            mask = ~df_feat.index.str.endswith("_grid")
-            df_feat = df_feat[mask]
+        if not background:
+            mask     = ~df_feat.index.str.endswith("_grid")
+            df_feat  = df_feat[mask]
             df_coord = df_coord[mask]
-
         feature_dfs.append(df_feat)
         coord_dfs.append(df_coord)
         tissue_labels.extend([os.path.splitext(os.path.basename(mf_file))[0]] * len(df_feat))
 
-    df_features = pd.concat(feature_dfs, axis=0)
-    df_coords = pd.concat(coord_dfs, axis=0)
+    df_features        = pd.concat(feature_dfs, axis=0)
+    df_coords          = pd.concat(coord_dfs,   axis=0)
     df_coords["tissue"] = tissue_labels
-
     print(f"[INFO] Loaded {len(df_features)} patches from {len(vit_mf_files)} sections")
 
-    # --- Scale features ---
-    scaler = StandardScaler()
-    features_scaled = scaler.fit_transform(df_features.values)
+    # --- Scale + UMAP + KMeans ---
+    features_scaled = StandardScaler().fit_transform(df_features.values)
+    embedding       = umap.UMAP(random_state=42).fit_transform(features_scaled)
+    df_features["UMAP1"] = embedding[:, 0]
+    df_features["UMAP2"] = embedding[:, 1]
+    df_features["cluster"] = KMeans(n_clusters=n_clusters, random_state=42).fit_predict(embedding)
+    df_coords["cluster"]   = df_features["cluster"].values
 
-    # --- UMAP embedding ---
-    reducer = umap.UMAP(random_state=42)
-    embedding = reducer.fit_transform(features_scaled)
-    df_features["UMAP1"], df_features["UMAP2"] = embedding[:,0], embedding[:,1]
-
-    # --- KMeans clustering ---
-    kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-    df_features["cluster"] = kmeans.fit_predict(embedding)
-    df_coords["cluster"] = df_features["cluster"].values
-
-    # --- Save combined dataset ---
     out_csv = os.path.join(vit_feature_dir, "umap_clusters_concatenated_sections.csv")
     df_features.to_csv(out_csv)
-    print(f"[INFO] Dataset with UMAP + clusters saved in: {out_csv}")
+    print(f"[INFO] Saved: {out_csv}")
 
-    # --- UMAP plot by cluster ---
-    plt.figure(figsize=(6,5), dpi=200)
-    sns.scatterplot(
-        x="UMAP1", y="UMAP2", hue="cluster",
-        palette="tab10", data=df_features,
-        s=spot_size, linewidth=0
-    )
-    plt.xlabel("UMAP1")
-    plt.ylabel("UMAP2")
-    plt.xticks(fontsize=8)
-    plt.yticks(fontsize=8)
-    plt.legend(markerscale=1.5, fontsize=8, bbox_to_anchor=(1.05,1), loc="upper left")
+    # --- Plot 1: UMAP coloured by cluster ---
+    fig, ax = plt.subplots(figsize=(6, 5), dpi=200)
+    sns.scatterplot(x="UMAP1", y="UMAP2", hue="cluster",
+                    palette="tab10", data=df_features,
+                    s=spot_size, linewidth=0, ax=ax, legend=False)
+    from matplotlib.patches import Patch
+    palette  = sns.color_palette("tab10", n_colors=n_clusters)
+    handles  = [Patch(color=palette[c], label=str(c)) for c in range(n_clusters)]
+    ax.legend(handles=handles, fontsize=6, markerscale=0.6, frameon=False,
+              bbox_to_anchor=(1.01, 1), loc="upper left", borderaxespad=0)
+    ax.set_xlabel("UMAP1", fontsize=8)
+    ax.set_ylabel("UMAP2", fontsize=8)
+    ax.tick_params(labelsize=8)
     plt.tight_layout()
     out_umap = os.path.join(vis_outdir, "umap_clusters.png")
-    plt.savefig(out_umap, dpi=200)
+    plt.savefig(out_umap, dpi=200, bbox_inches="tight")
     plt.show()
-    print(f"[INFO] UMAP cluster plot saved in: {out_umap}")
+    print(f"[INFO] Saved: {out_umap}")
 
-        # --- UMAP plot colored by tissue/section ---
-    section_colors = ["#F3CA40", "#5c8001"]  # yellow, green
-    plt.figure(figsize=(6,5), dpi=200)
+    # --- Plot 2: UMAP coloured by tissue ---
+    section_colors = ["#F3CA40", "#5c8001"]
+    fig, ax = plt.subplots(figsize=(6, 5), dpi=200)
     for i, tissue in enumerate(df_coords["tissue"].unique()):
-        df_sub = df_features[df_coords["tissue"] == tissue]
-        plt.scatter(
-            df_sub["UMAP1"], df_sub["UMAP2"],
-            c=section_colors[i % len(section_colors)],
-            s=spot_size, alpha=0.7, label=tissue
-        )
-    plt.xlabel("UMAP1")
-    plt.ylabel("UMAP2")
-    plt.xticks(fontsize=8)
-    plt.yticks(fontsize=8)
-    plt.legend(markerscale=1.5, fontsize=8, loc="upper right")
+        mask = df_coords["tissue"] == tissue
+        ax.scatter(df_features.loc[mask, "UMAP1"],
+                   df_features.loc[mask, "UMAP2"],
+                   c=section_colors[i % len(section_colors)],
+                   s=spot_size, alpha=0.7, label=tissue)
+    ax.set_xlabel("UMAP1", fontsize=8)
+    ax.set_ylabel("UMAP2", fontsize=8)
+    ax.tick_params(labelsize=8)
+    ax.legend(fontsize=6, markerscale=0.6, frameon=False, loc="upper right")
     plt.tight_layout()
     out_umap_section = os.path.join(vis_outdir, "umap_by_section.png")
-    plt.savefig(out_umap_section, dpi=200)
+    plt.savefig(out_umap_section, dpi=200, bbox_inches="tight")
     plt.show()
-    print(f"[INFO] UMAP plot colored by tissue saved in: {out_umap_section}")
+    print(f"[INFO] Saved: {out_umap_section}")
 
-    # --- Spatial plots side-by-side ---
-    unique_tissues = df_coords['tissue'].unique()
-    fig, axes = plt.subplots(1, len(unique_tissues), figsize=(6*len(unique_tissues), 6), dpi=200)
+    # --- Plot 3: spatial side-by-side ---
+    unique_tissues = df_coords["tissue"].unique()
+    fig, axes = plt.subplots(1, len(unique_tissues),
+                             figsize=(6 * len(unique_tissues), 6), dpi=200)
     if len(unique_tissues) == 1:
         axes = [axes]
 
     for ax, tissue in zip(axes, unique_tissues):
-        df_sub = df_coords[df_coords['tissue'] == tissue]
-        sns.scatterplot(
-            x='x', y=-df_sub['y'], hue='cluster',
-            palette='tab10', data=df_sub, s=spot_size, linewidth=0, ax=ax
-        )
-        ax.set_aspect('equal', adjustable='box')
-        ax.axis('off')
-        ax.set_title(f"{tissue} - spatial clusters")
+        df_sub = df_coords[df_coords["tissue"] == tissue].copy()
+        df_sub["y_plot"] = -df_sub["y"]
+        sns.scatterplot(x="x", y="y_plot", hue="cluster",
+                        palette="tab10", data=df_sub,
+                        s=spot_size, linewidth=0, ax=ax, legend=False)
+        ax.set_aspect("equal", adjustable="box")
+        ax.axis("off")
+        ax.set_title(f"{tissue} - spatial clusters", fontsize=9)
+
+    # single legend on the last axis
+    handles = [Patch(color=palette[c], label=str(c)) for c in range(n_clusters)]
+    axes[-1].legend(handles=handles, fontsize=6, markerscale=0.6, frameon=False,
+                    bbox_to_anchor=(1.01, 1), loc="upper left", borderaxespad=0)
+
     plt.tight_layout()
     out_spatial = os.path.join(vis_outdir, "spatial_clusters.png")
-    plt.savefig(out_spatial, dpi=200)
+    plt.savefig(out_spatial, dpi=200, bbox_inches="tight")
     plt.show()
-    print(f"[INFO] Spatial cluster plots saved in: {out_spatial}")
+    print(f"[INFO] Saved: {out_spatial}")
 
     return df_features
 

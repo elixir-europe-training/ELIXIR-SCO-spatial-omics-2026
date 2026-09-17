@@ -1,6 +1,7 @@
 # coast_visualization.py
 import glob
 import os
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
@@ -70,7 +71,7 @@ def run_umap_clustering(outdir, n_clusters=9, spot_size=20, background=True):
 
     # --- Plot 2: UMAP coloured by tissue ---
     section_colors = ["#F3CA40", "#5c8001"]
-    fig, ax = plt.subplots(figsize=(6, 5), dpi=200)
+    _, ax = plt.subplots(figsize=(6, 5), dpi=200)
     for i, tissue in enumerate(df_coords["tissue"].unique()):
         mask = df_coords["tissue"] == tissue
         ax.scatter(df_features.loc[mask, "UMAP1"],

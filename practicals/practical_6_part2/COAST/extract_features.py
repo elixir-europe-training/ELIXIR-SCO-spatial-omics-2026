@@ -1,11 +1,11 @@
 import os
+import numpy as np
 import pandas as pd
+import scanpy as sc
 import torch
 from PIL import Image
 from torchvision import transforms
 from tqdm import tqdm
-import scanpy as sc
-import numpy as np
 
 # -------------------------------
 # Feature extraction from images

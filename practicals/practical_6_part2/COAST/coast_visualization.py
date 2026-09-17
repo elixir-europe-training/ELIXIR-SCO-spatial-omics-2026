@@ -1,12 +1,13 @@
 # coast_visualization.py
-import os
 import glob
-import pandas as pd
+import os
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
 import umap
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
 
 def run_umap_clustering(outdir, n_clusters=9, spot_size=20, background=True):
     vit_feature_dir = os.path.join(outdir, "ViT_features")
@@ -88,7 +89,7 @@ def run_umap_clustering(outdir, n_clusters=9, spot_size=20, background=True):
 
     # --- Plot 3: spatial side-by-side ---
     unique_tissues = df_coords["tissue"].unique()
-    fig, axes = plt.subplots(1, len(unique_tissues),
+    _, axes = plt.subplots(1, len(unique_tissues),
                              figsize=(6 * len(unique_tissues), 6), dpi=200)
     if len(unique_tissues) == 1:
         axes = [axes]

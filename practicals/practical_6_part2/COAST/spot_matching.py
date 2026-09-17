@@ -1,11 +1,10 @@
-import os
 import glob
-import pandas as pd
+import os
 import numpy as np
-from scipy.spatial import cKDTree
+import pandas as pd
 import scanpy as sc
 from scipy.sparse import issparse
-from tqdm import tqdm
+from scipy.spatial import cKDTree
 
 
 def load_data(data_path, coord_dir=None, mode=None):

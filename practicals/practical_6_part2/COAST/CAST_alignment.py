@@ -1,12 +1,10 @@
-#!/usr/bin/env python3
 import os
-import torch
+import CAST
 import pandas as pd
 import numpy as np
 import scanpy as sc
+import torch
 from sklearn.preprocessing import StandardScaler
-import CAST
-
 
 def read_tissues(vit_dir):
     """

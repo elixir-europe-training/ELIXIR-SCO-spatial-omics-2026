@@ -62,21 +62,22 @@ The course fee is 150€. Lunch, coffee breaks and one social dinner are include
 
 The course will feature the following lecturers and trainers:
 
+* Christophe Avenel (Uppsala University, NBIS, Scilifelab, SE)
+* Åsa Björklund (Chalmers University of Technology, NBIS, Scilifelab, SE)
+* Peiying Cai (University of Zurich / Swiss Institute of Bioinformatics, CH)
 * Francesca Drummer (Helmholtz Zentrum München, DE)
+* Stefan Ebmeyer (Chalmers University of Technology, NBIS, Scilifelab, SE)
+* Jennifer Fransson (Uppsala University, NBIS, Scilifelab, SE)
 * Naveed Ishaque (Berlin Institute of Health (BIH), DE)
 * Ahmed Mahfouz (Leiden University Medical Center (LUMC), NL)
 * Benedetta Manzato (Leiden University Medical Center (LUMC), NL)
-* Emma Vonk (Leiden University Medical Center (LUMC), NL)
-* Lucie Pfeiferova (Czech Academy of Sciences, CZ)
-* Christophe Avenel (Uppsala University, NBIS, Scilifelab, SE)
-* Jonas Windhager (Uppsala University, NBIS, Scilifelab, SE)
-* Suganya Sivagurunathan (Uppsala University, NBIS, Scilifelab, SE)
-* Stefan Ebmeyer (Chalmers University of Technology, NBIS, Scilifelab, SE)
-* Åsa Björklund (Chalmers University of Technology, NBIS, Scilifelab, SE)
-* Aditya Singh (Gothenburg University, NBIS, Scilifelab, SE)
-* Leslie Solorzano  (Uppsala University, NBIS, Scilifelab, SE)
-* Jennifer Fransson (Uppsala University, NBIS, Scilifelab, SE)
 * Sergiu Netotea (Chalmers University of Technology, NBIS, Scilifelab, SE)
+* Lucie Pfeiferova (Czech Academy of Sciences, CZ)
+* Aditya Singh (Gothenburg University, NBIS, Scilifelab, SE)
+* Suganya Sivagurunathan (Uppsala University, NBIS, Scilifelab, SE)
+* Leslie Solorzano  (Uppsala University, NBIS, Scilifelab, SE)
+* Emma Vonk (Leiden University Medical Center (LUMC), NL)
+* Jonas Windhager (Uppsala University, NBIS, Scilifelab, SE)
 
 
 ## Course organizers

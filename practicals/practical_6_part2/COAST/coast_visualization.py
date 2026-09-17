@@ -51,7 +51,7 @@ def run_umap_clustering(outdir, n_clusters=9, spot_size=20, background=True):
     print(f"[INFO] Saved: {out_csv}")
 
     # --- Plot 1: UMAP coloured by cluster ---
-    fig, ax = plt.subplots(figsize=(6, 5), dpi=200)
+    _, ax = plt.subplots(figsize=(6, 5), dpi=200)
     sns.scatterplot(x="UMAP1", y="UMAP2", hue="cluster",
                     palette="tab10", data=df_features,
                     s=spot_size, linewidth=0, ax=ax, legend=False)

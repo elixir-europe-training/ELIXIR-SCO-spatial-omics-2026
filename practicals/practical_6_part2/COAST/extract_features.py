@@ -8,6 +8,7 @@ from PIL import Image
 from torchvision import transforms
 from tqdm import tqdm
 
+
 # -------------------------------
 # Feature extraction from images
 # -------------------------------

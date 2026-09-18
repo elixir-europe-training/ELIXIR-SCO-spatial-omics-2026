@@ -93,8 +93,13 @@ bash download_labs.sh --dest ~/mywork --branch dev all
 | *(none)* | Open the interactive menu |
 | `all` | Download all practicals |
 | `0 3 7` | Download specific practicals by number |
+| `6` | Download both parts of practical 6 (`practical_6_part1` + `practical_6_part2`) |
+| `6_part1` | Download only `practical_6_part1` |
 | `reset 2` | Delete practical 2 |
+| `reset 6` | Delete both parts of practical 6 |
 | `reset all` | Delete all practicals |
+
+Practical 6 is split across two folders in the repo (`practical_6_part1`, `practical_6_part2`). The script treats them as one logical practical numbered `6` — asking for `6` fetches/removes both parts — but you can still target a single part with `6_part1` or `6_part2` if you only need one.
 
 ### Examples
 

@@ -17,6 +17,8 @@
 #   (none)              Interactive menu
 #   all                 Download all practicals
 #   0 3 7               Download practical_0, _3, _7
+#   6                   Download both parts of practical_6 (6_part1 + 6_part2)
+#   6_part1             Download only practical_6_part1
 #   reset 2             Remove practical_2
 #   reset all           Remove all practicals
 #
@@ -46,6 +48,10 @@ declare -A practical_dois=()
 # TSV of "practical<TAB>url[,url2,...]" rows (default: next to this script).
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DATA_FILE="${SCRIPT_DIR}/practical_data.tsv"
+# Some practicals are split into several folders on GitHub (e.g. practical_6 ->
+# practical_6_part1 + practical_6_part2). Map the numeric id to its part suffixes
+# here; a plain number with no entry here downloads a single practical_<n> folder.
+declare -A PRACTICAL_PARTS=( [6]="part1 part2" )
 
 # ---------- Colors ----------
 if [ -t 1 ]; then
@@ -265,19 +271,40 @@ download_data() {
     return "$rc"
 }
 
-download_one() {
-    local n="$1"
-    local name="practical_${n}"
-    local target="${DEST}/${name}"
+# Expand a user-supplied id (e.g. "6") into the one or more actual practical
+# folder names it refers to (e.g. "practical_6_part1", "practical_6_part2").
+# An id that already names a part (e.g. "6_part1") or an unsplit practical
+# passes straight through as "practical_<id>".
+expand_practical_arg() {
+    local arg="$1"
+    if [[ "$arg" =~ ^[0-9]+$ ]] && [[ -n "${PRACTICAL_PARTS[$arg]:-}" ]]; then
+        local part
+        for part in ${PRACTICAL_PARTS[$arg]}; do
+            printf 'practical_%s_%s\n' "$arg" "$part"
+        done
+    else
+        printf 'practical_%s\n' "$arg"
+    fi
+}
 
-    fetch_tarball || return 1
+# Full ordered list of practical folder names, split practicals expanded into
+# their parts. Used by the status view and reset-all.
+all_practical_names() {
+    local i
+    for i in $(seq 0 $((N_PRACTICALS - 1))); do
+        expand_practical_arg "$i"
+    done
+}
+
+download_one_name() {
+    local name="$1"
+    local target="${DEST}/${name}"
 
     if [ -d "$target" ]; then
         warn "${name} already exists — removing old copy first..."
         rm -rf "$target"
     fi
 
-    mkdir -p "$DEST"
     log "Extracting ${BOLD}${name}${RESET}..."
 
     if tar -xz -f "$TARBALL_FILE" -C "$DEST" --strip-components=2 \
@@ -291,6 +318,19 @@ download_one() {
         err "Failed to extract ${name}. Does it exist in the repo?"
         return 1
     fi
+}
+
+download_one() {
+    local arg="$1"
+
+    fetch_tarball || return 1
+    mkdir -p "$DEST"
+
+    local name rc=0
+    while IFS= read -r name; do
+        download_one_name "$name" || rc=1
+    done < <(expand_practical_arg "$arg")
+    return "$rc"
 }
 
 download_all() {
@@ -307,39 +347,44 @@ download_all() {
 }
 
 reset_one() {
-    local n="$1"
-    local target="${DEST}/practical_${n}"
-    if [ -d "$target" ]; then
-        rm -rf "$target"
-        ok "Removed practical_${n}"
-    else
-        warn "practical_${n} not present."
-    fi
+    local arg="$1"
+    local name
+    while IFS= read -r name; do
+        local target="${DEST}/${name}"
+        if [ -d "$target" ]; then
+            rm -rf "$target"
+            ok "Removed ${name}"
+        else
+            warn "${name} not present."
+        fi
+    done < <(expand_practical_arg "$arg")
 }
 
 reset_all() {
     local removed=0
-    for i in $(seq 0 $((N_PRACTICALS - 1))); do
-        local target="${DEST}/practical_${i}"
+    local name
+    while IFS= read -r name; do
+        local target="${DEST}/${name}"
         if [ -d "$target" ]; then
             rm -rf "$target"
             removed=$((removed + 1))
         fi
-    done
+    done < <(all_practical_names)
     ok "Removed ${removed} practicals."
 }
 
 show_status() {
     echo
     echo -e "${BOLD}Current status in ${DEST}:${RESET}"
-    for i in $(seq 0 $((N_PRACTICALS - 1))); do
-        local target="${DEST}/practical_${i}"
+    local name
+    while IFS= read -r name; do
+        local target="${DEST}/${name}"
         if [ -d "$target" ]; then
-            echo -e "  ${GREEN}✅ practical_${i}${RESET}"
+            echo -e "  ${GREEN}✅ ${name}${RESET}"
         else
-            echo -e "  ${YELLOW}⬜ practical_${i}${RESET}  (not downloaded)"
+            echo -e "  ${YELLOW}⬜ ${name}${RESET}  (not downloaded)"
         fi
-    done
+    done < <(all_practical_names)
     echo
 }
 
@@ -347,7 +392,7 @@ interactive_menu() {
     while true; do
         show_status
         echo -e "${BOLD}Options:${RESET}"
-        echo "  [0-9]   Download a specific practical (e.g. type '3')"
+        echo "  [0-9]   Download a specific practical (e.g. type '3', or '6' for both parts of practical 6)"
         echo "  a       Download ALL practicals"
         echo "  r N     Reset (delete) practical N (e.g. 'r 2')"
         echo "  R       Reset ALL practicals"
@@ -362,7 +407,7 @@ interactive_menu() {
             q|Q|exit|quit) ok "Bye!"; exit 0 ;;
             '')            : ;;
             *)
-                if [[ "$choice" =~ ^[0-9]+$ ]]; then
+                if [[ "$choice" =~ ^[0-9]+(_part[0-9]+)?$ ]]; then
                     download_one "$choice"
                 else
                     warn "Unknown choice: $choice"
@@ -425,9 +470,10 @@ if [ "$1" = "all" ]; then
     exit 0
 fi
 
-# Handle list of numbers
+# Handle list of numbers (optionally "<n>_part<k>" for a single part of a
+# split practical, e.g. "6_part1")
 for n in "$@"; do
-    if [[ "$n" =~ ^[0-9]+$ ]]; then
+    if [[ "$n" =~ ^[0-9]+(_part[0-9]+)?$ ]]; then
         download_one "$n"
     else
         warn "Skipping invalid argument: $n"

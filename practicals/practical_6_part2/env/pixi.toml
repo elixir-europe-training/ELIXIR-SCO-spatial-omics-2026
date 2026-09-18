@@ -30,6 +30,9 @@ anndata = ">=0.13.3.post0,<0.14"
 scipy = ">=1.18.1,<2"
 pillow = ">=12.3.0,<13"
 dgl = ">=2.4.0.th24.cpu,<3"
+curl = ">=8.18.0,<9"
+tar = ">=1.35,<2"
+gzip = ">=1.14,<2"
 
 [pypi-dependencies]
 cast = { git = "https://github.com/wanglab-broad/CAST.git" }

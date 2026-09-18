@@ -10,7 +10,6 @@ on:
       - 'docker/download_labs.sh'
       - 'practicals/*/env/**'
       - '.github/workflows/build_push.yml'
-  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io

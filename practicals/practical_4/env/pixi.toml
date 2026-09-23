@@ -18,6 +18,7 @@ pandas = "*"
 seaborn = "*"
 matplotlib = "*"
 # Jupyter Ecosystem
+ipykernel = "*"
 jupyterlab = "*"
 pixi-kernel = "*"
 

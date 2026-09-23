@@ -10,6 +10,7 @@ on:
       - 'docker/download_labs.sh'
       - 'practicals/*/env/**'
       - '.github/workflows/build_push.yml'
+      -  'docker/practical_data.tsv'
   workflow_dispatch:
 
 env:

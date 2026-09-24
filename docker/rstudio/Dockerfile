@@ -5,7 +5,10 @@ ENV PIXI_ENV_PATH=practicals/practical_${PRAC}/env
 
 WORKDIR /app
 # Install git and curl to fetch the environment files from the repo, then clean up apt cache to reduce image size
-RUN apt-get update && apt-get install -y git curl && rm -rf /var/lib/apt/lists/*
+# apt-get update is retried since Ubuntu mirrors occasionally serve stale/mismatched index files mid-sync
+RUN for i in 1 2 3 4 5; do apt-get update && break || sleep 10; done && \
+    apt-get install -y git curl && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY ${PIXI_ENV_PATH}/pixi.toml /app/
 COPY ${PIXI_ENV_PATH}/pixi.lock /app/
@@ -39,7 +42,9 @@ ENV NB_USER=${NB_USER} \
     LANGUAGE=en_US:en
 
 # Install minimal runtime deps
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# apt-get update is retried since Ubuntu mirrors occasionally serve stale/mismatched index files mid-sync
+RUN for i in 1 2 3 4 5; do apt-get update && break || sleep 10; done && \
+    apt-get install -y --no-install-recommends \
         bash \
         ca-certificates \
         tini \

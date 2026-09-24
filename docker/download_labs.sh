@@ -344,6 +344,12 @@ download_all() {
         err "Extraction failed."
         return 1
     fi
+
+    local name rc=0
+    while IFS= read -r name; do
+        download_data "$name" || rc=1
+    done < <(all_practical_names)
+    return "$rc"
 }
 
 reset_one() {

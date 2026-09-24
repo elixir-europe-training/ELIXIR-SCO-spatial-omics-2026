@@ -35,5 +35,5 @@ tar = ">=1.35,<2"
 gzip = ">=1.14,<2"
 
 [pypi-dependencies]
-cast = { git = "https://github.com/wanglab-broad/CAST.git" }
+cast = { git = "https://github.com/addityea/CAST.git" }
 

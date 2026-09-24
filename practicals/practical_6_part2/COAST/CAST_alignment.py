@@ -1,5 +1,6 @@
 import os
 
+import anndata as ad
 import CAST
 import numpy as np
 import pandas as pd
@@ -71,7 +72,15 @@ def run_cast(outdir):
     os.makedirs(CAST_DIR, exist_ok=True)
 
     print("[INFO] Concatenating all tissues for CAST...")
-    adata_all = adata_list[0].concatenate(*adata_list[1:])
+    # AnnData.concatenate() was removed in recent anndata versions.
+    # ad.concat() with these arguments reproduces the old default behaviour.
+    adata_all = ad.concat(
+        adata_list,
+        join="inner",
+        label="batch",
+        keys=[str(i) for i in range(len(adata_list))],
+        index_unique="-",
+    )
     print(f"[INFO] Total tiles: {adata_all.shape[0]}")
 
     sample_list = np.unique(adata_all.obs['sample'])

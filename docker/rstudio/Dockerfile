@@ -5,9 +5,15 @@ ENV PIXI_ENV_PATH=practicals/practical_${PRAC}/env
 
 WORKDIR /app
 # Install git and curl to fetch the environment files from the repo, then clean up apt cache to reduce image size
-# apt-get update is retried since Ubuntu mirrors occasionally serve stale/mismatched index files mid-sync
-RUN for i in 1 2 3 4 5; do apt-get update && break || sleep 10; done && \
-    apt-get install -y git curl && \
+# The whole update+install is retried together, since Ubuntu mirrors can serve an index that's
+# briefly ahead of their package pool (update succeeds, then install 404s on a .deb)
+RUN n=0; \
+    until apt-get update && apt-get install -y git curl; do \
+        n=$((n + 1)); \
+        if [ "$n" -ge 5 ]; then exit 1; fi; \
+        echo "apt-get attempt $n failed, retrying in 10s..."; \
+        sleep 10; \
+    done && \
     rm -rf /var/lib/apt/lists/*
 
 COPY ${PIXI_ENV_PATH}/pixi.toml /app/
@@ -42,9 +48,10 @@ ENV NB_USER=${NB_USER} \
     LANGUAGE=en_US:en
 
 # Install minimal runtime deps
-# apt-get update is retried since Ubuntu mirrors occasionally serve stale/mismatched index files mid-sync
-RUN for i in 1 2 3 4 5; do apt-get update && break || sleep 10; done && \
-    apt-get install -y --no-install-recommends \
+# The whole update+install is retried together, since Ubuntu mirrors can serve an index that's
+# briefly ahead of their package pool (update succeeds, then install 404s on a .deb)
+RUN n=0; \
+    until apt-get update && apt-get install -y --no-install-recommends \
         bash \
         ca-certificates \
         tini \
@@ -57,8 +64,13 @@ RUN for i in 1 2 3 4 5; do apt-get update && break || sleep 10; done && \
         libssl-dev\
         libclang-dev \
         lsb-release \
-        sudo \
-    && rm -rf /var/lib/apt/lists/*
+        sudo; do \
+        n=$((n + 1)); \
+        if [ "$n" -ge 5 ]; then exit 1; fi; \
+        echo "apt-get attempt $n failed, retrying in 10s..."; \
+        sleep 10; \
+    done && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create non-root user with UID 1000 (required for SciLifeLab Serve)
 RUN userdel -r ubuntu 2>/dev/null || true && \

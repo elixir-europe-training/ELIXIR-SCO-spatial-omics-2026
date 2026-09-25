@@ -11,7 +11,7 @@
 #   -p, --parent        DIR         Folder in repo      (practicals)
 #   -n, --n-practicals  N           Number of practicals (10)
 #   -d, --dest          PATH        Local destination   (work/)
-#   -f, --data-file     PATH        Dataset TSV         (practical_data.tsv next to script)
+#   -f, --data-file     PATH        Dataset TSV         (fetched from the repo by default)
 #
 # Commands:
 #   (none)              Interactive menu
@@ -45,9 +45,10 @@ DEST="work/"
 # several practicals at the SAME URL and the (multi-GB) archive is downloaded and
 # extracted only once, then shared.
 declare -A practical_dois=()
-# TSV of "practical<TAB>url[,url2,...]" rows (default: next to this script).
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DATA_FILE="${SCRIPT_DIR}/practical_data.tsv"
+# TSV of "practical<TAB>url[,url2,...]" rows. Left empty by default so it is
+# fetched fresh from the repo (see fetch_data_file) instead of being baked
+# into a container image; pass -f/--data-file to use a local file instead.
+DATA_FILE=""
 # Some practicals are split into several folders on GitHub (e.g. practical_6 ->
 # practical_6_part1 + practical_6_part2). Map the numeric id to its part suffixes
 # here; a plain number with no entry here downloads a single practical_<n> folder.
@@ -71,7 +72,12 @@ err()  { echo -e "${RED}❌ $*${RESET}"; }
 # Download it ONCE per run and extract every requested practical from the cached
 # copy, instead of re-streaming the whole tarball for each practical.
 TARBALL_FILE=""
-cleanup() { [ -n "$TARBALL_FILE" ] && rm -f "$TARBALL_FILE"; return 0; }
+DATA_FILE_TMP=""
+cleanup() {
+    [ -n "$TARBALL_FILE" ] && rm -f "$TARBALL_FILE"
+    [ -n "$DATA_FILE_TMP" ] && rm -f "$DATA_FILE_TMP"
+    return 0
+}
 trap cleanup EXIT
 
 fetch_tarball() {
@@ -82,6 +88,25 @@ fetch_tarball() {
         err "Failed to download archive from ${TARBALL_URL}"
         rm -f "$TARBALL_FILE"; TARBALL_FILE=""
         return 1
+    fi
+}
+
+# Fetch the dataset registry (practical_data.tsv) fresh from the repo, unless
+# the caller pointed DATA_FILE at a local file via -f/--data-file. This keeps
+# the registry out of the container images entirely: it always reflects
+# whatever is currently on ${BRANCH}, instead of whatever was baked in at
+# image build time.
+fetch_data_file() {
+    [ -n "$DATA_FILE" ] && return 0
+    DATA_FILE_TMP="$(mktemp "${TMPDIR:-/tmp}/practical_data.XXXXXX.tsv")"
+    local url="https://raw.githubusercontent.com/${REPO}/${BRANCH}/docker/practical_data.tsv"
+    log "Pulling the latest practical_data.tsv from ${BOLD}${REPO}@${BRANCH}${RESET}..."
+    if curl -fsSL "$url" -o "$DATA_FILE_TMP"; then
+        DATA_FILE="$DATA_FILE_TMP"
+        ok "Fetched practical_data.tsv."
+    else
+        warn "Failed to download dataset registry from ${url} — no Zenodo datasets will be downloaded."
+        rm -f "$DATA_FILE_TMP"; DATA_FILE_TMP=""
     fi
 }
 
@@ -442,8 +467,10 @@ DEST="${DEST%/}"   # strip trailing slash to avoid work//practical_0
 REPO_NAME="${REPO##*/}"
 TARBALL_URL="https://github.com/${REPO}/archive/refs/heads/${BRANCH}.tar.gz"
 
-# Populate the dataset registry from the TSV file.
-load_dois "$DATA_FILE"
+# Populate the dataset registry from the TSV file, fetching it first if no
+# local file was given via -f/--data-file.
+fetch_data_file
+[ -n "$DATA_FILE" ] && load_dois "$DATA_FILE"
 
 # ---------- Main ----------
 echo -e "${BOLD}🧬 ELIXIR Spatial Omics 2026 — Practicals downloader${RESET}"

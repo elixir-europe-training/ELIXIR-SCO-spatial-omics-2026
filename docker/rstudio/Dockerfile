@@ -153,11 +153,11 @@ RUN mkdir -p ${HOME}/.cache \
 RUN chmod +x /app/start-script.sh /shell-hook.sh && \
     chown -R ${NB_UID}:${NB_GID} ${HOME}
 
-# Copy helper script to download labs
+# Copy helper script to download labs (it fetches practical_data.tsv from the
+# repo at runtime, so the TSV itself is not baked into the image)
 COPY docker/download_labs.sh /home/${NB_USER}/download-labs.sh
-COPY docker/practical_data.tsv /home/${NB_USER}/practical_data.tsv
 RUN chmod +x /home/${NB_USER}/download-labs.sh && \
-    chown ${NB_UID}:${NB_GID} /home/${NB_USER}/download-labs.sh /home/${NB_USER}/practical_data.tsv
+    chown ${NB_UID}:${NB_GID} /home/${NB_USER}/download-labs.sh
 
 # Switch to non-root user
 USER ${NB_UID}:${NB_GID}

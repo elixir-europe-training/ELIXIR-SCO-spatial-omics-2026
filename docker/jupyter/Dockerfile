@@ -98,11 +98,11 @@ RUN mkdir -p ${HOME}/.local/share/jupyter \
 RUN chmod +x /app/start-script.sh /shell-hook.sh && \
     chown -R ${NB_UID}:${NB_GID} ${HOME}
 
-# Copy helper script to download labs
+# Copy helper script to download labs (it fetches practical_data.tsv from the
+# repo at runtime, so the TSV itself is not baked into the image)
 COPY docker/download_labs.sh /home/${NB_USER}/download-labs.sh
-COPY docker/practical_data.tsv /home/${NB_USER}/practical_data.tsv
 RUN chmod +x /home/${NB_USER}/download-labs.sh && \
-    chown ${NB_UID}:${NB_GID} /home/${NB_USER}/download-labs.sh /home/${NB_USER}/practical_data.tsv
+    chown ${NB_UID}:${NB_GID} /home/${NB_USER}/download-labs.sh
 
 # Make /root/.pixi/bin accessible to the non-root user for pixi shell-hook to work (since pixi installs in /root by default) and it's in the PATH, this is a simple workaround
 RUN mkdir -p /root/.pixi/bin && chmod -R 755 /root && chown -R ${NB_UID}:${NB_GID} /root

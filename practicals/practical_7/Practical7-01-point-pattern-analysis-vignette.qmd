@@ -34,8 +34,8 @@ Often, the starting point in spatial omics data analysis in `R` is a `r BiocStyl
 ```{r warning=FALSE, message=FALSE}
 #| label: load packages
 
-if(!file.exists("/home/rstudio/.cache/R/ExperimentHub")){
-  dir.create("/home/rstudio/.cache/R/ExperimentHub", recursive = TRUE)
+if(!file.exists("/home/jovyan/.cache/R/ExperimentHub")){
+  dir.create("/home/jovyan/.cache/R/ExperimentHub", recursive = TRUE)
 }
 
 suppressPackageStartupMessages({
@@ -59,7 +59,7 @@ suppressPackageStartupMessages({
 # load the data from ExperimentHub
 #basedir <- here::here("day_3/practical_5/")
 
-basedir <- "/home/rstudio/work/practical_7/"
+basedir <- "/home/jovyan/work/practical_7/"
 
 if(!file.exists(file.path(basedir, "data","brain.rds"))){
   
@@ -172,7 +172,7 @@ We can plot one of these slices, e.g. slice $-0.09$ with ggplot
 # create a dataframe from ppp and plot with ggplot
 slice_df <- as.data.frame(pp_ls[["-0.09"]])
 ggplot(slice_df, aes(x, y, colour = marks)) +
-  geom_point(size = .5) +
+  geom_point(size = 0.5) +
   coord_equal()
 
 ```
@@ -264,7 +264,7 @@ pp_df <- pp_sub %>%
   pivot_longer(cols = 3:5)
 
 ggplot(pp_df, aes(x, y, colour = log(value + 1))) +
-  geom_point(size = .5) +
+  geom_point(size = 0.5) +
   facet_wrap(~name) +
   coord_equal() +
   scale_color_continuous(type = "viridis")

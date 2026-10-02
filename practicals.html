@@ -260,7 +260,7 @@ Note
 </ol>
 <p><img src="./assets/serve/serve_lab_app_types.png" class="img-fluid"></p>
 <ol start="4" type="1">
-<li>You will now see a form to configure a notebook server. Under <em>Name</em> put the name of your choice, <em>e.g.</em> the practical name. Select the Docker image for the practical you want to run. Leave the rest of the fields unchanged. Now click <em>Submit</em>.</li>
+<li>You will now see a form to configure a notebook server. Under <em>Environment</em>, select the practical you want to run (<em>e.g.</em> <em>Spatial Omics Practical 3 (Jupyter)</em>). Under <em>Title</em> put the name of your choice, <em>e.g.</em> the practical name. Leave the rest of the fields unchanged. Now click <em>Publish</em>.</li>
 </ol>
 <p><img src="./assets/serve/serve_lab_form.png" class="img-fluid"></p>
 <ol start="5" type="1">
@@ -282,13 +282,13 @@ Note
 </div>
 <ol start="6" type="1">
 <li><p>Click on the app name to open it in a new tab. If you are prompted for a password, input <code>spatial</code>.</p></li>
-<li><p>Once your app is open, download the files required for the practicals (notebooks, data and any other relevant files). You can download one practical at a time or all practicals at once. In a terminal window in the app, run</p></li>
+<li><p>Once your app is open, download the files required for the practical (notebooks, data and any other relevant files). Open a terminal in the app (JupyterLab: <em>File</em> → <em>New</em> → <em>Terminal</em>; RStudio: the <em>Terminal</em> tab next to the <em>Console</em>) and run</p></li>
 </ol>
-<pre><code>bash download_labs.sh [practical number]
-## or 
-bash download_labs.sh all</code></pre>
+<pre><code>bash ~/download-labs.sh [practical number]</code></pre>
+<p>The script <code>download-labs.sh</code> is part of the app and sits in your home folder, next to (not inside) the <code>work</code> folder. You can run the command above from any folder: the files are always downloaded into <code>work</code>.</p>
+<p>Download one practical at a time: the storage is shared by all your apps in the project and downloading all practicals at once may fill it up.</p>
 <ol start="8" type="1">
-<li>Your practical should now be available under <code>work/practical_[number]</code>. Open the notebook.</li>
+<li>Your practical should now be available under <code>work/practical_[number]</code>, and its data under <code>work/data</code>. Open the notebook.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -305,27 +305,26 @@ Note
 </div>
 <section id="storage" class="level4">
 <h4 class="anchored" data-anchor-id="storage">Storage</h4>
-<p>In the case of both JupyterLab and RStudio you have access to persistent storage. This is mounted to the folder <code>/home/nbis/work</code> (Jupyter) or <code>/home/rstudio/work</code> (RStudio). Files stored in this folder (<em>NB: only in this folder</em>) will be available even if a notebook suddenly restarts as well as between apps. You can also use a File Manager to manage these files (view, download, upload) outside of the apps. On the project page, scroll down to “Manage files” and click <em>Create</em>, then <em>Activate</em> on the next page, and finally open the file manager in the same way as the other apps.</p>
+<p>In the case of both JupyterLab and RStudio you have access to persistent storage. This is mounted to the folder <code>/home/jovyan/work</code> in both JupyterLab and RStudio. Files stored in this folder (<em>NB: only in this folder</em>) will be available even if a notebook suddenly restarts as well as between apps. You can also use a File Manager to manage these files (view, download, upload) outside of the apps. On the project page, scroll down to “Manage files” and click <em>Create</em>, then <em>Activate</em> on the next page, and finally open the file manager in the same way as the other apps.</p>
 </section>
 </section>
 <section id="option-2-working-locally" class="level3">
 <h3 class="anchored" data-anchor-id="option-2-working-locally">Option 2: Working locally</h3>
 <p>If you do not have access to the course on SciLifeLab Serve, you can work locally with Docker.</p>
-<p>The container images for each practical are in the <code>elixir-europe-training</code> namespace on dockerhub, find them <a href="https://ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026">here</a>. The naming convention is <code>practical-[number]-[IDE]-latest</code>. In order to run them locally, you can use the following command (example given for practical 0):</p>
+<p>The container images for each practical are in the <code>elixir-europe-training</code> namespace on the GitHub Container Registry, find them <a href="https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics-2026/pkgs/container/elixir-sco-spatial-omics-2026">here</a>. The naming convention is <code>practical-[number]-[IDE]-latest</code>. In order to run them locally, you can use the following command (example given for practical 0):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="dt">\</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>--rm <span class="dt">\</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>--platform=linux/amd64 <span class="dt">\</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>-p 8888:8888 <span class="dt">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>-v <span class="va">$PWD</span>:/home/nbis/work/ <span class="dt">\</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>-e JUPYTER_ENABLE_LAB=yes <span class="dt">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026:practical-0-jupyter-latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>-v <span class="va">$PWD</span>:/home/jovyan/work/ <span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026:practical-0-jupyter-latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Jupyter lab should now be available from <code>localhost:8888</code>. Use password <code>spatial</code> when prompted.</p>
 <p>For the RStudio image of practical 7, the equivalent would be:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="dt">\</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>--rm <span class="dt">\</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>--platform=linux/amd64 <span class="dt">\</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>-p 8787:8787 <span class="dt">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>-v <span class="va">$PWD</span>:/home/rstudio/work/ <span class="dt">\</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>-v <span class="va">$PWD</span>:/home/jovyan/work/ <span class="dt">\</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ghcr.io/elixir-europe-training/elixir-sco-spatial-omics-2026:practical-7-rstudio-latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Access Rstudio at <code>localhost:8787</code>.</p>
 <p>Once the you have accessed the app, see steps 7 and 8 above.</p>

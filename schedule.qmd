@@ -8,7 +8,7 @@ title: "Schedule"
 
 | Time      	| Topic                                                                                                         	| Teacher                          	|
 |-------------	|---------------------------------------------------------------------------------------------------------------	|--------------------------------	|
-| 09:00-09:15 	| Welcome and course introduction                                                                                	| Jennifer Fransson (NBIS, SE)        	|
+| 09:00-09:15 	| Welcome and [course introduction](presentations/SCO_course_intro.pdf)                                                                                	| Jennifer Fransson (NBIS, SE)        	|
 | 09:15-10:00 	| Lecture: [Overview of SRT technologies](presentations/technology_overview.pdf)                                         	| Åsa Björklund (NBIS, SE)              |
 | 10:00-10:15 	| Break                                                                                                         	|                                	|
 | 10:15-11:00 	| Lecture: [Cell segmentation](presentations/cell_segmentation.pdf) and [Data Formats](presentations/data_formats.pdf)                                                     	| Christophe Avenel, Jonas Windhager (NBIS, SE)          |

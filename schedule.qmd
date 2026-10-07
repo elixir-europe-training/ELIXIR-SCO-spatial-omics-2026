@@ -46,7 +46,7 @@ title: "Schedule"
 | 12:00-13:00   | Lunch                                                         |                                       |
 | 13:00-14:30 	| Practical 7: Spatial statistics [Part A](practicals/practical_7/Practical7-01-point-pattern-analysis-vignette.qmd) & [Part B](practicals/practical_7/Practical7-02-lattice-data-analysis-vignette.qmd)   | Peiying Cai (UZH/SIB, CH), Jennifer Fransson (NBIS, SE) |
 | 14:30-14:45 	| Break                                                       	|                                    	|
-| 14:45-15:30 	| Lecture: [Domain identification and niche reconstruction](presentations/domains_niches.pdf)   	|          	|
+| 14:45-15:30 	| Lecture: [Domain identification and niche reconstruction](presentations/domains_niches.pdf)   	| Ahmed Mahfouz (LUMC, NL)         	|
 | 15:30-16:15 	| Practical 8: [Domain identification and niche reconstruction](practicals/practical_8/adata_loading_and_annotation.ipynb) 	| Benedetta Manzato (LUMC, NL), Emma Vonk (LUMC, NL)        	|
 | 16:15-17:00 	| Guest lecture: From tissue biogeographies to spatial interactomes |  Stefania Giacomello, SciLifeLab / KTH  |
 : {tbl-colwidths="[25,50,25]"}

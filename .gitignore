@@ -17,3 +17,4 @@ practicals/practical_3/data/*.zip
 # pixi environments
 .pixi/*
 !.pixi/config.toml
+**/*.quarto_ipynb

@@ -59,7 +59,7 @@ If your practical requires large datasets to be downloaded, we will be hosting t
 
 - The GitHub repo archive is downloaded **once per run** (to a temp file, with a progress bar) and every requested practical is extracted from that local copy — downloading several practicals no longer re-fetches the whole repo each time.
 - When you download a practical that has a dataset registered in the manifest (see [Practical datasets](#practical-datasets)), its data is automatically downloaded and unzipped into the central `work/data/` directory.
-- Each dataset is stored under its original archive name (e.g. `work/data/Practical0`) and downloaded **only once**: practicals that share a dataset reuse it, and `reset` does not delete the central data.
+- Each dataset is stored under its original archive name (e.g. `work/data/Practical0`) and downloaded **only once**: practicals that share a dataset reuse it, and `reset` does not delete the central data by default. Pass `--data` to also delete it; a shared dataset is only removed once no other still-downloaded practical needs it.
 
 ## Usage
 
@@ -95,11 +95,15 @@ bash download_labs.sh --dest ~/mywork --branch dev all
 | `0 3 7` | Download specific practicals by number |
 | `6` | Download both parts of practical 6 (`practical_6_part1` + `practical_6_part2`) |
 | `6_part1` | Download only `practical_6_part1` |
-| `reset 2` | Delete practical 2 |
+| `reset 2` | Delete practical 2 (keeps its downloaded data) |
 | `reset 6` | Delete both parts of practical 6 |
 | `reset all` | Delete all practicals |
+| `reset 2 --data` | Delete practical 2 **and** its dataset(s), unless still shared with a practical you're not removing |
+| `reset all --data` | Delete all practicals and all downloaded data |
 
 Practical 6 is split across two folders in the repo (`practical_6_part1`, `practical_6_part2`). The script treats them as one logical practical numbered `6` — asking for `6` fetches/removes both parts — but you can still target a single part with `6_part1` or `6_part2` if you only need one.
+
+In the interactive menu, the equivalents are `r N` / `R` (reset, keep data) and `rd N` / `RD` (reset and also delete data).
 
 ### Examples
 
@@ -113,8 +117,11 @@ bash download_labs.sh --dest ~/practicals all
 # Download practicals 0 and 3 from a feature branch
 bash download_labs.sh -b dev 0 3
 
-# Reset practical 5
+# Reset practical 5 (keeps its downloaded data)
 bash download_labs.sh reset 5
+
+# Reset practical 5 and also delete its dataset (if no other downloaded practical needs it)
+bash download_labs.sh reset 5 --data
 
 # Use a custom dataset manifest
 bash download_labs.sh --data-file my_data.tsv 0

@@ -19,8 +19,11 @@
 #   0 3 7               Download practical_0, _3, _7
 #   6                   Download both parts of practical_6 (6_part1 + 6_part2)
 #   6_part1             Download only practical_6_part1
-#   reset 2             Remove practical_2
-#   reset all           Remove all practicals
+#   reset 2             Remove practical_2 (keeps its downloaded data)
+#   reset all           Remove all practicals (keeps downloaded data)
+#   reset 2 --data      Remove practical_2 AND its dataset(s) under data/,
+#                       unless still shared with a practical you're not removing
+#   reset all --data    Remove all practicals AND all downloaded data
 #
 # Dataset TSV format (tab-separated, one row per practical):
 #   Practical<TAB>URL
@@ -378,8 +381,65 @@ download_all() {
     return "$rc"
 }
 
+# Given a dataset URL, print the path of its existing directory under
+# <data_dir> (matching ".source_url"), or nothing if it hasn't been downloaded.
+find_dataset_dir() {
+    local url="$1" data_dir="$2"
+    local base="${url##*/}"; base="${base%%\?*}"
+    local data_name; data_name="$(compute_data_name "$base")"
+    local candidate; candidate="$(resolve_dataset_dir "$url" "$data_name" "$data_dir")"
+    [ -d "$candidate" ] && printf '%s' "$candidate"
+}
+
+# Whether `url` is still needed by another practical that's still downloaded
+# (its folder exists under $DEST) and isn't one of the ones named in
+# `excluded` (a space-separated list). Checking disk state rather than just
+# the TSV registry means a dataset is freed once its last downloaded sibling
+# is gone, instead of being "in use" forever because some practical somewhere
+# in the course still references the same (multi-GB) Zenodo URL.
+url_in_use_elsewhere() {
+    local url="$1" excluded="$2"
+    local name urls u
+    for name in "${!practical_dois[@]}"; do
+        [[ " ${excluded} " == *" ${name} "* ]] && continue
+        [ -d "${DEST}/${name}" ] || continue
+        IFS=',' read -ra urls <<< "${practical_dois[$name]}"
+        for u in "${urls[@]}"; do
+            [ "$(trim "$u")" = "$url" ] && return 0
+        done
+    done
+    return 1
+}
+
+# Remove the dataset(s) backing practical `name`, unless one is still needed
+# by a practical not in `excluded` (space-separated practical names).
+reset_data_for() {
+    local name="$1" excluded="$2"
+    [[ -n "${practical_dois[$name]:-}" ]] || return 0
+
+    local data_dir="${DEST}/data"
+    local urls url dir
+    IFS=',' read -ra urls <<< "${practical_dois[$name]}"
+    for url in "${urls[@]}"; do
+        url="$(trim "$url")"
+        [ -n "$url" ] || continue
+        dir="$(find_dataset_dir "$url" "$data_dir")"
+        [ -n "$dir" ] || continue
+        if url_in_use_elsewhere "$url" "$excluded"; then
+            warn "Keeping dataset '$(basename "$dir")' — still used by another practical."
+        else
+            rm -rf "$dir"
+            ok "Removed dataset '$(basename "$dir")'"
+        fi
+    done
+}
+
 reset_one() {
-    local arg="$1"
+    local arg="$1" with_data="${2:-0}"
+    local names excluded
+    names="$(expand_practical_arg "$arg")"
+    excluded="$(tr '\n' ' ' <<< "$names")"
+
     local name
     while IFS= read -r name; do
         local target="${DEST}/${name}"
@@ -389,10 +449,12 @@ reset_one() {
         else
             warn "${name} not present."
         fi
-    done < <(expand_practical_arg "$arg")
+        [ "$with_data" = "1" ] && reset_data_for "$name" "$excluded"
+    done <<< "$names"
 }
 
 reset_all() {
+    local with_data="${1:-0}"
     local removed=0
     local name
     while IFS= read -r name; do
@@ -403,6 +465,15 @@ reset_all() {
         fi
     done < <(all_practical_names)
     ok "Removed ${removed} practicals."
+
+    if [ "$with_data" = "1" ]; then
+        if [ -d "${DEST}/data" ]; then
+            rm -rf "${DEST}/data"
+            ok "Removed all downloaded datasets."
+        else
+            warn "No datasets present."
+        fi
+    fi
 }
 
 show_status() {
@@ -426,16 +497,20 @@ interactive_menu() {
         echo -e "${BOLD}Options:${RESET}"
         echo "  [0-9]   Download a specific practical (e.g. type '3', or '6' for both parts of practical 6)"
         echo "  a       Download ALL practicals"
-        echo "  r N     Reset (delete) practical N (e.g. 'r 2')"
-        echo "  R       Reset ALL practicals"
+        echo "  r N     Reset (delete) practical N, keeping its downloaded data (e.g. 'r 2')"
+        echo "  rd N    Reset practical N AND its downloaded data (e.g. 'rd 2')"
+        echo "  R       Reset ALL practicals, keeping downloaded data"
+        echo "  RD      Reset ALL practicals AND all downloaded data"
         echo "  q       Quit"
         echo
         read -rp "Choice: " choice
 
         case "$choice" in
             a|A)           download_all ;;
-            r\ *)          reset_one "${choice#r }" ;;
-            R)             reset_all ;;
+            rd\ *)         reset_one "${choice#rd }" 1 ;;
+            r\ *)          reset_one "${choice#r }" 0 ;;
+            RD)            reset_all 1 ;;
+            R)             reset_all 0 ;;
             q|Q|exit|quit) ok "Bye!"; exit 0 ;;
             '')            : ;;
             *)
@@ -488,11 +563,20 @@ fi
 # Handle reset subcommand
 if [ "$1" = "reset" ]; then
     shift
-    if [ $# -eq 0 ] || [ "$1" = "all" ]; then
-        reset_all
+    with_data=0
+    args=()
+    for a in "$@"; do
+        if [ "$a" = "--data" ]; then
+            with_data=1
+        else
+            args+=("$a")
+        fi
+    done
+    if [ ${#args[@]} -eq 0 ] || [ "${args[0]}" = "all" ]; then
+        reset_all "$with_data"
     else
-        for n in "$@"; do
-            reset_one "$n"
+        for n in "${args[@]}"; do
+            reset_one "$n" "$with_data"
         done
     fi
     exit 0

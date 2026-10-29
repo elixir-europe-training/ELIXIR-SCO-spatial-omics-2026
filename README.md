@@ -8,7 +8,7 @@ The materials published for this course are intended to facilitate knowledge tra
 
 ## Contents
 
-The course consists of 9 lectures and 9 practical exercise sessions. The [schedule](schedule.html) on the website contains links to the presentation slides and notebooks with the results of the exercises. To run the exercises, we recommend following the [instructions on the website](https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/practicals.html) (["Working locally"](https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/practicals.html#option-2-working-locally)).
+The course consists of 9 lectures and 9 practical exercise sessions. The [schedule](https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/schedule.html) on the website contains links to the presentation slides and notebooks with the results of the exercises. To run the exercises, we recommend following the [instructions on the website](https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/practicals.html) (["Working locally"](https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics-2026/practicals.html#option-2-working-locally)).
 
 If you wish to run the exercises in your own environment, you can use [`docker/download_labs.sh`](docker/download_labs.sh) to download the notebooks and datasets, or get the notebooks from the [`practicals` directory](practicals) and the datasets from the links in [`docker/practical_data.tsv`](docker/practical_data.tsv).
 

@@ -16,4 +16,4 @@ If you wish to run the exercises in your own environment, you can use [`docker/d
 
 To facilitate future instances of the course, improvements are pushed to the `fix/after_course` branch rather than the `main` branch. This branch will address some of the issues identified during the course, for example by reducing the resource requirements. The `main` branch reflects the state of the course website at the time of hosting the course with only minor modifications.
 
-
+A list of the changes made can be found in CHANGELOG.md.

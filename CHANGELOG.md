@@ -8,6 +8,12 @@ Below is a list of changes that have been made to the `main` branch after the co
 
 - This changelog has been added
 
+### Fixed
+
+- A smaller version of the Xenium dataset has been uploaded to <https://zenodo.org/records/23766246>.
+    - This link replaces the original link in `docker/practical_data.tsv` 
+- Practical 0 now creates a symlink to avoid downloading Practical1_cropped.zarr if the cropped dataset has already been created
+
 ## 2026-10-29
 
 ### Fixed

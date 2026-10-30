@@ -76,6 +76,7 @@ err()  { echo -e "${RED}❌ $*${RESET}"; }
 # Download it ONCE per run and extract every requested practical from the cached
 # copy, instead of re-streaming the whole tarball for each practical.
 TARBALL_FILE=""
+TARBALL_TOPDIR=""
 DATA_FILE_TMP=""
 cleanup() {
     [ -n "$TARBALL_FILE" ] && rm -f "$TARBALL_FILE"
@@ -90,6 +91,16 @@ fetch_tarball() {
     log "Fetching repository archive..."
     if ! curl -fL --progress-bar "$TARBALL_URL" -o "$TARBALL_FILE"; then
         err "Failed to download archive from ${TARBALL_URL}"
+        rm -f "$TARBALL_FILE"; TARBALL_FILE=""
+        return 1
+    fi
+    # GitHub names the tarball's top-level directory "<repo>-<branch>", but with
+    # any "/" in the branch name turned into "-" (e.g. branch "feature/foo"
+    # becomes "repo-feature-foo"). Read the real name back from the archive
+    # instead of reconstructing it, so branches containing "/" still work.
+    TARBALL_TOPDIR="$(tar -tzf "$TARBALL_FILE" | head -1 | cut -d/ -f1)"
+    if [ -z "$TARBALL_TOPDIR" ]; then
+        err "Could not determine top-level directory of the downloaded archive."
         rm -f "$TARBALL_FILE"; TARBALL_FILE=""
         return 1
     fi
@@ -337,7 +348,7 @@ download_one_name() {
     log "Extracting ${BOLD}${name}${RESET}..."
 
     if tar -xz -f "$TARBALL_FILE" -C "$DEST" --strip-components=2 \
-            "${REPO_NAME}-${BRANCH}/${PARENT}/${name}"; then
+            "${TARBALL_TOPDIR}/${PARENT}/${name}"; then
         local n_files n_nb
         n_files=$(find "$target" -type f | wc -l | tr -d ' ')
         n_nb=$(find "$target" -name "*.ipynb" | wc -l | tr -d ' ')
@@ -367,7 +378,7 @@ download_all() {
     mkdir -p "$DEST"
     log "Extracting ${BOLD}ALL${RESET} practicals..."
     if tar -xz -f "$TARBALL_FILE" -C "$DEST" --strip-components=2 \
-            "${REPO_NAME}-${BRANCH}/${PARENT}"; then
+            "${TARBALL_TOPDIR}/${PARENT}"; then
         ok "All practicals downloaded → ${DEST}"
     else
         err "Extraction failed."
@@ -540,7 +551,6 @@ while [[ $# -gt 0 ]]; do
 done
 
 DEST="${DEST%/}"   # strip trailing slash to avoid work//practical_0
-REPO_NAME="${REPO##*/}"
 TARBALL_URL="https://github.com/${REPO}/archive/refs/heads/${BRANCH}.tar.gz"
 
 # Populate the dataset registry from the TSV file, fetching it first if no

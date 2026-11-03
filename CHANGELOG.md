@@ -2,12 +2,17 @@
 
 Below is a list of changes that have been made to the `main` branch after the course:
 
+## 2026-11-03
+
+### Fixed
+
+- All images are now visible in html-files for practical exercises
+
 ## 2026-11-02
 
 ### Fixed
 
 - Xenium boundary cropping in p3 has been fixed to align with sainsc crop
-- All images are now visible in html-files for practical exercises
 
 ## 2026-10-30
 

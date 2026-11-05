@@ -6,6 +6,8 @@ project:
     - "!CONTRIBUTING.md"
     - "!LICENSE.md"
     - "!practicals/**"
+  resources:
+    - 'practicals/html/assets'
 
 website:
   title: "Spatial Omics Data Analysis"

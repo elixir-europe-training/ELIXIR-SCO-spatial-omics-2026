@@ -2,6 +2,12 @@
 
 Below is a list of changes that have been made to this branch after the course:
 
+## 2026-11-06
+
+### Added
+
+- Notebook includes an option to subset the data for practical 1 to reduce Cellpose run time
+
 ## 2026-11-03
 
 ### Fixed

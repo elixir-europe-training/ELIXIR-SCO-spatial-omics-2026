@@ -2,6 +2,12 @@
 
 Below is a list of changes that have been made to this branch after the course:
 
+## 2026-11-27
+
+### Added
+
+- Notebook includes an option to subset the data for practical 3 to reduce run time
+
 ## 2026-11-06
 
 ### Added
